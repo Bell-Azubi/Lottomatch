@@ -132,6 +132,7 @@ export default defineConfig(
     files: [
       'scripts/**/*.mjs',
       'eslint.config.js',
+      'lighthouserc.cjs',
       '*.config.ts',
       'build/**/*.ts',
       'tests/e2e/**/*.ts',
@@ -145,7 +146,7 @@ export default defineConfig(
     rules: { '@typescript-eslint/unbound-method': 'off' },
   },
   {
-    files: ['**/*.js', '**/*.mjs'],
+    files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
     extends: [tseslint.configs.disableTypeChecked],
   },
 );

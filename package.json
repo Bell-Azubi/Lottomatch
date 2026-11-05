@@ -22,7 +22,7 @@
     "test:e2e": "playwright test --project=chromium --project=firefox --project=webkit --project=visual",
     "test:e2e:perf": "playwright test --project=performance --project=soak --workers=1",
     "budgets": "node scripts/check-budgets.mjs",
-    "lhci": "lhci autorun",
+    "lhci": "lhci autorun --config=lighthouserc.cjs && LIGHTHOUSE_DEVICE=desktop lhci autorun --config=lighthouserc.cjs",
     "fonts": "node scripts/subset-fonts.mjs",
     "verify": "npm run lint && npm run lint:knip && npm run typecheck && npm run test:coverage && npm run build && npm run budgets",
     "css-types": "node scripts/css-module-types.mjs"
