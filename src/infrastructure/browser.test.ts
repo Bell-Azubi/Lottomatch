@@ -193,4 +193,11 @@ describe('service worker and platform', () => {
     platform.reportError(new Error('x'), 'test');
     expect(platform.diagnostics.list().at(-1)?.context).toBe('test');
   });
+
+  it('falls back to memory storage when IndexedDB is unavailable (ADR-0016, §12)', async () => {
+    vi.stubGlobal('indexedDB', undefined);
+    const platform = await createPlatform({ version: '1', commit: 'c', date: 'd', baseUrl: '/' });
+    expect(platform.backend).toBe('MEMORY');
+    expect(platform.diagnostics.list().at(-1)?.context).toBe('indexeddb');
+  });
 });

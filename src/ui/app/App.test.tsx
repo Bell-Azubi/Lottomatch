@@ -161,6 +161,15 @@ describe('SystemBanners', () => {
       expect(t?.platform.screen.download).toHaveBeenCalled();
     });
   });
+
+  it('offers a waiting update only between rounds (§10)', async () => {
+    t = await createTestHost();
+    t.pwa.connect(true, () => Promise.resolve());
+    t.pwa.markUpdateReady();
+    expect(t.host.startRound().ok).toBe(true);
+    renderWithServices(<SystemBanners />, t);
+    expect(screen.queryByRole('button', { name: 'Jetzt aktualisieren' })).toBeNull();
+  });
 });
 
 describe('LazyRoute and ErrorBoundary', () => {

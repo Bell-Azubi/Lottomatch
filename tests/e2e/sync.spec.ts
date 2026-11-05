@@ -31,6 +31,9 @@ test.describe('host and display (FR-10)', () => {
     await openHost(page);
     await startRound(page, 1);
     await typeNumber(page, 5);
+    // The draw and its pending write appear together; close only once it is stored.
+    await expect(cell(page, 5)).toHaveAccessibleName('5, zuletzt gezogen');
+    await expect(page.getByRole('status').filter({ hasText: 'Gespeichert' })).toBeVisible();
     await page.close();
     const display = await openDisplay(context);
     await expect(cell(display, 5)).toHaveAccessibleName('5, zuletzt gezogen');
@@ -38,6 +41,29 @@ test.describe('host and display (FR-10)', () => {
     await openHost(host);
     await typeNumber(host, 6);
     await expect(cell(display, 6)).toHaveAccessibleName('6, zuletzt gezogen');
+  });
+
+  test('an open display keeps its state when the host closes and follows a new host', async ({
+    context,
+    page,
+  }) => {
+    await setAnimation(page, 'Aus');
+    await openHost(page);
+    await startRound(page, 1);
+    const display = await openDisplay(context);
+    await page.bringToFront();
+    await typeNumber(page, 8);
+    await expect(cell(display, 8)).toHaveAccessibleName('8, zuletzt gezogen');
+    await expect(page.getByRole('status').filter({ hasText: 'Gespeichert' })).toBeVisible();
+    await page.close();
+    // Longer than two display heartbeats without any host: nothing on the display changes.
+    await display.waitForTimeout(4_500);
+    await expect(cell(display, 8)).toHaveAccessibleName('8, zuletzt gezogen');
+    await expect(display.getByText('Zuletzt gezogen: 8, Ziehung 1')).toBeAttached();
+    const host = await context.newPage();
+    await openHost(host);
+    await typeNumber(host, 9);
+    await expect(cell(display, 9)).toHaveAccessibleName('9, zuletzt gezogen');
   });
 
   test('a second host window is read-only until it takes over (Web Locks)', async ({

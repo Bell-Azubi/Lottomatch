@@ -73,6 +73,16 @@ describe('ClaimDialog (FR-6)', () => {
     expect(closed).toBe(1);
   });
 
+  it('hints when the card already won earlier in the round', async () => {
+    await setup([5, 12, 23, 34, 42]);
+    expect(t.host.award({ winners: [{ cardNo: '117' }] }).ok).toBe(true);
+    enter([5, 12, 23, 34, 42], '117');
+    fireEvent.click(within(dialog()).getByRole('button', { name: 'Gewinn bestätigen' }));
+    expect(
+      within(dialog()).getByText('Karte 117 hat in dieser Runde bereits gewonnen.'),
+    ).toBeInTheDocument();
+  });
+
   it('rejects duplicates and out-of-range numbers as chips', async () => {
     await setup([1]);
     enter([1, 1]);

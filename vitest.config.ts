@@ -10,6 +10,9 @@ export default mergeConfig(
       setupFiles: ['src/test/setup.ts'],
       restoreMocks: true,
       unstubGlobals: true,
+      // Transforms can depend on more than the file itself (`import.meta.glob` lists
+      // public/events/): a persisted transform would hide newly added files.
+      fsModuleCache: false,
       testTimeout: 15_000,
       coverage: {
         provider: 'v8',

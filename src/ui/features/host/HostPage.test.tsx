@@ -116,6 +116,30 @@ describe('HostPage', () => {
     expect(drawnCount()).toBe(0);
   });
 
+  it('disables Drehen with the reason once the pool is empty (FR-2, §12)', async () => {
+    const session = present(t.app.session.value, 'session');
+    session.updateSettings({ ...session.match.value.settings, maxNumber: 30 }, []);
+    await startFirstRound();
+    for (let number = 1; number <= 30; number += 1) expect(t.host.drawManual(number).ok).toBe(true);
+    expect(
+      await screen.findByText('Alle Zahlen sind gezogen. Gewinn prüfen oder Preis überspringen.'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Drehen' })).toBeDisabled();
+    key(' ');
+    expect(drawnCount()).toBe(30);
+  });
+
+  it('ignores shortcuts while focus is in a text field (§12)', async () => {
+    await startFirstRound();
+    const field = screen.getByLabelText('Zahl aus der Trommel');
+    field.focus();
+    for (const value of ['g', 'p', '?', 'a', ' ']) fireEvent.keyDown(field, { key: value });
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(t.host.overlays.state.value).toBeUndefined();
+    expect(t.platform.screen.openDisplay).not.toHaveBeenCalled();
+    expect(drawnCount()).toBe(0);
+  });
+
   it('runs host overrides with reasons (FR-5)', async () => {
     await startFirstRound();
     key(' ');

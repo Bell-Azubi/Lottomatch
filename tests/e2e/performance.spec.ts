@@ -7,11 +7,15 @@ const EVENT_TIMING_THRESHOLD_MS = 16;
 const INPUT_BUDGET_MS = 50;
 /** §8: host → display at the 95th percentile. */
 const SYNC_P95_BUDGET_MS = 100;
+/** §8: a repeat visit served by the service worker is interactive within this time. */
+const REPEAT_VISIT_BUDGET_MS = 300;
 
 declare global {
   interface Window {
     /** Bound by these specs through `exposeFunction`; the app never defines it. */
     reportTiming?: (name: string, value: number, group?: number) => Promise<void>;
+    /** Set by an init script of these specs when the console's board was first painted. */
+    consolePaintedAt?: number;
   }
 }
 
@@ -150,5 +154,36 @@ test.describe('performance (§8)', () => {
       description: `p95 ${p95.toFixed(1)} ms, max ${Math.max(...latencies).toFixed(1)} ms`,
     });
     expect(p95).toBeLessThanOrEqual(SYNC_P95_BUDGET_MS);
+  });
+
+  test('a repeat visit from the service worker is interactive within 300 ms', async ({ page }) => {
+    await page.addInitScript(() => {
+      // Navigation start → the console's board is in the DOM and painted (the next frame).
+      const observer = new MutationObserver(() => {
+        if (document.querySelector('[role="grid"]') === null) return;
+        observer.disconnect();
+        requestAnimationFrame(() => {
+          window.consolePaintedAt = performance.now();
+        });
+      });
+      observer.observe(document, { childList: true, subtree: true });
+    });
+    await openHost(page);
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.ready;
+    });
+    const samples: number[] = [];
+    for (let visit = 1; visit <= 3; visit += 1) {
+      const response = await page.reload();
+      expect(response?.fromServiceWorker()).toBe(true);
+      await expect.poll(() => page.evaluate(() => window.consolePaintedAt)).toBeGreaterThan(0);
+      samples.push(await page.evaluate(() => window.consolePaintedAt ?? Number.POSITIVE_INFINITY));
+    }
+    const median = percentile(samples, 0.5);
+    test.info().annotations.push({
+      type: 'repeat visit',
+      description: `console painted after ${samples.map((ms) => ms.toFixed(0)).join(', ')} ms`,
+    });
+    expect(median).toBeLessThanOrEqual(REPEAT_VISIT_BUDGET_MS);
   });
 });
