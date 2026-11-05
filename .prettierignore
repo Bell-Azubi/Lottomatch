@@ -1,0 +1,10 @@
+dist
+coverage
+node_modules
+playwright-report
+test-results
+.lighthouseci
+package-lock.json
+public/events/*.json
+src/**/*.module.css.d.ts
+tests/e2e/**/*-snapshots

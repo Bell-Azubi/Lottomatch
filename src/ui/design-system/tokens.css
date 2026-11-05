@@ -1,0 +1,185 @@
+/*
+ * Design tokens derived from the FC Laufenburg-Kaisten badge (docs/design-plan.md).
+ * Raw palette first, then semantic tokens per theme. No hues outside the badge palette.
+ */
+:root {
+  --c-gold: #f8b708;
+  --c-red: #c3071b;
+  --c-graphite: #6d6d6f;
+  --c-graphite-deep: #45474d;
+  --c-cream: #fffbe6;
+  --c-white: #ffffff;
+  --c-night: #1e1e21;
+  --c-mist: #ececee;
+  --c-ash: #8e8e93;
+
+  --font-ui: system-ui, -apple-system, 'Segoe UI Variable', 'Segoe UI', sans-serif;
+  --font-numeral: 'Barlow Condensed', 'Barlow Condensed Fallback', var(--font-ui);
+
+  --radius-panel: 28px;
+  --radius-image: 20px;
+  --radius-control: 16px;
+  --radius-capsule: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 240ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1);
+
+  --glass-blur: 24px;
+  --glass-saturate: 160%;
+
+  --logo-max: 139px;
+  --header-height: 72px;
+
+  /* Dunkler Saal (default) */
+  color-scheme: dark;
+  --surface: var(--c-night);
+  --surface-raised: #26262a;
+  --plate: #232327;
+  --text-strong: var(--c-white);
+  --text: var(--c-cream);
+  --text-muted: var(--c-ash);
+  --accent-fill: var(--c-gold);
+  --on-accent: var(--c-night);
+  --accent-text: var(--c-gold);
+  --danger-fill: var(--c-red);
+  --on-danger: var(--c-white);
+  --danger-text: var(--c-cream);
+  --hairline: rgb(255 251 230 / 18%);
+  --hairline-strong: var(--c-cream);
+  --column-band: rgb(255 251 230 / 5%);
+  --open-ring: var(--c-graphite);
+  --open-numeral: var(--c-ash);
+  --glass-tint: rgb(30 30 33 / 62%);
+  --glass-edge: rgb(255 251 230 / 12%);
+  --relief-edge: var(--c-graphite);
+  --relief-raised: -6px -6px 14px rgb(255 255 255 / 4.5%), 6px 6px 16px rgb(0 0 0 / 55%);
+  --relief-pressed: inset 4px 4px 10px rgb(0 0 0 / 55%), inset -4px -4px 10px rgb(255 255 255 / 4%);
+  --stage-glow: radial-gradient(
+    circle at 50% 45%,
+    rgb(248 183 8 / 16%) 0%,
+    rgb(248 183 8 / 0%) 62%
+  );
+  --scrim: rgb(30 30 33 / 72%);
+}
+
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(
+      0,
+      0.009,
+      0.035 2.1%,
+      0.141,
+      0.281 6.7%,
+      0.723 12.9%,
+      0.938 16.7%,
+      1.017,
+      1.077,
+      1.121 24%,
+      1.149 27.2%,
+      1.159 30.6%,
+      1.149 34.7%,
+      1.088 42.3%,
+      1.024 50.5%,
+      0.997 55.5%,
+      0.987,
+      0.984 65.4%,
+      0.998 79.6%,
+      1
+    );
+  }
+}
+
+/* Heller Saal */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --surface: var(--c-mist);
+  --surface-raised: #f6f6f7;
+  --plate: #e4e4e7;
+  --text-strong: var(--c-night);
+  --text: var(--c-graphite-deep);
+  --text-muted: var(--c-graphite-deep);
+  --accent-fill: var(--c-gold);
+  --on-accent: var(--c-night);
+  --accent-text: var(--c-graphite-deep);
+  --danger-fill: var(--c-red);
+  --on-danger: var(--c-white);
+  --danger-text: var(--c-red);
+  --hairline: rgb(69 71 77 / 25%);
+  --hairline-strong: var(--c-graphite-deep);
+  --column-band: rgb(109 109 111 / 5%);
+  --open-ring: var(--c-graphite);
+  --open-numeral: var(--c-graphite-deep);
+  --glass-tint: rgb(236 236 238 / 72%);
+  --glass-edge: rgb(255 255 255 / 60%);
+  --relief-edge: var(--c-graphite);
+  --relief-raised: -6px -6px 14px rgb(255 255 255 / 90%), 6px 6px 14px rgb(69 71 77 / 22%);
+  --relief-pressed:
+    inset 4px 4px 10px rgb(69 71 77 / 22%), inset -4px -4px 10px rgb(255 255 255 / 90%);
+  --stage-glow: radial-gradient(
+    circle at 50% 45%,
+    rgb(248 183 8 / 22%) 0%,
+    rgb(248 183 8 / 0%) 62%
+  );
+  --scrim: rgb(236 236 238 / 78%);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --surface: var(--c-mist);
+    --surface-raised: #f6f6f7;
+    --plate: #e4e4e7;
+    --text-strong: var(--c-night);
+    --text: var(--c-graphite-deep);
+    --text-muted: var(--c-graphite-deep);
+    --accent-text: var(--c-graphite-deep);
+    --danger-text: var(--c-red);
+    --hairline: rgb(69 71 77 / 25%);
+    --hairline-strong: var(--c-graphite-deep);
+    --column-band: rgb(109 109 111 / 5%);
+    --open-numeral: var(--c-graphite-deep);
+    --glass-tint: rgb(236 236 238 / 72%);
+    --glass-edge: rgb(255 255 255 / 60%);
+    --relief-raised: -6px -6px 14px rgb(255 255 255 / 90%), 6px 6px 14px rgb(69 71 77 / 22%);
+    --relief-pressed:
+      inset 4px 4px 10px rgb(69 71 77 / 22%), inset -4px -4px 10px rgb(255 255 255 / 90%);
+    --stage-glow: radial-gradient(
+      circle at 50% 45%,
+      rgb(248 183 8 / 22%) 0%,
+      rgb(248 183 8 / 0%) 62%
+    );
+    --scrim: rgb(236 236 238 / 78%);
+  }
+}
+
+/* Solid glass where blur is unavailable, unwanted or too costly. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --glass-blur: 0px;
+    --glass-tint: var(--surface-raised);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-blur: 0px;
+    --glass-tint: var(--surface-raised);
+  }
+}
+
+:root[data-performance='on'] {
+  --glass-blur: 0px;
+  --glass-tint: var(--surface-raised);
+}
