@@ -40,7 +40,10 @@ First release of Lottomatch Live for the FC Laufenburg-Kaisten Lottomatch.
 - Offline-first PWA with precache and an update prompt shown only between rounds; Web Speech
   announcements with digit repeat and synthesised sounds, both off by default.
 - de-CH (default) and English catalogues with Swiss formatting (CHF, dd.MM.yyyy, Europe/Zurich).
-- CI with lint, typecheck, unit and E2E tests with axe, Lighthouse CI and size budgets; deployment
-  to GitHub Pages from Actions; Dependabot and CodeQL.
+- CI with lint, knip, typecheck, unit and property-based tests with coverage gates, size budgets,
+  E2E on Chromium, Firefox and WebKit with axe and display snapshots, checks of input latency,
+  host → display latency, repeat visits and endurance, and Lighthouse CI against a GitHub Pages
+  stand-in; deployment of the tested build to GitHub Pages from Actions; Dependabot and CodeQL;
+  every action pinned by commit SHA.
 
 [1.0.0]: https://github.com/Bell-Azubi/Lottomatch/releases/tag/v1.0.0

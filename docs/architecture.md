@@ -140,8 +140,9 @@ others open read-only with "Steuerung übernehmen".
 
 The draw result is fixed when the key is pressed. The reveal is cosmetic: the snapshot carries the
 reveal key, its duration (Aus 0, Kurz 0.8 s, Normal 1.8 s, Spannend 3 s) and an `instant` flag set
-by a second press. Presses within 400 ms never draw twice; during the animation and its 750 ms
-settle time a press only reveals.
+by a second press. Spin presses within 400 ms never draw twice; during the animation and its
+750 ms settle time a press only reveals. Manual entries are not throttled: each is a typed number,
+and the domain rejects a number already drawn.
 
 ## Persistence layout
 
@@ -166,7 +167,9 @@ every built asset (JavaScript, CSS, HTML, fonts, images, prepared event files, m
 two large 512 px icons and `404.html`, with `index.html` as navigation fallback. Updates install in
 the background and wait: "Update bereit" appears only on the host console and only between rounds;
 applying it tells displays to reload and activates the new worker. Content-hashed asset names plus
-the precache give fast repeat visits despite Pages' short cache lifetimes (C7).
+the precache give fast repeat visits despite Pages' short cache lifetimes (C7). The worker is
+registered once the booted content has been painted, so its download never competes with the
+first screen (ADR-0019).
 
 ## Security
 
@@ -186,3 +189,19 @@ the precache give fast repeat visits despite Pages' short cache lifetimes (C7).
 - Persistent banners cover a read-only window, storage failures (with "Jetzt exportieren"),
   memory-only storage and a waiting update.
 - A failed lazy page load offers a reload; corrupt stored data opens the recovery screen.
+
+## Delivery
+
+```mermaid
+flowchart LR
+  push[Pull request or push to main] --> verify["verify: lint, knip, types,<br/>unit tests with coverage,<br/>audit, build, budgets"]
+  verify --> e2e["e2e: Chromium + snapshots<br/>+ latency and soak, Firefox, WebKit"]
+  verify --> lhci["Lighthouse CI on the<br/>Pages stand-in (ADR-0020)"]
+  e2e --> passed{CI passed}
+  lhci --> passed
+  passed -- "main, green" --> deploy["deploy.yml: configure Pages,<br/>download the tested site,<br/>check its address, publish"]
+```
+
+The site is built once, in CI, and the deploy workflow publishes exactly that artifact. Its base
+path and absolute URL come from repository variables with project-site defaults (README); the
+deploy job refuses a build made for another address than the one Pages reports.

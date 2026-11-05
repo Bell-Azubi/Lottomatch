@@ -38,3 +38,6 @@ architecture it has an ADR.
     and never used for ordering (I7).
 17. **Browsers**: latest two Chrome, Edge, Firefox; Safari ≥ 16.4. Window Management, Wake Lock,
     Web Speech and `linear()` easing are progressive enhancements with fallbacks.
+18. **"Latest number ≥ 35 vh"** (§7, §8) is met by the latest-number badge: it is at least 35 % of
+    the window height in every display layout (4:3 to 16:9, 1024×768 to 3840×2160), and its numeral
+    scales with it. Board numerals are at least 4.5 vh. Both are asserted in the visual E2E.
