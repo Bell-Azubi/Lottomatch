@@ -38,25 +38,29 @@ export const test = base.extend<{ guard: undefined }>({
 });
 
 /**
- * Waits until no finite animation is running. axe measures colour contrast at the current
- * opacity, so an overlay that is still fading in would be reported as low contrast.
+ * Brings every finite animation to its end state, as Playwright's screenshots do with
+ * `animations: 'disabled'`, and repeats until none is left (a finished step may start the next
+ * one). axe measures colour contrast at the current opacity, so an overlay that is still fading
+ * in would be reported as low contrast. Waiting for running animations is not enough: an engine
+ * may hold the animations of a window that is not in front without reporting them as running.
  */
 async function settleAnimations(page: Page): Promise<void> {
   await expect
     .poll(
       () =>
-        page.evaluate(() =>
-          document
-            .getAnimations()
-            .some(
-              (animation) =>
-                animation.playState === 'running' &&
-                animation.effect?.getComputedTiming().endTime !== Infinity,
-            ),
-        ),
-      { message: 'entrance animations have finished', timeout: 5_000 },
+        page.evaluate(() => {
+          let finished = 0;
+          for (const animation of document.getAnimations()) {
+            const done = animation.playState === 'finished' || animation.playState === 'idle';
+            if (done || animation.effect?.getTiming().iterations === Infinity) continue;
+            animation.finish();
+            finished += 1;
+          }
+          return finished;
+        }),
+      { message: 'every finite animation has reached its end state', timeout: 5_000 },
     )
-    .toBe(false);
+    .toBe(0);
 }
 
 /** WCAG 2.2 AA check of the settled page; serious and critical violations fail the test (§8). */
@@ -72,5 +76,9 @@ export async function expectAccessible(page: Page, label: string): Promise<void>
     (violation) =>
       `${violation.id}: ${violation.nodes.map((node) => node.target.join(' ')).join(', ')}`,
   );
-  expect(summary, `${label}\n${summary.join('\n')}`).toEqual([]);
+  // axe's own explanation per element, e.g. the measured colours and ratio of a contrast finding.
+  const details = severe.flatMap((violation) =>
+    violation.nodes.map((node) => `${node.target.join(' ')}: ${node.failureSummary ?? ''}`),
+  );
+  expect(summary, `${label}\n${details.join('\n')}`).toEqual([]);
 }

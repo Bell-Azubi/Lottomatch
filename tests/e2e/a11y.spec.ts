@@ -10,10 +10,7 @@ import {
   typeNumber,
 } from './helpers';
 
-/**
- * Checks the display as the audience sees it: brought to the front first, because a browser may
- * pause the animations of a window in the background, then hands the front back to the host.
- */
+/** Checks the display as the audience sees it, in front, then hands the front back to the host. */
 async function expectDisplayAccessible(display: Page, host: Page, label: string): Promise<void> {
   await display.bringToFront();
   await expectAccessible(display, label);
