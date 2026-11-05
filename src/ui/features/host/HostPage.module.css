@@ -1,0 +1,80 @@
+/* Host console mirrors the badge's split field: opaque control plate left, banded board right. */
+.console {
+  display: grid;
+  grid-template-columns: minmax(460px, 600px) minmax(0, 1fr);
+  grid-template-areas:
+    'plate board'
+    'bar bar';
+  gap: var(--space-4);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.plate {
+  grid-area: plate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-content: start;
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+}
+
+.statusArea,
+.summaryArea {
+  grid-column: 1 / -1;
+}
+
+.boardArea {
+  grid-area: board;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: var(--space-3);
+}
+
+.boardFooter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.counter {
+  color: var(--text-strong);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.lastNumbers {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lastBall {
+  width: 44px;
+}
+
+.barArea {
+  grid-area: bar;
+}
+
+@media (max-width: 1180px) {
+  .console {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'plate'
+      'board'
+      'bar';
+  }
+}
+
+@media (max-width: 640px) {
+  .plate {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,43 @@
+.choices {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.error {
+  padding-left: var(--space-2);
+  border-left: 4px solid var(--c-red);
+  color: var(--danger-text);
+}
+
+.shortcuts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.shortcuts dt {
+  font-weight: 650;
+}
+
+.key {
+  display: inline-block;
+  min-width: 2.2em;
+  padding: 2px var(--space-2);
+  border: 2px solid var(--relief-edge);
+  border-radius: 8px;
+  background: var(--plate);
+  color: var(--text-strong);
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  text-align: center;
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}

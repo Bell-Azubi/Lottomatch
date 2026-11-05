@@ -1,0 +1,114 @@
+.board {
+  --cell: 44px;
+  --gap: 6px;
+  --numeral-size: calc(var(--cell) * 0.6);
+
+  display: grid;
+  gap: var(--gap);
+  padding: var(--gap);
+  border-radius: var(--radius-panel);
+  /* Faint alternating Cream bands per column: the striped half of the badge, and a scan aid. */
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--column-band) 0,
+    var(--column-band) calc(var(--cell) + var(--gap)),
+    transparent calc(var(--cell) + var(--gap)),
+    transparent calc(2 * (var(--cell) + var(--gap)))
+  );
+  background-origin: content-box;
+  background-position: calc(var(--gap) / -2) 0;
+}
+
+.host {
+  --cell: clamp(30px, min(4.6vw, 6.2vh), 64px);
+}
+
+.display {
+  /* The display layout sets --display-cell and --display-numeral per aspect ratio. */
+  --cell: var(--display-cell, 7.4vh);
+  --gap: clamp(3px, 0.6vh, 14px);
+  --numeral-size: calc(var(--cell) * var(--display-numeral, 0.66));
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(10, var(--cell));
+  gap: var(--gap);
+}
+
+.cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--cell);
+  height: var(--cell);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  font-family: var(--font-numeral);
+  font-weight: 800;
+  cursor: default;
+}
+
+button.cell {
+  cursor: pointer;
+}
+
+button.cell[aria-disabled='true'] {
+  cursor: default;
+}
+
+.numeral {
+  font-size: var(--numeral-size);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cellOPEN {
+  box-shadow: inset 0 0 0 2px var(--open-ring);
+  color: var(--open-numeral);
+}
+
+.cellDRAWN,
+.cellLATEST {
+  background: var(--c-gold);
+  color: var(--c-night);
+  box-shadow: inset 0 0 0 2px var(--c-cream);
+}
+
+/* Latest: Red outer ring over a Cream hairline (Red alone is below 3:1 on Night), one pulse. */
+.cellLATEST {
+  box-shadow:
+    inset 0 0 0 2px var(--c-cream),
+    0 0 0 2px var(--c-cream),
+    0 0 0 calc(2px + max(3px, var(--cell) * 0.07)) var(--c-red);
+  animation: pulse 600ms var(--ease-spring) 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.14);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cellLATEST {
+    animation: none;
+  }
+}
+
+@media print {
+  .board {
+    display: none;
+  }
+}

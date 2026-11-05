@@ -1,0 +1,249 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  gap: var(--space-5);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.toc {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-4));
+  align-self: start;
+}
+
+.tocTitle {
+  margin-bottom: var(--space-3);
+  font-size: 1.5rem;
+}
+
+.tocList {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tocButton {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-left: 3px solid transparent;
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+  background: transparent;
+  color: var(--text-strong);
+  font-weight: 550;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tocButton:hover {
+  border-left-color: var(--c-gold);
+  background: var(--column-band);
+}
+
+.sections {
+  display: grid;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.section {
+  display: grid;
+  gap: var(--space-4);
+  scroll-margin-top: calc(var(--header-height) + var(--space-5));
+}
+
+.sectionTitle {
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--c-gold);
+  font-size: 1.5rem;
+}
+
+.sectionTitle:focus {
+  outline: none;
+}
+
+.subTitle {
+  font-size: 1.125rem;
+}
+
+.intro,
+.hint {
+  color: var(--text-muted);
+}
+
+.notice {
+  padding: var(--space-3) var(--space-4);
+  border-left: 6px solid var(--c-gold);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--text-strong);
+}
+
+.warning {
+  border-left-color: var(--c-red);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.group {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+}
+
+.legend {
+  padding: 0 var(--space-2);
+  color: var(--text-strong);
+  font-weight: 650;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+}
+
+.itemActive {
+  border-color: var(--c-gold);
+  box-shadow: inset 4px 0 0 var(--c-gold);
+}
+
+.itemMain {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.itemName {
+  color: var(--text-strong);
+  font-weight: 650;
+}
+
+.itemMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.badge {
+  padding: 0 var(--space-2);
+  border: 2px solid var(--hairline-strong);
+  border-radius: var(--radius-capsule);
+  color: var(--text-strong);
+  font-size: 0.8125rem;
+  font-weight: 650;
+}
+
+.badgeActive {
+  border-color: var(--c-cream);
+  background: var(--accent-fill);
+  color: var(--on-accent);
+}
+
+.badgePractice {
+  border-color: var(--c-cream);
+  background: var(--c-red);
+  color: var(--c-white);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.facts dt {
+  color: var(--text-muted);
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.fileInput {
+  max-width: 100%;
+  color: var(--text-strong);
+}
+
+.fileInput::file-selector-button {
+  min-height: 44px;
+  margin-right: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--hairline-strong);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text-strong);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.errorText {
+  padding-left: var(--space-2);
+  border-left: 4px solid var(--c-red);
+  color: var(--danger-text);
+  font-weight: 550;
+}
+
+@media (max-width: 860px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .toc {
+    position: static;
+  }
+
+  .tocList {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .tocButton {
+    width: auto;
+    border-left: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: var(--radius-control) var(--radius-control) 0 0;
+  }
+
+  .tocButton:hover {
+    border-bottom-color: var(--c-gold);
+  }
+}

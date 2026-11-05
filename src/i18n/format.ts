@@ -3,12 +3,6 @@ const TIME_ZONE = 'Europe/Zurich';
 
 const chf = new Intl.NumberFormat('de-CH', { style: 'currency', currency: 'CHF' });
 const integer = new Intl.NumberFormat('de-CH', { maximumFractionDigits: 0 });
-const date = new Intl.DateTimeFormat('de-CH', {
-  day: '2-digit',
-  month: '2-digit',
-  year: 'numeric',
-  timeZone: TIME_ZONE,
-});
 const time = new Intl.DateTimeFormat('de-CH', {
   hour: '2-digit',
   minute: '2-digit',
@@ -32,11 +26,6 @@ export function formatChf(value: number): string {
 /** `1’234` */
 export function formatInteger(value: number): string {
   return integer.format(value);
-}
-
-/** `07.11.2026` from a UTC ISO timestamp, in Europe/Zurich. */
-export function formatDate(iso: string): string {
-  return date.format(new Date(iso));
 }
 
 /** `07.11.2026` from a calendar date `yyyy-MM-dd` (no time-zone shift). */

@@ -18,14 +18,14 @@ snapshots ordered by `(epoch, seq)`, with a `storage`-event fallback.
 
 ## Phases and deliverables
 
-| Phase | Deliverables | Gate |
-| --- | --- | --- |
-| 1 Foundation | Pinned toolchain, strict TS, Vite (base from env, CSP meta, `404.html`, font preload), ESLint layer rules, CI/deploy/CodeQL workflows, Dependabot, tokens, app shell, hash router, trimmed logo, derived icons, subset fonts | build + lint + typecheck |
-| 2 Domain engine | Types, commands, reducer, pool derivation, claim check with late detection, Stechen, RNG mapping with rejection sampling, CHF parsing, settings/prize validation, event store with write queue and hash chain, migrations | domain coverage ≥ 95 %, property tests I1–I7 |
-| 3 Live | Host console, board, Drehen with reveal, manual entry and keypad, undo, claim dialog, Stechen, display window, sync, Web Locks takeover, wake lock, keyboard | component tests, E2E live flows |
-| 4 Content | Prize manager, CSV and JSON import/export, prepared event files, image pipeline, print list, settings, events and practice mode, PIN, about and diagnostics | component tests, E2E import |
-| 5 Experience | Start page with readiness checklist, results and audit viewer, overlays, confetti, PWA update prompt, offline, voice and sound | E2E offline, overlays, axe |
-| 6 Hardening | Budgets, Lighthouse CI, visual snapshots, docs, test report, v1.0.0 | all gates |
+| Phase           | Deliverables                                                                                                                                                                                                                 | Gate                                         |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| 1 Foundation    | Pinned toolchain, strict TS, Vite (base from env, CSP meta, `404.html`, font preload), ESLint layer rules, CI/deploy/CodeQL workflows, Dependabot, tokens, app shell, hash router, trimmed logo, derived icons, subset fonts | build + lint + typecheck                     |
+| 2 Domain engine | Types, commands, reducer, pool derivation, claim check with late detection, Stechen, RNG mapping with rejection sampling, CHF parsing, settings/prize validation, event store with write queue and hash chain, migrations    | domain coverage ≥ 95 %, property tests I1–I7 |
+| 3 Live          | Host console, board, Drehen with reveal, manual entry and keypad, undo, claim dialog, Stechen, display window, sync, Web Locks takeover, wake lock, keyboard                                                                 | component tests, E2E live flows              |
+| 4 Content       | Prize manager, CSV and JSON import/export, prepared event files, image pipeline, print list, settings, events and practice mode, PIN, about and diagnostics                                                                  | component tests, E2E import                  |
+| 5 Experience    | Start page with readiness checklist, results and audit viewer, overlays, confetti, PWA update prompt, offline, voice and sound                                                                                               | E2E offline, overlays, axe                   |
+| 6 Hardening     | Budgets, Lighthouse CI, visual snapshots, docs, test report, v1.0.0                                                                                                                                                          | all gates                                    |
 
 ## Key decisions (details in `docs/adr/`)
 

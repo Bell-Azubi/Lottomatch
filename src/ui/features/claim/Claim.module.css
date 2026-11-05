@@ -1,0 +1,137 @@
+.check,
+.confirm {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.cardTitle {
+  color: var(--text-strong);
+  font-weight: 650;
+}
+
+.addRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--space-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 40px;
+  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-3);
+  border-radius: var(--radius-capsule);
+  font-weight: 600;
+}
+
+.chipDrawn {
+  background: var(--c-gold);
+  color: var(--c-night);
+  box-shadow: inset 0 0 0 2px var(--c-cream);
+}
+
+.chipMissing {
+  background: var(--c-red);
+  color: var(--c-white);
+  box-shadow: inset 0 0 0 2px var(--c-cream);
+}
+
+.chipRemove {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: 1.125rem;
+  cursor: pointer;
+}
+
+.verdict {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-control);
+  background: var(--surface-raised);
+}
+
+.valid {
+  padding-left: var(--space-2);
+  border-left: 4px solid var(--c-gold);
+  color: var(--text-strong);
+}
+
+.late {
+  padding-left: var(--space-2);
+  border-left: 4px solid var(--c-cream);
+  color: var(--text-strong);
+}
+
+.invalid {
+  padding-left: var(--space-2);
+  border-left: 4px solid var(--c-red);
+  color: var(--danger-text);
+}
+
+.verdictActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.admitted {
+  margin: 0;
+  padding-left: var(--space-4);
+  color: var(--text-strong);
+}
+
+.tiebreak {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+}
+
+.pass {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.passTitle {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.passList {
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.winner {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+}

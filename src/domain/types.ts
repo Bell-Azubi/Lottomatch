@@ -145,7 +145,6 @@ export type AuditEvent =
   | { readonly type: 'CONTROL_TAKEN_OVER' };
 
 export type LogEvent = GameEvent | AuditEvent;
-export type LogEventType = LogEvent['type'];
 
 /** Persisted envelope around a log event. Ordering uses `seq` only, never `at` (I7). */
 export interface LogEnvelope {

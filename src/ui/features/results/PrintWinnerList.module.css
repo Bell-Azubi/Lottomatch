@@ -1,0 +1,81 @@
+.print {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 14mm 16mm;
+  }
+
+  .print {
+    display: block;
+    color: var(--c-night);
+    background: var(--c-white);
+    font-size: 10.5pt;
+    line-height: 1.35;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 6mm;
+    padding-bottom: 3mm;
+    border-bottom: 0.6mm solid var(--c-gold);
+  }
+
+  .title {
+    margin: 0;
+    color: var(--c-night);
+    font-size: 18pt;
+  }
+
+  .subtitle {
+    margin: 1mm 0 0;
+    color: var(--c-night);
+  }
+
+  .round {
+    margin-top: 6mm;
+    break-inside: avoid;
+  }
+
+  .roundTitle {
+    margin: 0 0 2mm;
+    color: var(--c-night);
+    font-size: 13pt;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    padding: 1.6mm 2mm;
+    border-bottom: 0.3mm solid var(--c-gold);
+    color: var(--c-night);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .table thead th {
+    border-bottom-width: 0.5mm;
+    font-weight: 700;
+  }
+
+  .box {
+    display: inline-block;
+    width: 4mm;
+    height: 4mm;
+    border: 0.3mm solid var(--c-night);
+  }
+
+  .footer {
+    margin-top: 8mm;
+    padding-top: 2mm;
+    border-top: 0.3mm solid var(--c-gold);
+    font-size: 9pt;
+  }
+}

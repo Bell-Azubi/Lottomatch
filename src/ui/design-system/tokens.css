@@ -67,9 +67,9 @@
   --relief-raised: -6px -6px 14px rgb(255 255 255 / 4.5%), 6px 6px 16px rgb(0 0 0 / 55%);
   --relief-pressed: inset 4px 4px 10px rgb(0 0 0 / 55%), inset -4px -4px 10px rgb(255 255 255 / 4%);
   --stage-glow: radial-gradient(
-    circle at 50% 45%,
+    closest-side circle at 50% 45%,
     rgb(248 183 8 / 16%) 0%,
-    rgb(248 183 8 / 0%) 62%
+    rgb(248 183 8 / 0%) 100%
   );
   --scrim: rgb(30 30 33 / 72%);
 }
@@ -128,9 +128,9 @@
   --relief-pressed:
     inset 4px 4px 10px rgb(69 71 77 / 22%), inset -4px -4px 10px rgb(255 255 255 / 90%);
   --stage-glow: radial-gradient(
-    circle at 50% 45%,
+    closest-side circle at 50% 45%,
     rgb(248 183 8 / 22%) 0%,
-    rgb(248 183 8 / 0%) 62%
+    rgb(248 183 8 / 0%) 100%
   );
   --scrim: rgb(236 236 238 / 78%);
 }
@@ -156,9 +156,9 @@
     --relief-pressed:
       inset 4px 4px 10px rgb(69 71 77 / 22%), inset -4px -4px 10px rgb(255 255 255 / 90%);
     --stage-glow: radial-gradient(
-      circle at 50% 45%,
+      closest-side circle at 50% 45%,
       rgb(248 183 8 / 22%) 0%,
-      rgb(248 183 8 / 0%) 62%
+      rgb(248 183 8 / 0%) 100%
     );
     --scrim: rgb(236 236 238 / 78%);
   }

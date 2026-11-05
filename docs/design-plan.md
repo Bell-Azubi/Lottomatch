@@ -18,17 +18,17 @@ striped half) and a lettered graphite band. The badge itself appears only as the
 
 ## Tokens (CSS custom properties, `src/ui/design-system/tokens.css`)
 
-| Group | Tokens |
-| --- | --- |
-| Badge palette | `--c-gold #F8B708`, `--c-red #C3071B`, `--c-graphite #6D6D6F`, `--c-graphite-deep #45474D`, `--c-cream #FFFBE6`, `--c-white #FFFFFF` |
-| Neutrals | `--c-night #1E1E21`, `--c-mist #ECECEE`, `--c-ash #8E8E93` |
+| Group             | Tokens                                                                                                                                                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Badge palette     | `--c-gold #F8B708`, `--c-red #C3071B`, `--c-graphite #6D6D6F`, `--c-graphite-deep #45474D`, `--c-cream #FFFBE6`, `--c-white #FFFFFF`                                                                               |
+| Neutrals          | `--c-night #1E1E21`, `--c-mist #ECECEE`, `--c-ash #8E8E93`                                                                                                                                                         |
 | Semantic (themed) | `--surface`, `--plate`, `--text-strong`, `--text`, `--text-muted`, `--accent-fill`, `--on-accent`, `--danger-fill`, `--on-danger`, `--danger-text`, `--hairline`, `--column-band`, `--open-ring`, `--open-numeral` |
-| Focus | double ring: 2 px `--c-cream` outside 2 px `--c-night` |
-| Radii | `--radius-panel 28px`, `--radius-image 20px`, `--radius-control 16px`, `--radius-capsule 999px`, circles `50%` |
-| Space | `--space-1 … --space-8`: 4, 8, 12, 16, 24, 32, 48, 64 px |
-| Glass | `--glass-tint` Night 62 %, `--glass-blur 24px`, `--glass-saturate 160%`, `--glass-edge` Cream 12 % |
-| Relief | `--relief-raised`, `--relief-pressed` (dual shadows), `--relief-edge` Graphite (≥ 3:1 on Night) |
-| Motion | `--dur-fast 120ms`, `--dur-base 180ms`, `--dur-slow 240ms`, `--ease-spring` (`linear()` with cubic-bezier fallback), reveal ≤ 450 ms |
+| Focus             | double ring: 2 px `--c-cream` outside 2 px `--c-night`                                                                                                                                                             |
+| Radii             | `--radius-panel 28px`, `--radius-image 20px`, `--radius-control 16px`, `--radius-capsule 999px`, circles `50%`                                                                                                     |
+| Space             | `--space-1 … --space-8`: 4, 8, 12, 16, 24, 32, 48, 64 px                                                                                                                                                           |
+| Glass             | `--glass-tint` Night 62 %, `--glass-blur 24px`, `--glass-saturate 160%`, `--glass-edge` Cream 12 %                                                                                                                 |
+| Relief            | `--relief-raised`, `--relief-pressed` (dual shadows), `--relief-edge` Graphite (≥ 3:1 on Night)                                                                                                                    |
+| Motion            | `--dur-fast 120ms`, `--dur-base 180ms`, `--dur-slow 240ms`, `--ease-spring` (`linear()` with cubic-bezier fallback), reveal ≤ 450 ms                                                                               |
 
 Dark (Dunkler Saal, display default): Night surface, Gold fills with Night numerals, open
 numerals Ash in a Graphite outline, Cream hairlines, column bands Cream 5 %.
@@ -37,14 +37,14 @@ column bands Graphite 5 %, Gold never used as text.
 
 ## Type roles
 
-| Role | Face | Use |
-| --- | --- | --- |
-| `numeral` | Barlow Condensed 800, tabular | latest number (≥ 35 vh), board (≥ 4.5 vh), balls |
-| `ring` | Barlow Condensed 700, uppercase, +6 % tracking | ring lettering only |
-| `title` | system stack 650 | page and prize titles, sentence case |
-| `body` | system stack 400 | copy |
-| `label` | system stack 550 | controls, captions |
-| `counter` | system stack, `tabular-nums` | counters, times, CHF |
+| Role      | Face                                           | Use                                              |
+| --------- | ---------------------------------------------- | ------------------------------------------------ |
+| `numeral` | Barlow Condensed 800, tabular                  | latest number (≥ 35 vh), board (≥ 4.5 vh), balls |
+| `ring`    | Barlow Condensed 700, uppercase, +6 % tracking | ring lettering only                              |
+| `title`   | system stack 650                               | page and prize titles, sentence case             |
+| `body`    | system stack 400                               | copy                                             |
+| `label`   | system stack 550                               | controls, captions                               |
+| `counter` | system stack, `tabular-nums`                   | counters, times, CHF                             |
 
 ## Layout
 

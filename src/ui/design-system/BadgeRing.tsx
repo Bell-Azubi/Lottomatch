@@ -8,12 +8,12 @@ export type SegmentState = 'DONE' | 'CURRENT' | 'UPCOMING' | 'ABORTED';
 export interface BadgeRingProps {
   /** badge: full anatomy with lettered band; ball: rim, hairline, gold field; ring: rim only. */
   readonly variant?: BadgeVariant;
-  readonly topText?: string;
-  readonly bottomText?: string;
+  readonly topText?: string | undefined;
+  readonly bottomText?: string | undefined;
   /** The band turns Club Red for the Hauptpreis. */
   readonly bandTone?: 'graphite' | 'red';
   /** Numeral in the field, rendered in Barlow Condensed ExtraBold. */
-  readonly numeral?: string;
+  readonly numeral?: string | undefined;
   /** Round-ring mode: one segment per round. */
   readonly segments?: readonly SegmentState[];
   /** Gold progress arc on the rim, 0–1. */
@@ -61,7 +61,7 @@ function Segments({ states }: { readonly states: readonly SegmentState[] }) {
 }
 
 /**
- * The single ring primitive behind every badge-like element (ADR-0001 design plan): badge
+ * The single ring primitive behind every badge-like element (docs/design-plan.md): badge
  * ball, round ring, Drehen button and drum. Lettering is decorative (`aria-hidden`); callers
  * always render the same information as real text.
  */
@@ -88,41 +88,46 @@ export function BadgeRing({
       <svg class={styles.svg} viewBox="0 0 200 200" aria-hidden="true" focusable="false">
         {segments === undefined ? (
           <>
-            <circle class={styles.rim} cx={CENTER} cy={CENTER} r={RIM_RADIUS} />
-            <circle class={styles.whiteHairline} cx={CENTER} cy={CENTER} r={94.5} />
+            <g data-layer="rim">
+              <circle class={styles.rim} cx={CENTER} cy={CENTER} r={RIM_RADIUS} />
+            </g>
+            <g data-layer="whiteHairline">
+              <circle class={styles.whiteHairline} cx={CENTER} cy={CENTER} r={94.5} />
+            </g>
           </>
         ) : (
           <Segments states={segments} />
         )}
         {showBand && (
           <>
-            <circle
-              class={bandTone === 'red' ? styles.bandRed : styles.band}
-              cx={CENTER}
-              cy={CENTER}
-              r={83.5}
-            />
-            <path id={topId} class={styles.guide} d="M 23 100 A 77 77 0 0 1 177 100" />
-            <path id={bottomId} class={styles.guide} d="M 11 100 A 89 89 0 0 0 189 100" />
-            {topText !== undefined && (
-              <text class={styles.lettering}>
-                <textPath href={`#${topId}`} startOffset="50%" text-anchor="middle">
-                  {topText}
-                </textPath>
-              </text>
-            )}
-            {bottomText !== undefined && (
-              <text class={styles.lettering}>
-                <textPath href={`#${bottomId}`} startOffset="50%" text-anchor="middle">
-                  {bottomText}
-                </textPath>
-              </text>
-            )}
-            <circle class={styles.creamHairline} cx={CENTER} cy={CENTER} r={72.4} />
+            <g data-layer="band">
+              <circle
+                class={bandTone === 'red' ? styles.bandRed : styles.band}
+                cx={CENTER}
+                cy={CENTER}
+                r={83.5}
+              />
+              <path id={topId} class={styles.guide} d="M 23 100 A 77 77 0 0 1 177 100" />
+              <path id={bottomId} class={styles.guide} d="M 11 100 A 89 89 0 0 0 189 100" />
+              {topText !== undefined && (
+                <text class={styles.lettering}>
+                  <textPath href={`#${topId}`} startOffset="50%" text-anchor="middle">
+                    {topText}
+                  </textPath>
+                </text>
+              )}
+              {bottomText !== undefined && (
+                <text class={styles.lettering}>
+                  <textPath href={`#${bottomId}`} startOffset="50%" text-anchor="middle">
+                    {bottomText}
+                  </textPath>
+                </text>
+              )}
+            </g>
+            <g data-layer="creamHairline">
+              <circle class={styles.creamHairline} cx={CENTER} cy={CENTER} r={72.4} />
+            </g>
           </>
-        )}
-        {showField && (
-          <circle class={styles.field} cx={CENTER} cy={CENTER} r={showBand ? 71.6 : 93.8} />
         )}
         {(progress !== undefined || sweepMs !== undefined) && (
           <circle
@@ -135,15 +140,22 @@ export function BadgeRing({
             style={sweepMs === undefined ? undefined : { animationDuration: `${sweepMs}ms` }}
           />
         )}
-        {numeral !== undefined && (
-          <text
-            class={styles.numeral}
-            x={CENTER}
-            y={CENTER}
-            font-size={numeral.length > 2 ? 64 : showBand ? 86 : 118}
-          >
-            {numeral}
-          </text>
+        {(showField || numeral !== undefined) && (
+          <g data-layer="core">
+            {showField && (
+              <circle class={styles.field} cx={CENTER} cy={CENTER} r={showBand ? 71.6 : 93.8} />
+            )}
+            {numeral !== undefined && (
+              <text
+                class={styles.numeral}
+                x={CENTER}
+                y={CENTER}
+                font-size={numeral.length > 2 ? 72 : showBand ? 118 : 120}
+              >
+                {numeral}
+              </text>
+            )}
+          </g>
         )}
       </svg>
       {children !== undefined && <div class={styles.content}>{children}</div>}

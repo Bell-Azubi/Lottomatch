@@ -139,4 +139,13 @@ export default defineConfig(
     languageOptions: { globals: globals.node },
     rules: { 'no-console': 'off' },
   },
+  {
+    // `expect(mock.method)` is the Vitest idiom for spies; it is not an unbound call.
+    files: ['src/**/*.test.{ts,tsx}', 'src/test/**/*.{ts,tsx}'],
+    rules: { '@typescript-eslint/unbound-method': 'off' },
+  },
+  {
+    files: ['**/*.js', '**/*.mjs'],
+    extends: [tseslint.configs.disableTypeChecked],
+  },
 );

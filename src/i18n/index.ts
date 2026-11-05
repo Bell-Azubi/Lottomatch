@@ -2,8 +2,6 @@ import { signal } from '@preact/signals';
 
 export type Locale = 'de-CH' | 'en';
 
-export const LOCALES: readonly Locale[] = ['de-CH', 'en'];
-
 /** The UI language; de-CH is the default (C5). */
 export const locale = signal<Locale>('de-CH');
 

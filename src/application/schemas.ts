@@ -1,6 +1,5 @@
 import * as v from 'valibot';
-import type { MatchSettings } from '../domain/settings';
-import type { LogEnvelope, Prize } from '../domain/types';
+import type { LogEnvelope } from '../domain/types';
 import type { CatalogueRecord, MatchRecord, PinRecord, Preferences } from './records';
 
 /** Shared building blocks for every trust boundary (storage, files, channel messages). */
@@ -215,14 +214,6 @@ export function parseMatch(input: unknown): MatchRecord | undefined {
 
 export function parseCatalogue(input: unknown): CatalogueRecord | undefined {
   return parseWith(catalogueSchema, input);
-}
-
-export function parseSettings(input: unknown): MatchSettings | undefined {
-  return parseWith(settingsSchema, input);
-}
-
-export function parsePrize(input: unknown): Prize | undefined {
-  return parseWith(prizeSchema, input);
 }
 
 export function parsePreferences(input: unknown): Preferences | undefined {

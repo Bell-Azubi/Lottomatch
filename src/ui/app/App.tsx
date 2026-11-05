@@ -1,5 +1,4 @@
 import { useEffect } from 'preact/hooks';
-import type { ThemeChoice } from '../../application/records';
 import { commonText, liveText } from '../../i18n/catalogues';
 import { locale, t } from '../../i18n';
 import { BadgeRing } from '../design-system/BadgeRing';
@@ -16,19 +15,13 @@ import { PinGate } from './PinGate';
 import { RecoveryScreen } from './RecoveryScreen';
 import { currentRoute } from './router';
 import { SystemBanners } from './SystemBanners';
+import { applyTheme } from './theme';
 
 const loadHost = () => import('../features/host/HostPage');
 const loadDisplay = () => import('../features/display/DisplayPage');
 const loadPrizes = () => import('../features/prizes/PrizesPage');
 const loadResults = () => import('../features/results/ResultsPage');
 const loadSettings = () => import('../features/settings/SettingsPage');
-
-/** Applies a theme choice to the document (`SYSTEM` follows the OS). */
-export function applyTheme(theme: ThemeChoice): void {
-  const root = document.documentElement;
-  if (theme === 'SYSTEM') delete root.dataset['theme'];
-  else root.dataset['theme'] = theme === 'DARK' ? 'dark' : 'light';
-}
 
 function Booting() {
   return (

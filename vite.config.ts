@@ -19,7 +19,7 @@ const pkg = JSON.parse(
 ) as PackageJson;
 
 function resolveCommitSha(): string {
-  const fromEnv = process.env['GITHUB_SHA']?.trim();
+  const fromEnv = process.env.GITHUB_SHA?.trim();
   if (fromEnv !== undefined && fromEnv !== '') return fromEnv;
   try {
     return execFileSync('git', ['rev-parse', 'HEAD'], {
@@ -31,9 +31,10 @@ function resolveCommitSha(): string {
   }
 }
 
-const base = normaliseBase(process.env['BASE_PATH']);
-const siteUrl = normaliseSiteUrl(process.env['SITE_URL']);
-const cname = process.env['PAGES_CNAME']?.trim() || undefined;
+const base = normaliseBase(process.env.BASE_PATH);
+const siteUrl = normaliseSiteUrl(process.env.SITE_URL);
+const cnameRaw = process.env.PAGES_CNAME?.trim();
+const cname = cnameRaw === undefined || cnameRaw === '' ? undefined : cnameRaw;
 
 /** Browser targets: latest Chrome, Edge, Firefox and Safari ≥ 16.4 (see README). */
 const CSS_TARGETS = {
@@ -58,7 +59,7 @@ export default defineConfig({
     transformer: 'lightningcss',
     lightningcss: {
       targets: CSS_TARGETS,
-      cssModules: { pattern: '[local]_[hash]' },
+      cssModules: { pattern: '[hash]_[local]', grid: false },
     },
   },
   build: {

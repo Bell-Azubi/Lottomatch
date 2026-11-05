@@ -1,0 +1,158 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 4vh, 96px);
+  background: var(--scrim);
+  animation: fadeIn var(--dur-slow) var(--ease-out);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.panel {
+  width: min(92vw, 160vh);
+  max-height: 92vh;
+  overflow: hidden;
+  padding: clamp(16px, 5vh, 120px);
+  border-top: 3px solid var(--c-gold);
+}
+
+.content {
+  display: grid;
+  justify-items: center;
+  gap: clamp(8px, 2.4vh, 56px);
+  text-align: center;
+}
+
+.headline {
+  color: var(--text-strong);
+  font-size: clamp(2rem, 9vh, 12rem);
+  font-weight: 750;
+  line-height: 1.05;
+}
+
+.mainWin .headline {
+  color: var(--accent-text);
+}
+
+.prize {
+  color: var(--text-strong);
+  font-size: clamp(1.5rem, 6vh, 8rem);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.sub {
+  color: var(--text);
+  font-size: clamp(1.25rem, 4vh, 5rem);
+}
+
+.winners {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 2vh, 48px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.winner {
+  padding: clamp(4px, 1vh, 24px) clamp(12px, 3vh, 72px);
+  border-radius: var(--radius-capsule);
+  background: var(--c-gold);
+  color: var(--c-night);
+  box-shadow: inset 0 0 0 3px var(--c-cream);
+  font-family: var(--font-ui);
+  font-size: clamp(1.5rem, 7vh, 9rem);
+  font-weight: 800;
+}
+
+.nextPrizes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(8px, 2vh, 48px);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nextPrize {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: clamp(4px, 1vh, 24px);
+}
+
+.nextSlot {
+  color: var(--text-muted);
+  font-size: clamp(0.9rem, 2.4vh, 3rem);
+}
+
+.nextTitle {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  color: var(--text-strong);
+  font-size: clamp(1rem, 3.4vh, 4.5rem);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.nextCondition {
+  color: var(--text);
+  font-size: clamp(0.9rem, 2.6vh, 3.4rem);
+}
+
+.sponsors {
+  display: grid;
+  gap: clamp(4px, 1vh, 24px);
+}
+
+.sponsorsTitle {
+  color: var(--text-muted);
+  font-size: clamp(1rem, 2.6vh, 3.4rem);
+}
+
+.sponsor {
+  color: var(--text-strong);
+  font-size: clamp(1.5rem, 5vh, 6.5rem);
+  font-weight: 700;
+  animation: fadeIn var(--dur-slow) var(--ease-out);
+}
+
+.sponsorList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 2vh, 48px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-strong);
+  font-size: clamp(1.25rem, 3.6vh, 4.6rem);
+}
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}

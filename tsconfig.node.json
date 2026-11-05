@@ -17,9 +17,7 @@
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "allowJs": true,
     "allowImportingTsExtensions": true,
-    "checkJs": true,
     "skipLibCheck": true,
     "noEmit": true,
     "rootDir": "."
@@ -28,8 +26,6 @@
     "vite.config.ts",
     "vitest.config.ts",
     "playwright.config.ts",
-    "eslint.config.js",
-    "scripts/**/*.mjs",
     "build/**/*.ts",
     "tests/e2e/**/*.ts"
   ]
