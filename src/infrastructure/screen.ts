@@ -62,15 +62,15 @@ export class BrowserScreenControl implements ScreenControl {
 
   async toggleFullscreen(): Promise<void> {
     try {
-      if (document.fullscreenElement === null) await document.documentElement.requestFullscreen();
-      else await document.exitFullscreen();
+      if (this.isFullscreen()) await document.exitFullscreen();
+      else await document.documentElement.requestFullscreen();
     } catch {
       // Fullscreen needs a user gesture in some browsers; the UI offers a click target.
     }
   }
 
   isFullscreen(): boolean {
-    return document.fullscreenElement !== null;
+    return (document.fullscreenElement ?? null) !== null;
   }
 
   download(fileName: string, content: Blob): void {

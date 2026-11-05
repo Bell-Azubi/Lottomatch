@@ -82,6 +82,7 @@ export default defineConfig({
       registerType: 'prompt',
       injectRegister: false,
       strategies: 'generateSW',
+      includeManifestIcons: false,
       manifest: {
         id: base,
         name: 'Lottomatch Live – FC Laufenburg-Kaisten',
@@ -107,7 +108,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,woff2,png,json,webmanifest}'],
+        globPatterns: ['**/*.{js,css,html,woff2,png,json}'],
         globIgnores: ['icons/pwa-512.png', 'icons/pwa-maskable-512.png', '404.html'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,

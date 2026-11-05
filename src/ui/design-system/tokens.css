@@ -61,6 +61,7 @@
   --column-band: rgb(255 251 230 / 5%);
   --open-ring: var(--c-graphite);
   --open-numeral: var(--c-ash);
+  --ring-current: var(--c-cream);
   --glass-tint: rgb(30 30 33 / 62%);
   --glass-edge: rgb(255 251 230 / 12%);
   --relief-edge: var(--c-graphite);
@@ -121,6 +122,7 @@
   --column-band: rgb(109 109 111 / 5%);
   --open-ring: var(--c-graphite);
   --open-numeral: var(--c-graphite-deep);
+  --ring-current: var(--c-graphite-deep);
   --glass-tint: rgb(236 236 238 / 72%);
   --glass-edge: rgb(255 255 255 / 60%);
   --relief-edge: var(--c-graphite);
@@ -150,6 +152,7 @@
     --hairline-strong: var(--c-graphite-deep);
     --column-band: rgb(109 109 111 / 5%);
     --open-numeral: var(--c-graphite-deep);
+    --ring-current: var(--c-graphite-deep);
     --glass-tint: rgb(236 236 238 / 72%);
     --glass-edge: rgb(255 255 255 / 60%);
     --relief-raised: -6px -6px 14px rgb(255 255 255 / 90%), 6px 6px 14px rgb(69 71 77 / 22%);

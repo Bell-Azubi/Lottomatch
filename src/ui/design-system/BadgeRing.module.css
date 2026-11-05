@@ -82,7 +82,7 @@
 }
 
 .segmentCURRENT {
-  stroke: var(--c-cream);
+  stroke: var(--ring-current);
 }
 
 .segmentUPCOMING {

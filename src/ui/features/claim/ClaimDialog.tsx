@@ -119,7 +119,14 @@ export function ClaimDialog({
           />
           <div class={styles.verdictActions}>
             <Button onClick={close}>{c.actions.cancel}</Button>
-            {cards.length > 0 ? (
+            <Button
+              onClick={() => {
+                admit('', undefined, true);
+              }}
+            >
+              {m.confirmWithoutCheck}
+            </Button>
+            {cards.length > 0 && (
               <Button
                 variant="primary"
                 onClick={() => {
@@ -127,14 +134,6 @@ export function ClaimDialog({
                 }}
               >
                 {m.confirm}
-              </Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  admit('', undefined, true);
-                }}
-              >
-                {m.confirmWithoutCheck}
               </Button>
             )}
           </div>

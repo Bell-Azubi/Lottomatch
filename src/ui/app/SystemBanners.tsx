@@ -1,5 +1,4 @@
 import { useState } from 'preact/hooks';
-import { downloadBackup } from '../../application/backup-export';
 import { commonText } from '../../i18n/catalogues';
 import { t } from '../../i18n';
 import { Button } from '../design-system/Button';
@@ -19,7 +18,9 @@ export function SystemBanners() {
   const phase = app.session.value?.game.value.phase;
   const updateReady = pwa.status.value.updateReady && phase !== 'ROUND_RUNNING';
   const exportNow = () => {
-    void downloadBackup(app);
+    void import('../../application/backup-export').then(({ downloadBackup }) =>
+      downloadBackup(app),
+    );
   };
   return (
     <div class={`${styles.stack} no-print`}>

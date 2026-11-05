@@ -32,9 +32,20 @@ function installErrorHandlers(platform: Platform): void {
   });
 }
 
+/**
+ * Uses the preloaded numeral fonts right away, so they are ready for the board and the badge
+ * and the browser never reports an unused preload.
+ */
+function warmFonts(): void {
+  for (const weight of ['700', '800']) {
+    document.fonts.load(`${weight} 1em "Barlow Condensed"`, '0').catch(() => undefined);
+  }
+}
+
 async function main(): Promise<void> {
   const root = document.getElementById('app');
   if (root === null) return;
+  warmFonts();
   const role: WindowRole = window.location.hash.startsWith('#/display') ? 'display' : 'host';
   document.documentElement.dataset['role'] = role;
   const platform = await createPlatform({

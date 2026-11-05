@@ -83,7 +83,7 @@
 .discACTIVE {
   background: transparent;
   color: var(--text-strong);
-  box-shadow: 0 0 0 4px var(--c-cream) inset;
+  box-shadow: 0 0 0 4px var(--ring-current) inset;
 }
 
 .discUPCOMING {

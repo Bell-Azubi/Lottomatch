@@ -45,7 +45,7 @@ export class RevealController {
     return this.clock.nowMs() < reveal.startedAt + reveal.durationMs + REVEAL_SETTLE_MS;
   }
 
-  /** True when a new draw would follow the previous one too closely. */
+  /** True when a spin would follow the previous spin too closely (double press). */
   tooSoon(): boolean {
     return this.clock.nowMs() - this.lastDrawAt < MIN_DRAW_INTERVAL_MS;
   }
@@ -54,7 +54,7 @@ export class RevealController {
   start(key: string, number: number, method: DrawMethod, durationMs: number): void {
     this.cancelTimer();
     const now = this.clock.nowMs();
-    this.lastDrawAt = now;
+    if (method === 'RANDOM') this.lastDrawAt = now;
     const reveal: Reveal = { key, number, method, durationMs, startedAt: now, instant: false };
     this.current.value = reveal;
     if (durationMs === 0) {
