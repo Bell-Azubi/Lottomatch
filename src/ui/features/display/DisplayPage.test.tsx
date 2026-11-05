@@ -90,6 +90,8 @@ describe('DisplayPage', () => {
     expect(screen.getByText('Zuletzt gezogen: 42, Ziehung 2')).toBeInTheDocument();
     expect(screen.getByRole('gridcell', { name: '42, zuletzt gezogen' })).toBeInTheDocument();
     expect(document.documentElement.dataset['theme']).toBe('dark');
+    // The display is one landmark: everything on it is the main content.
+    expect(screen.getByRole('main')).toContainElement(screen.getByRole('grid'));
   });
 
   it('reveals a new draw after the drum and lands it on the board', async () => {

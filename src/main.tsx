@@ -42,6 +42,24 @@ function warmFonts(): void {
   }
 }
 
+/**
+ * Runs a task once the booted content has been painted, so work that is not needed for the first
+ * screen (the service worker download and precache) never delays it. The timeout covers windows
+ * that start hidden, where animation frames do not run.
+ */
+function afterFirstPaint(task: () => void): void {
+  let done = false;
+  const run = () => {
+    if (done) return;
+    done = true;
+    task();
+  };
+  requestAnimationFrame(() => {
+    setTimeout(run, 0);
+  });
+  setTimeout(run, 2_000);
+}
+
 async function main(): Promise<void> {
   const root = document.getElementById('app');
   if (root === null) return;
@@ -77,7 +95,9 @@ async function main(): Promise<void> {
     await app.boot('display');
     display.start();
   }
-  registerServiceWorker(pwa, platform.reportError);
+  afterFirstPaint(() => {
+    registerServiceWorker(pwa, platform.reportError);
+  });
   void platform.wakeLock.enable();
 }
 

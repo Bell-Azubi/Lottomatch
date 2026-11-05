@@ -12,7 +12,8 @@ export const LOGO_SIZE = 139;
  * The supplied badge, unmodified (no recolouring, effects or crops), never upscaled beyond its
  * intrinsic resolution; clear space of a quarter of its diameter around it. The size cap follows
  * the file that actually loaded, so a larger replacement grows to its intended size on big
- * screens without a code change.
+ * screens without a code change. It loads at low fetch priority: the scripts, styles and numeral
+ * fonts that make the console usable come first (ADR-0019).
  */
 export function Logo({ size = 'host' }: { readonly size?: 'host' | 'display' | 'print' }) {
   const [intrinsic, setIntrinsic] = useState(LOGO_SIZE);
@@ -28,6 +29,7 @@ export function Logo({ size = 'host' }: { readonly size?: 'host' | 'display' | '
         width={LOGO_SIZE}
         height={LOGO_SIZE}
         decoding="async"
+        fetchpriority="low"
         onLoad={(event) => {
           // A vector without intrinsic size reports 0: keep the cap of the supplied badge.
           const width = event.currentTarget.naturalWidth;

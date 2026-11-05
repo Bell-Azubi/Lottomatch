@@ -55,7 +55,7 @@ export default function DisplayPage() {
 
   const lastFive = drawn.value.slice(-5).reverse();
   return (
-    <div
+    <main
       class={`${styles.display} ${cursorHidden ? styles.hideCursor : ''}`}
       onClick={() => {
         if (!fullscreen) void toggleFullscreen();
@@ -95,6 +95,6 @@ export default function DisplayPage() {
         </>
       )}
       {!fullscreen && <p class={styles.hint}>{m.fullscreenHint}</p>}
-    </div>
+    </main>
   );
 }
