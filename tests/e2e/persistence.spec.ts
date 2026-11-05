@@ -38,6 +38,15 @@ test.describe('crash safety (§8 reliability)', () => {
 });
 
 test.describe('offline (C4)', () => {
+  // Playwright supports service workers in Chromium only. WebKit's offline emulation also fails
+  // the loads the worker answers from its cache ("WebKit encountered an internal error"), and
+  // under Playwright's Firefox the worker never reports ready. Offline mode in Firefox and Safari
+  // is covered by the airplane-mode check on the event laptop (docs/eventtag-checkliste.de.md).
+  test.skip(
+    ({ browserName }) => browserName !== 'chromium',
+    'service workers and offline emulation are reliable in Chromium only',
+  );
+
   test('runs without network after the first visit', async ({ context, page }) => {
     await openHost(page);
     // The worker precaches during install; once it is active, the next navigation is controlled

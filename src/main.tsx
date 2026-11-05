@@ -33,8 +33,10 @@ function installErrorHandlers(platform: Platform): void {
 }
 
 /**
- * Uses the preloaded numeral fonts right away, so they are ready for the board and the badge
- * and the browser never reports an unused preload.
+ * Starts the numeral fonts before the boot, so the board and the latest number are usually drawn
+ * in their final font. There is deliberately no `<link rel="preload">` for them: WebKit does not
+ * hand a font preload to the `@font-face` load and reports it as unused (ADR-0022). A failed load
+ * keeps the metric-matched fallback font, which needs no report.
  */
 function warmFonts(): void {
   for (const weight of ['700', '800']) {

@@ -40,38 +40,6 @@ export function securityHeadersPlugin(): Plugin {
   };
 }
 
-/** Preloads the self-hosted numeral fonts so the board and latest number render without swap. */
-export function fontPreloadPlugin(): Plugin {
-  let base = '/';
-  return {
-    name: 'lottomatch:font-preload',
-    apply: 'build',
-    configResolved(config) {
-      base = config.base;
-    },
-    transformIndexHtml: {
-      order: 'post',
-      handler(_html, context): HtmlTagDescriptor[] {
-        const bundle = context.bundle ?? {};
-        return Object.keys(bundle)
-          .filter((fileName) => /barlow-condensed-\d+-[\w-]+\.woff2$/.test(fileName))
-          .sort()
-          .map((fileName) => ({
-            tag: 'link',
-            attrs: {
-              rel: 'preload',
-              href: `${base}${fileName}`,
-              as: 'font',
-              type: 'font/woff2',
-              crossorigin: '',
-            },
-            injectTo: 'head',
-          }));
-      },
-    },
-  };
-}
-
 function escapeAttribute(value: string): string {
   return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
 }
