@@ -23,6 +23,21 @@ export interface CryptoPort {
   randomHex(bytes: number): string;
 }
 
+/** Binary helpers for exports (images travel as base64 inside JSON). */
+export interface BinaryCodec {
+  blobToBase64(blob: Blob): Promise<string>;
+  base64ToBlob(data: string, type: string): Blob;
+  textToBlob(text: string, type: string): Blob;
+}
+
+/** Last-resort tools for the recovery screen; they bypass validation on purpose. */
+export interface Maintenance {
+  /** Every stored record as JSON, exactly as stored (images as base64). */
+  dumpAll(): Promise<string>;
+  /** Deletes all data of this app on this device. */
+  wipe(): Promise<void>;
+}
+
 export type StorageBackend = 'INDEXED_DB' | 'MEMORY';
 
 /** One entry of the local diagnostics ring buffer (no personal data). */
@@ -65,6 +80,10 @@ export interface Platform {
   readonly storage: StorageInfo;
   readonly screen: ScreenControl;
   readonly crypto: CryptoPort;
+  readonly binary: BinaryCodec;
+  readonly maintenance: Maintenance;
+  /** Fetches a same-origin text file relative to the app base (prepared event files). */
+  readonly fetchText: (path: string) => Promise<string>;
   readonly build: BuildInfo;
   readonly diagnostics: Diagnostics;
   /** Records an unexpected error in the local diagnostics ring buffer. */

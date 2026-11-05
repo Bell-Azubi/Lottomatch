@@ -132,6 +132,12 @@ export const common = {
     submit: 'Entsperren',
     wrong: 'Falsche PIN.',
     forgot: 'PIN vergessen?',
+    resetTitle: 'PIN zurücksetzen',
+    resetBody:
+      'Die PIN wird entfernt; das wird protokolliert. Die PIN schützt nur vor Versehen, nicht vor Absicht.',
+    resetConfirm: 'Zum Bestätigen «PIN ENTFERNEN» eintippen',
+    resetWord: 'PIN ENTFERNEN',
+    reset: 'PIN entfernen',
   },
 };
 

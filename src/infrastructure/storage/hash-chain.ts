@@ -1,27 +1,7 @@
 import type { ChainVerification } from '../../application/ports';
+import { canonicalJson } from '../../domain/canonical-json';
 import type { LogEnvelope } from '../../domain/types';
 import { REDACTABLE_WINNER_FIELDS } from '../../domain/types';
-
-type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
-
-function canonicalise(value: unknown): Json {
-  if (
-    value === null ||
-    typeof value === 'boolean' ||
-    typeof value === 'number' ||
-    typeof value === 'string'
-  ) {
-    return value;
-  }
-  if (Array.isArray(value)) return value.map(canonicalise);
-  if (typeof value === 'object') {
-    const entries = Object.entries(value as Record<string, unknown>)
-      .filter(([, entry]) => entry !== undefined)
-      .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
-    return Object.fromEntries(entries.map(([key, entry]) => [key, canonicalise(entry)]));
-  }
-  return null;
-}
 
 function withoutPersonalData(winners: unknown): unknown {
   if (!Array.isArray(winners)) return winners;
@@ -41,7 +21,7 @@ export function hashInput(envelope: LogEnvelope): string {
   const record: Record<string, unknown> = { ...event };
   if ('winners' in record) record['winners'] = withoutPersonalData(record['winners']);
   if ('claimants' in record) record['claimants'] = withoutPersonalData(record['claimants']);
-  return JSON.stringify(canonicalise({ ...rest, event: record }));
+  return canonicalJson({ ...rest, event: record });
 }
 
 /** Computes the chained hash of an envelope from the previous hash. */

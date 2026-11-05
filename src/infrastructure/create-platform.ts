@@ -1,5 +1,6 @@
 import type { BuildInfo, Platform } from '../application/platform';
 import type { DocumentStore, EventStore, ImageStore } from '../application/ports';
+import { binaryCodec, fetchText } from './binary';
 import { CryptoRandomSource, uuidGenerator, webCrypto } from './crypto';
 import { excelCsv } from './csv';
 import { DiagnosticsLog } from './diagnostics';
@@ -9,6 +10,7 @@ import { BrowserScreenControl, BrowserStorageInfo } from './screen';
 import { WebAudioPlayer } from './sound';
 import { SpeechAnnouncer } from './speech';
 import { openDatabase } from './storage/idb';
+import { idbMaintenance, memoryMaintenance } from './storage/maintenance';
 import { IdbDocumentStore, IdbEventStore, IdbImageStore } from './storage/idb-stores';
 import { MemoryDocumentStore, MemoryEventStore, MemoryImageStore } from './storage/memory-stores';
 import { createSyncTransport } from './sync';
@@ -16,6 +18,7 @@ import { ScreenWakeLock } from './wake-lock';
 
 interface Stores {
   readonly backend: Platform['backend'];
+  readonly maintenance: Platform['maintenance'];
   readonly events: EventStore;
   readonly documents: DocumentStore;
   readonly images: ImageStore;
@@ -37,6 +40,7 @@ async function openStores(diagnostics: DiagnosticsLog): Promise<Stores> {
     });
     return {
       backend: 'INDEXED_DB',
+      maintenance: idbMaintenance(db, binaryCodec),
       events: new IdbEventStore(db, (text) => webCrypto.sha256Hex(text)),
       documents: new IdbDocumentStore(db),
       images: new IdbImageStore(db),
@@ -45,6 +49,7 @@ async function openStores(diagnostics: DiagnosticsLog): Promise<Stores> {
     diagnostics.record(error, 'indexeddb');
     return {
       backend: 'MEMORY',
+      maintenance: memoryMaintenance,
       events: new MemoryEventStore((text) => webCrypto.sha256Hex(text)),
       documents: new MemoryDocumentStore(),
       images: new MemoryImageStore(),
@@ -76,6 +81,8 @@ export async function createPlatform(build: BuildInfo): Promise<Platform> {
     storage: new BrowserStorageInfo('storage' in navigator ? navigator.storage : undefined),
     screen: new BrowserScreenControl(),
     crypto: webCrypto,
+    binary: binaryCodec,
+    fetchText,
     build,
     diagnostics,
     reportError: (error, context) => {

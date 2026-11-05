@@ -140,8 +140,7 @@ export class HostLink {
     const connected =
       beat !== undefined && this.app.platform.clock.nowMs() - beat.at < DISPLAY_TIMEOUT_MS;
     const latest = this.latest;
-    const synced =
-      connected && beat.epoch === latest?.epoch && beat.seq === latest.seq;
+    const synced = connected && beat.epoch === latest?.epoch && beat.seq === latest.seq;
     const current = this.displayState.value;
     if (current.connected !== connected || current.synced !== synced)
       this.displayState.value = { connected, synced };

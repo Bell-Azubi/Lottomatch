@@ -1,0 +1,11 @@
+.gate {
+  display: grid;
+  gap: var(--space-4);
+  width: min(480px, 100%);
+  margin: var(--space-7) auto;
+}
+
+.form {
+  display: grid;
+  gap: var(--space-3);
+}

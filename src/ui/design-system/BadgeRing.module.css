@@ -1,0 +1,123 @@
+.root {
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.rim {
+  fill: none;
+  stroke: var(--c-gold);
+  stroke-width: 4;
+}
+
+.whiteHairline {
+  fill: none;
+  stroke: var(--c-white);
+  stroke-width: 1.2;
+}
+
+.band {
+  fill: none;
+  stroke: var(--c-graphite);
+  stroke-width: 21;
+}
+
+.bandRed {
+  fill: none;
+  stroke: var(--c-red);
+  stroke-width: 21;
+}
+
+.creamHairline {
+  fill: none;
+  stroke: var(--c-cream);
+  stroke-width: 1.2;
+}
+
+.field {
+  fill: var(--c-gold);
+}
+
+.guide {
+  fill: none;
+  stroke: none;
+}
+
+.lettering {
+  fill: var(--c-white);
+  font-family: var(--font-numeral);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.numeral {
+  fill: var(--c-night);
+  font-family: var(--font-numeral);
+  font-weight: 800;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-variant-numeric: tabular-nums;
+}
+
+.segment {
+  fill: none;
+  stroke-width: 14;
+  stroke-linecap: butt;
+}
+
+.segmentDONE {
+  stroke: var(--c-gold);
+}
+
+.segmentCURRENT {
+  stroke: var(--c-cream);
+}
+
+.segmentUPCOMING {
+  stroke: var(--open-ring);
+}
+
+.segmentABORTED {
+  stroke: var(--open-ring);
+  stroke-dasharray: 2 2.5;
+}
+
+.progress {
+  fill: none;
+  stroke: var(--c-gold);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 100px 100px;
+}
+
+.sweep {
+  animation-name: sweep;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes sweep {
+  from {
+    stroke-dashoffset: 609.47;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}

@@ -1,0 +1,40 @@
+.main {
+  display: block;
+  padding: var(--space-4) var(--space-3) var(--space-7);
+}
+
+.main:focus {
+  outline: none;
+}
+
+.skipLink {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-control);
+  background: var(--accent-fill);
+  color: var(--on-accent);
+  font-weight: 650;
+  transform: translateY(-200%);
+}
+
+.skipLink:focus {
+  transform: none;
+}
+
+.booting {
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+
+.bootRing {
+  display: block;
+  width: 96px;
+  height: 96px;
+}

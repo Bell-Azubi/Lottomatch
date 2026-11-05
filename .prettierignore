@@ -6,5 +6,5 @@ test-results
 .lighthouseci
 package-lock.json
 public/events/*.json
-src/**/*.module.css.d.ts
+src/**/*.module.d.css.ts
 tests/e2e/**/*-snapshots

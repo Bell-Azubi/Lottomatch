@@ -13,7 +13,7 @@
     "build": "vite build",
     "preview": "vite preview --strictPort --port 4173",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit",
-    "lint": "eslint . --max-warnings 0 && prettier --check .",
+    "lint": "node scripts/css-module-types.mjs --check && eslint . --max-warnings 0 && prettier --check .",
     "lint:knip": "knip",
     "format": "prettier --write .",
     "test": "vitest run",
@@ -23,7 +23,8 @@
     "budgets": "node scripts/check-budgets.mjs",
     "lhci": "lhci autorun",
     "fonts": "node scripts/subset-fonts.mjs",
-    "verify": "npm run lint && npm run lint:knip && npm run typecheck && npm run test:coverage && npm run build && npm run budgets"
+    "verify": "npm run lint && npm run lint:knip && npm run typecheck && npm run test:coverage && npm run build && npm run budgets",
+    "css-types": "node scripts/css-module-types.mjs"
   },
   "dependencies": {
     "@preact/signals": "2.11.4",

@@ -127,5 +127,11 @@ export const common: CommonMessages = {
     submit: 'Unlock',
     wrong: 'Wrong PIN.',
     forgot: 'Forgot PIN?',
+    resetTitle: 'Reset PIN',
+    resetBody:
+      'The PIN is removed; this is logged. The PIN only guards against accidents, not intent.',
+    resetConfirm: 'Type «REMOVE PIN» to confirm',
+    resetWord: 'REMOVE PIN',
+    reset: 'Remove PIN',
   },
 };

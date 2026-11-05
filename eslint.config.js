@@ -23,7 +23,7 @@ export default defineConfig(
       'playwright-report/**',
       'test-results/**',
       '.lighthouseci/**',
-      'src/**/*.module.css.d.ts',
+      'src/**/*.module.d.css.ts',
     ],
   },
   js.configs.recommended,

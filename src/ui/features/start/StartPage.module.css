@@ -1,0 +1,105 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.event {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+.name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.practice {
+  padding: var(--space-1) var(--space-3);
+  border: 2px solid var(--c-cream);
+  border-radius: var(--radius-capsule);
+  background: var(--c-red);
+  color: var(--c-white);
+  font-size: 1rem;
+}
+
+.meta {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.status {
+  color: var(--text-strong);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.hint {
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.checklist {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+.items {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 40px;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.done .mark {
+  background: var(--accent-fill);
+  color: var(--on-accent);
+}
+
+.open .mark {
+  box-shadow: inset 0 0 0 2px var(--open-ring);
+  color: var(--text-strong);
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+}

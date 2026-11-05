@@ -1,0 +1,17 @@
+.main {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: var(--space-4);
+}
+
+.panel {
+  display: grid;
+  gap: var(--space-4);
+  width: min(560px, 100%);
+}
+
+.code {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  color: var(--text-muted);
+}

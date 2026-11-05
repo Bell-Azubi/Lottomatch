@@ -1,12 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  apply,
-  CONTEXT,
-  drawAll,
-  PRIZE_RULES,
-  run,
-  startedState,
-} from '../test/domain-builders';
+import { apply, CONTEXT, drawAll, PRIZE_RULES, run, startedState } from '../test/domain-builders';
 import {
   abortRound,
   awardPrize,

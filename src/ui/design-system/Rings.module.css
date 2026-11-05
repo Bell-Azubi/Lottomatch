@@ -1,0 +1,113 @@
+.roundRing {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ringGraphic {
+  display: block;
+  width: 44px;
+  height: 44px;
+}
+
+.roundRingLarge .ringGraphic {
+  width: clamp(48px, 8vh, 140px);
+  height: clamp(48px, 8vh, 140px);
+}
+
+.ringText {
+  color: var(--text-strong);
+  font-size: 1.125rem;
+}
+
+.roundRingLarge .ringText {
+  font-size: clamp(1.25rem, 3.6vh, 4.5rem);
+}
+
+.progress {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.progressCompact {
+  gap: clamp(6px, 1vh, 16px);
+}
+
+.progressItem {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  min-width: 56px;
+}
+
+.progressCompact .progressItem {
+  min-width: 0;
+}
+
+.progressLabel {
+  color: var(--text);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.disc {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-family: var(--font-numeral);
+  font-weight: 800;
+  font-size: 1.1rem;
+  overflow: hidden;
+}
+
+.progressCompact .disc {
+  width: clamp(28px, 4.6vh, 96px);
+  height: clamp(28px, 4.6vh, 96px);
+  font-size: clamp(1rem, 2.6vh, 3rem);
+}
+
+.discAWARDED {
+  background: var(--c-gold);
+  color: var(--c-night);
+  box-shadow:
+    0 0 0 2px var(--c-cream) inset,
+    0 0 0 2px var(--c-gold);
+}
+
+.discACTIVE {
+  background: transparent;
+  color: var(--text-strong);
+  box-shadow: 0 0 0 4px var(--c-cream) inset;
+}
+
+.discUPCOMING {
+  background: transparent;
+  color: var(--open-numeral);
+  box-shadow: 0 0 0 2px var(--open-ring) inset;
+}
+
+.discSKIPPED {
+  background: transparent;
+  color: var(--open-numeral);
+  box-shadow: 0 0 0 2px var(--open-ring) inset;
+}
+
+.discSKIPPED::after {
+  content: '';
+  position: absolute;
+  width: 140%;
+  height: 2px;
+  background: var(--open-ring);
+  transform: rotate(-45deg);
+}
+
+.ball {
+  display: block;
+  width: 100%;
+}
