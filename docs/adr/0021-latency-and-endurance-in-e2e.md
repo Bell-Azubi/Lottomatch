@@ -35,10 +35,17 @@ were dominated by the test setup rather than by the app:
   (`Runtime.queryObjects`, which excludes Playwright's isolated world) may grow by at most 25 per
   event (the new event's record in the event list); the V8 heap by at most 2 MB, DOM nodes by 150
   and event listeners by 25. A retained session would add thousands of objects per event.
+- Each sample is taken once the console is quiet: no toast left (each dismisses itself after
+  4.5 s). Sampled right after an event, the last four toasts (20 DOM nodes, 4 listeners, about 150
+  objects) and, in some runs, the dialog closed last (15 nodes, 13 listeners, about 70 objects)
+  were still counted; CI run 42070304926 failed on that difference (+74 objects between two
+  samples), not on growth. Quiet samples are identical from event to event except for the event
+  record (+4 objects per event).
 
 ## Consequences
 
 - Results are stable across runs (input ≤ 32 ms, display p95 ≈ 10 ms, repeat visit ≈ 60 ms, flat
   object counts in this environment) and fail only on real regressions.
-- The soak takes about 2 minutes; `SOAK_EVENTS` raises the number of events for longer runs.
+- The soak takes about 2 minutes, plus the wait for the toasts after each event; `SOAK_EVENTS`
+  raises the number of events for longer runs.
 - Firefox and WebKit are not measured: Event Timing and CDP heap metrics are Chromium APIs.

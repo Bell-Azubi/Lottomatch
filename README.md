@@ -79,17 +79,17 @@ BASE_PATH=/Lottomatch/ npm run lhci
 
 `.github/workflows/ci.yml` runs on every pull request and on `main`; any failure blocks the merge.
 
-| Gate                     | Threshold                                                                                             |
-| ------------------------ | ----------------------------------------------------------------------------------------------------- |
-| Lint, format, knip       | zero findings, zero warnings                                                                          |
-| Types                    | `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`              |
-| Unit and component tests | all green; coverage domain ≥ 95 %, overall ≥ 85 % (lines, branches, functions, statements)            |
-| Runtime dependencies     | `npm audit --omit=dev` without high or critical advisories                                            |
-| Budgets                  | initial JS ≤ 60 KB gzip, CSS ≤ 20 KB gzip, first load ≤ 250 KB including logo and fonts               |
-| E2E                      | Chromium, Firefox, WebKit; axe without serious or critical issues; no console error, no CSP violation |
-| Visual                   | display at 1024×768, 1920×1080, 3840×2160 in both themes; latest number ≥ 35 vh, board ≥ 4.5 vh       |
-| Latency and endurance    | input → paint ≤ 50 ms, host → display p95 ≤ 100 ms, no growth over four full events (Chromium)        |
-| Lighthouse               | ≥ 95 in all categories; LCP ≤ 1.5 s mobile, ≤ 0.8 s desktop; CLS ≤ 0.02; TBT ≤ 100 ms (median)        |
+| Gate                     | Threshold                                                                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| Lint, format, knip       | zero findings, zero warnings                                                                                                    |
+| Types                    | `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`                                        |
+| Unit and component tests | all green; coverage domain ≥ 95 %, overall ≥ 85 % (lines, branches, functions, statements)                                      |
+| Runtime dependencies     | `npm audit --omit=dev` without high or critical advisories                                                                      |
+| Budgets                  | initial JS ≤ 60 KB gzip, CSS ≤ 20 KB gzip, first load ≤ 250 KB including logo and fonts                                         |
+| E2E                      | Chromium, Firefox, WebKit (offline check: Chromium); axe without serious or critical issues; no console error, no CSP violation |
+| Visual                   | display at 1024×768, 1920×1080, 3840×2160 in both themes; latest number ≥ 35 vh, board ≥ 4.5 vh                                 |
+| Latency and endurance    | input → paint ≤ 50 ms, host → display p95 ≤ 100 ms, no growth over four full events (Chromium)                                  |
+| Lighthouse               | ≥ 95 in all categories; LCP ≤ 1.5 s mobile, ≤ 0.8 s desktop; CLS ≤ 0.02; TBT ≤ 100 ms (median)                                  |
 
 `codeql.yml` analyses the code and the workflows; Dependabot proposes npm and Actions updates
 weekly. All actions are pinned by full commit SHA.

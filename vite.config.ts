@@ -3,7 +3,6 @@ import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import {
-  fontPreloadPlugin,
   githubPagesPlugin,
   normaliseBase,
   normaliseSiteUrl,
@@ -76,7 +75,6 @@ export default defineConfig({
   },
   plugins: [
     securityHeadersPlugin(),
-    fontPreloadPlugin(),
     githubPagesPlugin({ siteUrl, cname }),
     VitePWA({
       registerType: 'prompt',

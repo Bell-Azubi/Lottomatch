@@ -11,7 +11,7 @@ function ToastView({
   readonly closeLabel: string;
 }) {
   return (
-    <div class={`${styles.toast} ${styles[item.tone]}`}>
+    <div class={`${styles.toast} ${styles[item.tone]}`} data-toast={item.tone}>
       <p class={styles.message}>{item.message}</p>
       {item.action !== undefined && (
         <button type="button" class={styles.action} onClick={item.action.run}>

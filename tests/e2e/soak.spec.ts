@@ -118,6 +118,10 @@ test.describe('endurance (§8)', () => {
     for (let event = 1; event <= EVENTS; event += 1) {
       await createEvent(page, `Dauertest ${event}`);
       await playEvent(page);
+      // Sample the quiet console. Right after an event its last toasts are still on screen (each
+      // dismisses itself after 4.5 s) and the dialog closed last may not be released yet;
+      // counting them in one sample but not in another reads as growth that is not there.
+      await expect(page.locator('[data-toast]')).toHaveCount(0, { timeout: 15_000 });
       for (const window of windows) window.samples.push(await measure(window.session));
     }
     const report = windows.map((window) => describeSeries(window.label, window.samples));

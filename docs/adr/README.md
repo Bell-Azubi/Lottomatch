@@ -23,3 +23,5 @@
 | [0019](0019-first-visit-loading-order.md)           | First-visit loading order                                     |
 | [0020](0020-lighthouse-against-a-pages-stand-in.md) | Lighthouse CI against a GitHub Pages stand-in                 |
 | [0021](0021-latency-and-endurance-in-e2e.md)        | Latency and endurance measured in E2E                         |
+| [0022](0022-numeral-fonts-without-link-preload.md)  | Numeral fonts without a link preload                          |
+| [0023](0023-engine-limits-of-the-e2e-suite.md)      | Engine limits of the E2E suite                                |
