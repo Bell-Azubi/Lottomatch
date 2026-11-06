@@ -76,6 +76,21 @@ Display 4:3 (split turns horizontal):
 +--------------------------------------------+
 ```
 
+Display welcome page until the first round starts (same split field; on 4:3 the split turns
+horizontal). The badge sits where the drawn numbers appear later; the greeting takes the place of the
+board:
+
+```
++----------------------------------------------------------------+
+|     .--HERZLICH WILLKOMMEN--.            [Vereinslogo]         |
+|    /   .------------.        \        Herzlich willkommen      |
+|   |   |    LOTTO     |        |        zum Lottomatch der      |
+|   |   |    MATCH     |        |   FC Laufenburg-Kaisten Senioren|
+|    \   '------------'        /      21.11.2026 · Mehrzweckhalle |
+|     '--FC LAUFENBURG-KAISTEN-'           ( Viel Glück! )       |
++----------------------------------------------------------------+
+```
+
 Host console (opaque control plate left, banded board right):
 
 ```

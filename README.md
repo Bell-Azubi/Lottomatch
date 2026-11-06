@@ -168,7 +168,8 @@ Prepared events let the organiser load a whole prize list on the event laptop wi
 
 The badge is `public/brand/fclk-logo.png` (trimmed to 139 × 139 px, transparent background). A
 higher-resolution PNG (≥ 1024 px, square, trimmed) can replace it in place; the display then grows
-the logo to about 11 vh on large screens without a code change. For a vector version, change
+the logo to about 11 vh on large screens, and to about 20 vh on the display's welcome page, without
+a code change. For a vector version, change
 `LOGO_URL` in `src/ui/design-system/Logo.tsx`. Regenerate the favicon and the icons in
 `public/icons/` from the new file at the sizes of the existing ones.
 

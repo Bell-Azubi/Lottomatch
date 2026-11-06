@@ -60,6 +60,8 @@ export const snapshotSchema = v.object({
   seq: int(0, Number.MAX_SAFE_INTEGER),
   matchId: text(64),
   practice: v.boolean(),
+  date: optional(text(10)),
+  venue: optional(text(80)),
   phase: v.picklist(['READY', 'ROUND_RUNNING', 'BETWEEN_ROUNDS', 'COMPLETED']),
   round: optional(int(1, 50)),
   totalRounds: int(1, 50),

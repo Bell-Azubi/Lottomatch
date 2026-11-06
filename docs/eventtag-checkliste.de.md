@@ -16,6 +16,7 @@
 - [ ] Projektor oder TV angeschlossen, Bildschirm erweitert (nicht gespiegelt).
 - [ ] Konsole und Anzeige geöffnet; die Anzeige im Vollbild auf dem Projektor.
 - [ ] In der Konsole steht «Anzeige verbunden».
+- [ ] Die Anzeige zeigt die Begrüssung; Datum und Ort stimmen.
 - [ ] Lesbarkeit von der hintersten Reihe geprüft.
 - [ ] Browser-Zoom in beiden Fenstern auf 100 % (Ctrl/Cmd + 0).
 - [ ] Ruhezustand, Bildschirmschoner und automatische Updates des Systems ausgeschaltet.

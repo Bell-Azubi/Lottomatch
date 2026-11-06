@@ -1,0 +1,141 @@
+/*
+ * The split field of the display: the badge on the solid stage, the greeting on the striped half
+ * where the board appears later. On 4:3 the split turns horizontal.
+ */
+.welcome {
+  --welcome-badge: var(--badge-size, min(36vw, 59.5vh));
+  --welcome-stripes: repeating-linear-gradient(
+    to right,
+    var(--column-band) 0,
+    var(--column-band) 6vw,
+    transparent 6vw,
+    transparent 12vw
+  );
+
+  position: relative;
+  grid-area: 1 / 1 / -1 / -1;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  align-items: center;
+  min-height: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.glow {
+  position: absolute;
+  inset: 0 60% 0 0;
+  background: var(--stage-glow);
+  pointer-events: none;
+}
+
+/* Top left, where the practice mark sits on the rest of the display. */
+.practice {
+  position: absolute;
+  top: clamp(8px, 2vh, 48px);
+  left: clamp(8px, 2vh, 48px);
+  z-index: 1;
+}
+
+.badge {
+  position: relative;
+  justify-self: center;
+  width: var(--welcome-badge);
+}
+
+.mark {
+  display: grid;
+  justify-items: center;
+  color: var(--c-night);
+  font-family: var(--font-numeral);
+  font-size: calc(var(--welcome-badge) * 0.19);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.text {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: clamp(8px, 2.4vh, 56px);
+  height: 100%;
+  padding: clamp(12px, 4vh, 96px) clamp(12px, 3vw, 96px);
+  background-image: var(--welcome-stripes);
+  text-align: center;
+}
+
+.headline {
+  color: var(--text-strong);
+  font-size: clamp(2rem, min(9.5vh, 5.2vw), 12rem);
+  font-weight: 750;
+  line-height: 1.05;
+}
+
+.event {
+  color: var(--text);
+  font-size: clamp(1.25rem, min(5vh, 2.9vw), 6.5rem);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+/* The club's name stays on one line: the event line breaks in front of it, if at all. */
+.club {
+  white-space: nowrap;
+}
+
+.details {
+  color: var(--text);
+  font-size: clamp(1rem, 3.4vh, 4.4rem);
+  overflow-wrap: anywhere;
+}
+
+.luck {
+  padding: clamp(4px, 1vh, 24px) clamp(12px, 3vh, 72px);
+  border-radius: var(--radius-capsule);
+  background: var(--c-gold);
+  color: var(--c-night);
+  box-shadow: inset 0 0 0 3px var(--c-cream);
+  font-size: clamp(1.25rem, 4.6vh, 6rem);
+  font-weight: 800;
+}
+
+@media (max-aspect-ratio: 3/2) {
+  .welcome {
+    --welcome-badge: min(36vh, 70vw);
+
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    justify-items: center;
+    padding-top: clamp(8px, 2vh, 48px);
+    background-image: var(--welcome-stripes);
+  }
+
+  .glow {
+    inset: 0 0 50% 0;
+  }
+
+  .text {
+    width: 100%;
+    gap: clamp(4px, 1.4vh, 32px);
+    padding-block: clamp(4px, 1vh, 24px);
+    background-image: none;
+  }
+
+  .headline {
+    font-size: clamp(2rem, min(8vh, 8vw), 10rem);
+  }
+
+  .event {
+    font-size: clamp(1.25rem, min(4vh, 4.4vw), 5rem);
+  }
+}

@@ -9,6 +9,15 @@ export const display = {
   ringMain: 'HAUPTPREIS',
   ringPractice: 'ÜBUNG',
   fullscreenHint: 'Klicken oder F drücken für Vollbild',
+  welcome: {
+    greeting: 'Herzlich willkommen',
+    event: 'zum Lottomatch der',
+    club: 'FC Laufenburg-Kaisten Senioren',
+    luck: 'Viel Glück!',
+    ringTop: 'HERZLICH WILLKOMMEN',
+    ringBottom: 'FC LAUFENBURG-KAISTEN SENIOREN',
+    mark: ['LOTTO', 'MATCH'],
+  },
   win: {
     title: 'Gewinn!',
     mainTitle: 'Hauptpreis!',

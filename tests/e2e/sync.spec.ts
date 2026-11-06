@@ -2,6 +2,25 @@ import { expect, test } from './fixtures';
 import { cell, open, openDisplay, openHost, setAnimation, startRound, typeNumber } from './helpers';
 
 test.describe('host and display (FR-10)', () => {
+  test('the display welcomes the audience until the first round starts', async ({
+    context,
+    page,
+  }) => {
+    await openHost(page);
+    const display = await openDisplay(context);
+    const welcome = display.getByRole('region', { name: 'Herzlich willkommen' });
+    await expect(welcome).toBeVisible();
+    await expect(welcome.getByRole('img', { name: 'FC Laufenburg-Kaisten' })).toBeVisible();
+    await expect(
+      welcome.getByText('FC Laufenburg-Kaisten Senioren', { exact: true }),
+    ).toBeVisible();
+    await expect(display.getByRole('grid', { name: 'Lottoraster' })).toBeHidden();
+    await page.bringToFront();
+    await startRound(page, 1);
+    await expect(display.getByRole('grid', { name: 'Lottoraster' })).toBeVisible();
+    await expect(welcome).toBeHidden();
+  });
+
   test('the display follows the host live, including overlays', async ({ context, page }) => {
     await setAnimation(page, 'Aus');
     await openHost(page);

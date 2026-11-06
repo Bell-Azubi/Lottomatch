@@ -36,6 +36,8 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
 3. Im Anzeigefenster einmal klicken oder F drücken: «Klicken oder F drücken für Vollbild».
 4. Unten in der Konsole muss «Anzeige verbunden» stehen. Die Startseite zeigt zusätzlich die
    Checkliste «Bereit für den Anlass?».
+5. Bis zur ersten Runde zeigt die Anzeige die Begrüssung mit dem Vereinslogo sowie Datum und Ort des
+   Anlasses (Einstellungen → Anlass). Mit «Runde starten» wechselt sie auf das Spielbrett.
 
 ## Ablauf einer Runde
 

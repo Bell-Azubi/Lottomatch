@@ -81,6 +81,60 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
+describe('DisplayPage: welcome page', () => {
+  const ready = { phase: 'READY', date: '2026-11-21', venue: 'Mehrzweckhalle' } as const;
+
+  it('greets the audience with the logo, date and venue before the first round', () => {
+    push(snapshot(ready));
+    const welcome = screen.getByRole('region', { name: 'Herzlich willkommen' });
+    expect(welcome).toHaveTextContent('zum Lottomatch der FC Laufenburg-Kaisten Senioren');
+    expect(welcome).toHaveTextContent('21.11.2026 · Mehrzweckhalle');
+    expect(welcome).toHaveTextContent('Viel Glück!');
+    expect(screen.getByRole('img', { name: 'FC Laufenburg-Kaisten' })).toBeInTheDocument();
+    expect(screen.queryByRole('grid')).not.toBeInTheDocument();
+    expect(screen.getByRole('main')).toContainElement(welcome);
+  });
+
+  it('leaves out date and venue that are not set', () => {
+    push(snapshot({ phase: 'READY', date: '2026-11-21' }));
+    expect(screen.getByText('21.11.2026')).toBeInTheDocument();
+    push(snapshot({ phase: 'READY' }));
+    expect(screen.queryByText('21.11.2026')).not.toBeInTheDocument();
+    expect(screen.getByText('Herzlich willkommen')).toBeInTheDocument();
+  });
+
+  it('also greets while no event exists yet', () => {
+    expect(screen.getByText('Herzlich willkommen')).toBeInTheDocument();
+  });
+
+  it('marks a practice event', () => {
+    push(snapshot({ phase: 'READY', practice: true }));
+    expect(screen.getByRole('region', { name: 'Herzlich willkommen' })).toHaveTextContent('ÜBUNG');
+  });
+
+  it('shows a pause over the welcome page', () => {
+    push(
+      snapshot({
+        phase: 'READY',
+        overlay: { kind: 'PAUSE', id: 'p', message: 'Kurze Pause', sponsors: [] },
+      }),
+    );
+    expect(screen.getByRole('region', { name: 'Kurze Pause' })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'Herzlich willkommen' })).toBeInTheDocument();
+  });
+
+  it('gives way to the board with the event numbers when the first round starts', async () => {
+    push(snapshot({ phase: 'READY', maxNumber: 75 }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    push(snapshot({ maxNumber: 75 }));
+    expect(screen.queryByText('Herzlich willkommen')).not.toBeInTheDocument();
+    expect(screen.getByRole('grid')).toBeInTheDocument();
+    expect(screen.getAllByRole('gridcell')).toHaveLength(75);
+  });
+});
+
 describe('DisplayPage', () => {
   it('renders round, prize, board and the latest number without animation on first sight', () => {
     push(snapshot({ drawn: [7, 42], latest: { number: 42, seq: 2, method: 'RANDOM' } }));

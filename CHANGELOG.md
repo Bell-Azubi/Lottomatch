@@ -5,6 +5,14 @@ All notable changes to this project are documented in this file. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Commits follow
 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [Unreleased]
+
+### Added
+
+- Welcome page on the display until the first round starts: greeting to the Lottomatch of the
+  FC Laufenburg-Kaisten Senioren, club badge, the event's date and venue. A round start replaces it
+  with the board.
+
 ## [1.0.0] - 2026-11-05
 
 First release of Lottomatch Live for the FC Laufenburg-Kaisten Lottomatch.

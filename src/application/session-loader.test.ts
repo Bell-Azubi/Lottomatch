@@ -137,6 +137,32 @@ describe('sync messages and snapshots', () => {
     expect(isNewer(snapshot, 4, 0)).toBe(false);
   });
 
+  it('carries date and venue for the welcome page, only when they are set', async () => {
+    const { app } = await createTestHost();
+    const session = app.session.value;
+    if (session === undefined) throw new Error('no session');
+    const settings = session.match.value.settings;
+    const build = (date: string, venue: string) =>
+      buildSnapshot({
+        epoch: 1,
+        seq: 1,
+        matchId: session.matchId,
+        kind: 'REAL',
+        settings: { ...settings, date, venue },
+        catalogue: session.catalogue.value,
+        game: session.game.value,
+        prefs: app.prefs.value,
+        reveal: undefined,
+        overlay: undefined,
+      });
+    const snapshot = build('2026-11-21', 'Mehrzweckhalle');
+    expect(snapshot).toMatchObject({ date: '2026-11-21', venue: 'Mehrzweckhalle' });
+    expect(parseSyncMessage({ t: 'snapshot', snapshot })).toEqual({ t: 'snapshot', snapshot });
+    const empty = build('', '');
+    expect(empty).not.toHaveProperty('date');
+    expect(empty).not.toHaveProperty('venue');
+  });
+
   it('builds the readiness checklist', async () => {
     const { app } = await createTestHost();
     const session = app.session.value;

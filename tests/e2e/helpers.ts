@@ -61,6 +61,6 @@ export async function confirmWin(page: Page, cardNo: string): Promise<void> {
 export async function openDisplay(context: BrowserContext): Promise<Page> {
   const display = await context.newPage();
   await display.goto('./#/display');
-  await expect(display.getByRole('grid', { name: 'Lottoraster' })).toBeVisible();
+  await expect(display.getByRole('main')).toBeVisible();
   return display;
 }

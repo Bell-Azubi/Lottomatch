@@ -10,6 +10,15 @@ export const display: DisplayMessages = {
   ringMain: 'MAIN PRIZE',
   ringPractice: 'PRACTICE',
   fullscreenHint: 'Click or press F for fullscreen',
+  welcome: {
+    greeting: 'Welcome',
+    event: 'to the Lottomatch of the',
+    club: 'FC Laufenburg-Kaisten seniors',
+    luck: 'Good luck!',
+    ringTop: 'WELCOME',
+    ringBottom: 'FC LAUFENBURG-KAISTEN SENIORS',
+    mark: ['LOTTO', 'MATCH'],
+  },
   win: {
     title: 'Winner!',
     mainTitle: 'Main prize!',
