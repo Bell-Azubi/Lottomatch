@@ -12,9 +12,18 @@ updates:
       prefix: chore(deps)
       prefix-development: chore(deps-dev)
     groups:
+      # A Playwright upgrade also needs the CI image tag and digest (ADR-0024) and may need new
+      # display snapshots (ADR-0018), so it gets a pull request of its own.
+      playwright:
+        patterns:
+          - '@playwright/test'
+          - 'playwright-core'
       npm-minor-and-patch:
         patterns:
           - '*'
+        exclude-patterns:
+          - '@playwright/test'
+          - 'playwright-core'
         update-types:
           - minor
           - patch

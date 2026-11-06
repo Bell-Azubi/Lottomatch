@@ -88,8 +88,9 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  # Chromium runs on the runner itself: the display snapshots and the timing gates are calibrated
-  # there (ADR-0018, ADR-0021), and its system libraries are few.
+  # Chromium runs on the runner itself, where the display snapshots and the timing gates pass
+  # (ADR-0018, ADR-0021). The runner image has its libraries; apt adds nine font packages (21 MB),
+  # about 10 minutes on a slow mirror, hence the install step's 20-minute limit (ADR-0024).
   e2e:
     name: E2E (chromium)
     needs: verify
@@ -117,7 +118,7 @@ jobs:
           path: dist
 
       - name: Install chromium
-        timeout-minutes: 10
+        timeout-minutes: 20
         run: npx playwright install --with-deps chromium
 
       - name: Functional, accessibility, CSP and console checks
@@ -137,10 +138,11 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  # Firefox and WebKit run in the official Playwright image, which carries their system libraries:
-  # installing them on the runner downloads about 120 Ubuntu packages per run, and a slow mirror
-  # made that step exceed the job timeout (ADR-0024). Keep the image on the version of
-  # @playwright/test, pinned by digest, and update both together.
+  # Firefox and WebKit run in the official Playwright image, which carries their system libraries
+  # and browser builds: on the runner, apt fetched up to 181 packages (114 MB for WebKit) per run,
+  # and a slow mirror made that step exceed the job timeout (ADR-0024). Keep the image on the
+  # version of @playwright/test and change tag and digest together (Docker pulls by the digest).
+  # Dependabot does not update it.
   e2e-engines:
     name: E2E (${{ matrix.browser }})
     needs: verify
@@ -174,11 +176,20 @@ jobs:
           name: site
           path: dist
 
-      # A no-op while the image matches @playwright/test; otherwise it fetches the matching browser
-      # build (not its system libraries) from Playwright's download server.
+      # A no-op while the image matches @playwright/test. After a Playwright upgrade without a new
+      # image it fetches the matching browser build (not its system libraries) from Playwright's
+      # download server, in seconds, and warns so that the image gets updated.
       - name: Browser build of the installed Playwright version
         timeout-minutes: 10
-        run: npx playwright install ${{ matrix.browser }}
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: |
+          image=$(node -p "JSON.parse(require('fs').readFileSync('/ms-playwright/.docker-info', 'utf8')).driverVersion" 2>/dev/null || true)
+          wanted=$(node -p "require('@playwright/test/package.json').version")
+          if [ -n "$image" ] && [ "$image" != "$wanted" ]; then
+            echo "::warning title=Playwright image::The image has Playwright $image, package.json $wanted. Update the image tag and digest in ci.yml (ADR-0024)."
+          fi
+          npx playwright install "$BROWSER"
 
       - name: Functional, accessibility, CSP and console checks
         run: npx playwright test --project=${{ matrix.browser }}
