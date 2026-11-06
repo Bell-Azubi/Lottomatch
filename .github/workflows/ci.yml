@@ -88,21 +88,13 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
+  # Chromium runs on the runner itself: the display snapshots and the timing gates are calibrated
+  # there (ADR-0018, ADR-0021), and its system libraries are few.
   e2e:
-    name: E2E (${{ matrix.browser }})
+    name: E2E (chromium)
     needs: verify
     runs-on: ubuntu-24.04
     timeout-minutes: 40
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - browser: chromium
-            projects: --project=chromium --project=visual
-          - browser: firefox
-            projects: --project=firefox
-          - browser: webkit
-            projects: --project=webkit
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -124,15 +116,72 @@ jobs:
           name: site
           path: dist
 
-      - name: Install ${{ matrix.browser }}
-        run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Install chromium
+        timeout-minutes: 10
+        run: npx playwright install --with-deps chromium
 
       - name: Functional, accessibility, CSP and console checks
-        run: npx playwright test ${{ matrix.projects }}
+        run: npx playwright test --project=chromium --project=visual
 
       - name: Input latency, display sync and endurance (one worker, no tracing)
-        if: ${{ matrix.browser == 'chromium' }}
         run: npm run test:e2e:perf
+
+      - name: Upload the Playwright report
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: playwright-report-chromium
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # Firefox and WebKit run in the official Playwright image, which carries their system libraries:
+  # installing them on the runner downloads about 120 Ubuntu packages per run, and a slow mirror
+  # made that step exceed the job timeout (ADR-0024). Keep the image on the version of
+  # @playwright/test, pinned by digest, and update both together.
+  e2e-engines:
+    name: E2E (${{ matrix.browser }})
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+      options: --user 1001 --ipc=host
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [firefox, webkit]
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js (LTS from .nvmrc)
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies from the lockfile
+        run: npm ci
+
+      - name: Download the site
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: site
+          path: dist
+
+      # A no-op while the image matches @playwright/test; otherwise it fetches the matching browser
+      # build (not its system libraries) from Playwright's download server.
+      - name: Browser build of the installed Playwright version
+        timeout-minutes: 10
+        run: npx playwright install ${{ matrix.browser }}
+
+      - name: Functional, accessibility, CSP and console checks
+        run: npx playwright test --project=${{ matrix.browser }}
 
       - name: Upload the Playwright report
         if: ${{ failure() }}
@@ -187,7 +236,7 @@ jobs:
   passed:
     name: CI passed
     if: ${{ always() }}
-    needs: [verify, e2e, lighthouse]
+    needs: [verify, e2e, e2e-engines, lighthouse]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

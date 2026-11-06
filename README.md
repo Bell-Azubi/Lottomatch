@@ -198,7 +198,8 @@ formatted by `Intl` and dates as dd.MM.yyyy.
 
 A Playwright upgrade can change the rendering of the display snapshots; regenerate them in the
 same pull request with `npx playwright test --project=visual --update-snapshots=all` and review
-the image diff.
+the image diff. In the same pull request, set the Playwright container image of the Firefox and
+WebKit jobs in `.github/workflows/ci.yml` to the new version, with its digest (ADR-0024).
 
 ## Backlog
 
