@@ -195,9 +195,11 @@ first screen (ADR-0019).
 ```mermaid
 flowchart LR
   push[Pull request or push to main] --> verify["verify: lint, knip, types,<br/>unit tests with coverage,<br/>audit, build, budgets"]
-  verify --> e2e["e2e: Chromium + snapshots<br/>+ latency and soak, Firefox, WebKit"]
+  verify --> e2e["e2e: Chromium + snapshots<br/>+ latency and soak"]
+  verify --> engines["e2e-engines: Firefox, WebKit<br/>in the Playwright image (ADR-0024)"]
   verify --> lhci["Lighthouse CI on the<br/>Pages stand-in (ADR-0020)"]
   e2e --> passed{CI passed}
+  engines --> passed
   lhci --> passed
   passed -- "main, green" --> deploy["deploy.yml: configure Pages,<br/>download the tested site,<br/>check its address, publish"]
 ```

@@ -92,7 +92,8 @@ BASE_PATH=/Lottomatch/ npm run lhci
 | Lighthouse               | ≥ 95 in all categories; LCP ≤ 1.5 s mobile, ≤ 0.8 s desktop; CLS ≤ 0.02; TBT ≤ 100 ms (median)                                  |
 
 `codeql.yml` analyses the code and the workflows; Dependabot proposes npm and Actions updates
-weekly. All actions are pinned by full commit SHA.
+weekly. All actions are pinned by full commit SHA. The Playwright image of the Firefox and WebKit
+jobs is pinned by tag and digest and updated by hand (see Contributing).
 
 ## GitHub Pages
 
@@ -198,7 +199,15 @@ formatted by `Intl` and dates as dd.MM.yyyy.
 
 A Playwright upgrade can change the rendering of the display snapshots; regenerate them in the
 same pull request with `npx playwright test --project=visual --update-snapshots=all` and review
-the image diff.
+the image diff. In the same pull request, set the Playwright container image of the Firefox and
+WebKit jobs in `.github/workflows/ci.yml` to the new version, with its digest (ADR-0024). Until
+then those jobs download the browser builds on every run and the CI run shows a warning.
+Dependabot opens Playwright upgrades as a pull request of their own: push the image change to its
+branch. The digest is that of the multi-platform index:
+
+```bash
+curl -sI -H 'Accept: application/vnd.oci.image.index.v1+json' https://mcr.microsoft.com/v2/playwright/manifests/v1.63.0-noble | grep -i '^docker-content-digest'
+```
 
 ## Backlog
 
