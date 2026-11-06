@@ -2,7 +2,8 @@
 
 Every runtime dependency must earn its place in a 60 KB (gzip) initial bundle and run offline
 without third-party requests. Versions are pinned exactly (`.npmrc` `save-exact=true`); `npm ci`
-installs from the committed lockfile and Dependabot proposes updates weekly.
+installs from the committed lockfile and Dependabot proposes updates weekly. The tables list the
+versions of release 1.0.0; after a Dependabot update, `package.json` is authoritative.
 
 ## Runtime
 
@@ -55,13 +56,21 @@ later for local work.
 
 CI runs `npm audit --omit=dev --audit-level=high`: the runtime dependencies have no known
 advisories. `npm audit` without `--omit=dev` reports advisories in development tools only, as of
-2026-11-05:
+2026-11-06:
 
 - `@lhci/cli` → `proxy-agent` → `pac-proxy-agent` → `get-uri` → `basic-ftp` (high: CPU denial of
   service in the FTP directory-listing parser). The code is reachable only through `ftp://` or
   PAC proxy URLs; Lighthouse CI here talks to a local server and writes reports to disk.
-- `eslint`, `typescript-eslint`, `vite-plugin-pwa` / `workbox-build` (moderate, via `minimatch`,
-  `glob` and related packages): build-time tools that only read files of this repository.
+- `eslint`, `typescript-eslint`, `vite-plugin-pwa` / `workbox-build` and `lighthouse` (moderate,
+  via `minimatch`, `glob` and related packages): build-time tools that only read files of this
+  repository.
+- `workbox-build` → `@rollup/plugin-node-resolve` → `deepmerge` (low: prototype poisoning in
+  `mergeObject()`): it merges only the build's own configuration.
 
-`npm audit fix --force` would downgrade these tools to old major versions, so the fixes come
-through Dependabot as the upstream packages update.
+`npm audit fix` changes nothing, and `npm audit fix --force` would downgrade these tools to old
+major versions, so the fixes come through Dependabot as the upstream packages update. `minimatch`
+is fixed only in 11.0.1 (GHSA-g3hv-75wg-m249), while ESLint 10.14 with `@eslint/config-array`
+0.23, typescript-eslint 8.72 and the `glob` versions of `workbox-build` and Lighthouse accept only
+`minimatch` 10. Until they move, Dependabot's security update for it fails with
+`security_update_not_possible`. An `overrides` entry across that major version would change how
+ESLint matches files without upstream testing, so the repository does not force it.
