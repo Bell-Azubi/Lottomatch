@@ -1,7 +1,7 @@
-import { isAwarded } from '../../../application/selectors';
-import { prizeAt, roundCompleteness, type Catalogue } from '../../../domain/catalogue';
-import type { GameState } from '../../../domain/state';
-import { PRIZE_SLOTS } from '../../../domain/types';
+import { isAwarded, slotsForRound } from '../../../application/selectors';
+import { prizeAt, type Catalogue } from '../../../domain/catalogue';
+import { roundOf, type GameState } from '../../../domain/state';
+import { SUPERLOTTO_SLOT } from '../../../domain/types';
 import { commonText } from '../../../i18n/catalogues';
 import { t } from '../../../i18n';
 import { BadgeRing } from '../../design-system/BadgeRing';
@@ -17,7 +17,7 @@ export interface PrizeMatrixProps {
   readonly onSelect: (round: number) => void;
 }
 
-/** Rounds × 4 matrix: four mini prize badges and a completeness ring per round (FR-8). */
+/** Rounds × prizes matrix: mini prize badges and a completeness ring per round (FR-8). */
 export function PrizeMatrix({ rounds, catalogue, game, selected, onSelect }: PrizeMatrixProps) {
   const m = t(prizesText);
   const c = t(commonText);
@@ -37,8 +37,9 @@ export function PrizeMatrix({ rounds, catalogue, game, selected, onSelect }: Pri
       </thead>
       <tbody>
         {list.map((round) => {
-          const filled = roundCompleteness(catalogue, round);
-          const missing = 4 - filled;
+          const slots = slotsForRound(roundOf(game, round), catalogue);
+          const filled = slots.filter((slot) => prizeAt(catalogue, round, slot) !== undefined);
+          const missing = slots.length - filled.length;
           return (
             <tr key={round} class={round === selected ? styles.selected : undefined}>
               <th scope="row" class={`${styles.round} tabular`}>
@@ -46,7 +47,7 @@ export function PrizeMatrix({ rounds, catalogue, game, selected, onSelect }: Pri
               </th>
               <td>
                 <ul class={styles.badges}>
-                  {PRIZE_SLOTS.map((slot) => {
+                  {slots.map((slot) => {
                     const prize = prizeAt(catalogue, round, slot);
                     const awarded = isAwarded(game, round, slot);
                     const state = awarded
@@ -54,10 +55,11 @@ export function PrizeMatrix({ rounds, catalogue, game, selected, onSelect }: Pri
                       : prize === undefined
                         ? styles.gap
                         : styles.filled;
+                    const superlotto = slot === SUPERLOTTO_SLOT ? styles.superlotto : '';
                     return (
-                      <li key={slot} class={`${styles.badge} ${state}`}>
+                      <li key={slot} class={`${styles.badge} ${state} ${superlotto}`}>
                         <span class={styles.disc} aria-hidden="true">
-                          {slot === 4 ? 'H' : slot}
+                          {c.prizeDisc(slot)}
                         </span>
                         <span class={styles.badgeText}>
                           <span class="visually-hidden">{c.prizeSlot(slot)}: </span>
@@ -74,13 +76,13 @@ export function PrizeMatrix({ rounds, catalogue, game, selected, onSelect }: Pri
                   <span class={styles.ring} aria-hidden="true">
                     <BadgeRing
                       variant="ring"
-                      segments={PRIZE_SLOTS.map((slot) =>
+                      segments={slots.map((slot) =>
                         prizeAt(catalogue, round, slot) === undefined ? 'UPCOMING' : 'DONE',
                       )}
                     />
                   </span>
                   <span>
-                    {m.matrix.complete(filled)}
+                    {m.matrix.complete(filled.length, slots.length)}
                     {missing > 0 && (
                       <span class={styles.warning}>
                         <Icon name="alert" size={16} /> {m.matrix.gaps(missing)}

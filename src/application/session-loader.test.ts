@@ -45,6 +45,24 @@ describe('MatchSession', () => {
 });
 
 describe('loader', () => {
+  it('still loads logs with checked claims from before ADR-0025', () => {
+    const log = logOf([
+      { type: 'ROUND_STARTED', round: 1, rules: RULES },
+      { type: 'NUMBER_DRAWN', round: 1, draw: { seq: 1, number: 5, method: 'MANUAL' } },
+      { type: 'CLAIM_REJECTED', round: 1, slot: 1, claimed: [5, 6], missing: [6] },
+      { type: 'CLAIM_REJECTED', round: 1, slot: 1, claimed: [5], missing: [], lateSinceSeq: 1 },
+      {
+        type: 'PRIZE_AWARDED',
+        round: 1,
+        slot: 1,
+        winners: [{ cardNo: '17', validSinceSeq: 1 }],
+        prize: { winCondition: { kind: 'ONE_LINE' } },
+      },
+    ]);
+    const loaded = validateLog(log);
+    expect(loaded.ok && loaded.value.state.rounds.get(1)?.rejectedClaims).toBe(2);
+  });
+
   it('reports corrupt logs with the first bad position', () => {
     const log = logOf([{ type: 'ROUND_STARTED', round: 1, rules: RULES }]);
     expect(validateLog([...log, { nonsense: true }])).toEqual({
@@ -135,6 +153,32 @@ describe('sync messages and snapshots', () => {
     expect(isNewer(snapshot, 3, 9)).toBe(false);
     expect(isNewer(snapshot, 2, 99)).toBe(true);
     expect(isNewer(snapshot, 4, 0)).toBe(false);
+  });
+
+  it('carries date and venue for the welcome page, only when they are set', async () => {
+    const { app } = await createTestHost();
+    const session = app.session.value;
+    if (session === undefined) throw new Error('no session');
+    const settings = session.match.value.settings;
+    const build = (date: string, venue: string) =>
+      buildSnapshot({
+        epoch: 1,
+        seq: 1,
+        matchId: session.matchId,
+        kind: 'REAL',
+        settings: { ...settings, date, venue },
+        catalogue: session.catalogue.value,
+        game: session.game.value,
+        prefs: app.prefs.value,
+        reveal: undefined,
+        overlay: undefined,
+      });
+    const snapshot = build('2026-11-21', 'Mehrzweckhalle');
+    expect(snapshot).toMatchObject({ date: '2026-11-21', venue: 'Mehrzweckhalle' });
+    expect(parseSyncMessage({ t: 'snapshot', snapshot })).toEqual({ t: 'snapshot', snapshot });
+    const empty = build('', '');
+    expect(empty).not.toHaveProperty('date');
+    expect(empty).not.toHaveProperty('venue');
   });
 
   it('builds the readiness checklist', async () => {

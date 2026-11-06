@@ -1,7 +1,7 @@
 import { cleanText, LIMITS } from './limits';
-import type { ConditionTemplate } from './settings';
+import { templateCondition, type ConditionTemplate } from './settings';
 import type { Prize, PrizeSlot, PrizeSnapshot, WinCondition } from './types';
-import { PRIZE_SLOTS } from './types';
+import { PRIZE_SLOTS, SUPERLOTTO_ROUND_SLOTS, SUPERLOTTO_SLOT } from './types';
 import { textLength, validateWinCondition } from './win-condition';
 
 /** The prizes of one event. A missing (round, slot) is a gap. */
@@ -93,7 +93,7 @@ export function conditionFor(
   round: number,
   slot: PrizeSlot,
 ): WinCondition {
-  return prizeAt(catalogue, round, slot)?.winCondition ?? template[slot];
+  return prizeAt(catalogue, round, slot)?.winCondition ?? templateCondition(template, slot);
 }
 
 /** Snapshot recorded with an award. */
@@ -122,9 +122,16 @@ export function removePrize(catalogue: Catalogue, round: number, slot: PrizeSlot
   return { prizes: catalogue.prizes.filter((p) => !(p.round === round && p.slot === slot)) };
 }
 
-/** Number of slots with a prize in a round (0–4). */
-export function roundCompleteness(catalogue: Catalogue, round: number): number {
-  return PRIZE_SLOTS.filter((slot) => prizeAt(catalogue, round, slot) !== undefined).length;
+/** The prizes a round will play: the four, plus the Superlotto when one is entered. */
+export function plannedSlots(catalogue: Catalogue, round: number): readonly PrizeSlot[] {
+  return prizeAt(catalogue, round, SUPERLOTTO_SLOT) === undefined
+    ? PRIZE_SLOTS
+    : SUPERLOTTO_ROUND_SLOTS;
+}
+
+/** The rounds with a Superlotto entered. */
+export function superlottoRounds(catalogue: Catalogue): ReadonlySet<number> {
+  return new Set(catalogue.prizes.filter((p) => p.slot === SUPERLOTTO_SLOT).map((p) => p.round));
 }
 
 export interface RoundGaps {
@@ -132,7 +139,7 @@ export interface RoundGaps {
   readonly slots: readonly PrizeSlot[];
 }
 
-/** Rounds 1–R with missing prizes. */
+/** Rounds 1–R with one of the four prizes missing; a round needs no Superlotto. */
 export function findGaps(catalogue: Catalogue, totalRounds: number): readonly RoundGaps[] {
   const gaps: RoundGaps[] = [];
   for (let round = 1; round <= totalRounds; round += 1) {
@@ -148,7 +155,10 @@ export interface BulkResult {
   readonly skipped: readonly { readonly round: number; readonly slot: PrizeSlot }[];
 }
 
-/** Copies the four prizes of a round to other rounds; locked targets are skipped. */
+/**
+ * Copies the four prizes of a round to other rounds; locked targets are skipped. The Superlotto
+ * stays where it is, so a copy never changes which rounds play one.
+ */
 export function copyRound(
   catalogue: Catalogue,
   from: number,
@@ -174,7 +184,7 @@ export function copyRound(
   return { catalogue: next, skipped };
 }
 
-/** Applies the win-condition template to every unlocked prize. */
+/** Applies the template to the four prizes; the Superlotto has no template and keeps its rule. */
 export function applyTemplate(
   catalogue: Catalogue,
   template: ConditionTemplate,
@@ -182,6 +192,7 @@ export function applyTemplate(
 ): BulkResult {
   const skipped: { round: number; slot: PrizeSlot }[] = [];
   const prizes = catalogue.prizes.map((prize) => {
+    if (prize.slot === SUPERLOTTO_SLOT) return prize;
     if (!locked(prize.round, prize.slot)) return { ...prize, winCondition: template[prize.slot] };
     skipped.push({ round: prize.round, slot: prize.slot });
     return prize;
@@ -191,7 +202,7 @@ export function applyTemplate(
 
 /** Removes the unlocked prizes of a round. */
 export function clearRound(catalogue: Catalogue, round: number, locked: SlotLock): BulkResult {
-  const skipped = PRIZE_SLOTS.filter(
+  const skipped = SUPERLOTTO_ROUND_SLOTS.filter(
     (slot) => locked(round, slot) && prizeAt(catalogue, round, slot) !== undefined,
   ).map((slot) => ({ round, slot }));
   const prizes = catalogue.prizes.filter((p) => p.round !== round || locked(p.round, p.slot));

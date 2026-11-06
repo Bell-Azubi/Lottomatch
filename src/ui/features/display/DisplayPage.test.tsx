@@ -54,6 +54,9 @@ function snapshot(patch: Partial<DisplaySnapshot> = {}): DisplaySnapshot {
   };
 }
 
+const band = () =>
+  document.querySelector('[data-reveal="badge"] [data-layer="band"] circle')?.getAttribute('class');
+
 function push(next: DisplaySnapshot) {
   void act(() => {
     link.accept(next);
@@ -81,10 +84,64 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
+describe('DisplayPage: welcome page', () => {
+  const ready = { phase: 'READY', date: '2026-11-21', venue: 'Mehrzweckhalle' } as const;
+
+  it('greets the audience with the logo, date and venue before the first round', () => {
+    push(snapshot(ready));
+    const welcome = screen.getByRole('region', { name: 'Herzlich willkommen' });
+    expect(welcome).toHaveTextContent('zum Lottomatch der FC Laufenburg-Kaisten Senioren');
+    expect(welcome).toHaveTextContent('21.11.2026 · Mehrzweckhalle');
+    expect(welcome).toHaveTextContent('Viel Glück!');
+    expect(screen.getByRole('img', { name: 'FC Laufenburg-Kaisten' })).toBeInTheDocument();
+    expect(screen.queryByRole('grid')).not.toBeInTheDocument();
+    expect(screen.getByRole('main')).toContainElement(welcome);
+  });
+
+  it('leaves out date and venue that are not set', () => {
+    push(snapshot({ phase: 'READY', date: '2026-11-21' }));
+    expect(screen.getByText('21.11.2026')).toBeInTheDocument();
+    push(snapshot({ phase: 'READY' }));
+    expect(screen.queryByText('21.11.2026')).not.toBeInTheDocument();
+    expect(screen.getByText('Herzlich willkommen')).toBeInTheDocument();
+  });
+
+  it('also greets while no event exists yet', () => {
+    expect(screen.getByText('Herzlich willkommen')).toBeInTheDocument();
+  });
+
+  it('marks a practice event', () => {
+    push(snapshot({ phase: 'READY', practice: true }));
+    expect(screen.getByRole('region', { name: 'Herzlich willkommen' })).toHaveTextContent('ÜBUNG');
+  });
+
+  it('shows a pause over the welcome page', () => {
+    push(
+      snapshot({
+        phase: 'READY',
+        overlay: { kind: 'PAUSE', id: 'p', message: 'Kurze Pause', sponsors: [] },
+      }),
+    );
+    expect(screen.getByRole('region', { name: 'Kurze Pause' })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'Herzlich willkommen' })).toBeInTheDocument();
+  });
+
+  it('gives way to the board with the event numbers when the first round starts', async () => {
+    push(snapshot({ phase: 'READY', maxNumber: 75 }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    push(snapshot({ maxNumber: 75 }));
+    expect(screen.queryByText('Herzlich willkommen')).not.toBeInTheDocument();
+    expect(screen.getByRole('grid')).toBeInTheDocument();
+    expect(screen.getAllByRole('gridcell')).toHaveLength(75);
+  });
+});
+
 describe('DisplayPage', () => {
   it('renders round, prize, board and the latest number without animation on first sight', () => {
     push(snapshot({ drawn: [7, 42], latest: { number: 42, seq: 2, method: 'RANDOM' } }));
-    expect(screen.getByText('Runde 3 von 24')).toBeInTheDocument();
+    expect(screen.getByText('Gang 3 von 24')).toBeInTheDocument();
     expect(screen.getByText('Präsentkorb')).toBeInTheDocument();
     expect(screen.getByText('Preis 2 von 4')).toBeInTheDocument();
     expect(screen.getByText('Zuletzt gezogen: 42, Ziehung 2')).toBeInTheDocument();
@@ -121,7 +178,7 @@ describe('DisplayPage', () => {
     expect(screen.getByText('Gleich geht’s los')).toBeInTheDocument();
   });
 
-  it('shows the Hauptpreis and practice lettering and the light theme', () => {
+  it('shows a gap by its slot name, practice lettering and the light theme', () => {
     push(
       snapshot({
         practice: true,
@@ -130,8 +187,30 @@ describe('DisplayPage', () => {
       }),
     );
     expect(screen.getAllByText('ÜBUNG').length).toBeGreaterThan(0);
-    expect(screen.getByText('Hauptpreis')).toBeInTheDocument();
+    expect(screen.getByText('Preis 4')).toBeInTheDocument();
     expect(document.documentElement.dataset['theme']).toBe('light');
+  });
+
+  it('counts five prizes in a Superlotto round and rings the Superlotto', () => {
+    const progress = ['AWARDED', 'ACTIVE', 'UPCOMING', 'UPCOMING', 'UPCOMING'] as const;
+    push(snapshot({ progress: [...progress] }));
+    expect(screen.getByText('Preis 2 von 5')).toBeInTheDocument();
+    push(
+      snapshot({
+        prize: { slot: 5, title: 'Früchtekorb', condition: { kind: 'FULL_CARD' } },
+        progress: ['AWARDED', 'AWARDED', 'AWARDED', 'AWARDED', 'ACTIVE'],
+      }),
+    );
+    expect(screen.getByText('Superlotto')).toBeInTheDocument();
+    expect(screen.getAllByText('SUPERLOTTO').length).toBeGreaterThan(0);
+    expect(screen.getByText('S')).toBeInTheDocument();
+    expect(band()).toMatch(/bandRed/);
+  });
+
+  it('keeps the ring without red and shows no S while no Superlotto is played', () => {
+    push(snapshot({ prize: { slot: 4, condition: { kind: 'ONE_LINE' } } }));
+    expect(band()).not.toMatch(/bandRed/);
+    expect(screen.queryByText('S')).toBeNull();
   });
 
   it.each<[DisplayOverlay, string]>([
@@ -140,11 +219,11 @@ describe('DisplayPage', () => {
         kind: 'WIN',
         id: 'o1',
         round: 3,
-        slot: 4,
+        slot: 5,
         title: 'Velo',
         condition: { kind: 'FULL_CARD' },
         winners: [{ cardNo: '17' }, { name: 'Anna' }],
-        main: true,
+        superlotto: true,
       },
       'Karte 17',
     ],
@@ -155,9 +234,9 @@ describe('DisplayPage', () => {
         round: 3,
         next: { round: 4, prizes: [{ slot: 1, condition: { kind: 'ONE_LINE' }, title: 'Wein' }] },
       },
-      'Runde 4: diese Preise warten',
+      'Gang 4: diese Preise warten',
     ],
-    [{ kind: 'ROUND_END', id: 'o3', round: 24 }, 'Alle Runden sind gespielt'],
+    [{ kind: 'ROUND_END', id: 'o3', round: 24 }, 'Alle Gänge sind gespielt'],
     [
       { kind: 'PAUSE', id: 'o4', message: 'Kurze Pause', resumeAt: '21:30', sponsors: ['A', 'B'] },
       'Weiter um 21:30 Uhr',

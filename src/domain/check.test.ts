@@ -159,6 +159,36 @@ describe('checkEvent: claims and awards', () => {
   });
 });
 
+describe('checkEvent: logs that continue after an end', () => {
+  it('refuses draws and revocations after the event was completed', () => {
+    const completed = apply(initialGameState(), [{ type: 'EVENT_COMPLETED' }]);
+    expect(
+      code(completed, {
+        type: 'NUMBER_DRAWN',
+        round: 1,
+        draw: { seq: 1, number: 1, method: 'RANDOM' },
+      }),
+    ).toBe('EVENT_COMPLETED');
+    expect(code(completed, { type: 'AWARD_REVOKED', round: 1, slot: 1, reason: 'x' })).toBe(
+      'EVENT_COMPLETED',
+    );
+  });
+
+  it('refuses to start a completed round again', () => {
+    const awards = ([1, 2, 3, 4] as const).map((slot): LogEvent => ({
+      type: 'PRIZE_AWARDED',
+      round: 1,
+      slot,
+      winners: [{}],
+      prize: PRIZE,
+    }));
+    const finished = apply(startedState(), awards);
+    expect(code(finished, { type: 'ROUND_STARTED', round: 1, rules: RULES })).toBe(
+      'ROUND_ALREADY_COMPLETED',
+    );
+  });
+});
+
 describe('structural helpers', () => {
   it('validates winners', () => {
     expect(validWinner({ validSinceSeq: 0 })).toBe(false);

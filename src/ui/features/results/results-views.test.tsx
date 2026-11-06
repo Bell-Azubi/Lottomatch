@@ -33,12 +33,12 @@ describe('winnerTable', () => {
   it('formats every column for Excel de-CH', () => {
     const { headers, cells } = winnerTable(winnerRows(results.rounds), deResults, deCommon);
     expect(headers).toHaveLength(15);
-    expect(headers[0]).toBe('Runde');
+    expect(headers[0]).toBe('Gang');
     expect(cells[0]).toEqual([
       '1',
       'Preis 1',
       'Präsentkorb',
-      '1 Linie',
+      '1 Reihe',
       '50.50',
       'Bäckerei Frei',
       '18',
@@ -100,6 +100,16 @@ describe('round notes and anonymous Stechen', () => {
     expect(screen.getByText('ohne Kartennummer')).toBeInTheDocument();
     expect(screen.getByText(/Tisch 2/)).toBeInTheDocument();
     expect(screen.queryByText(/gewinnt das Stechen/)).not.toBeInTheDocument();
+  });
+});
+
+describe('TotalsPanel', () => {
+  it('lists false claims only for events from before ADR-0025 that hold them', () => {
+    const { unmount } = render(<TotalsPanel totals={results.totals} />);
+    expect(screen.getByText('Fehlmeldungen')).toBeInTheDocument();
+    unmount();
+    render(<TotalsPanel totals={{ ...results.totals, falseClaims: 0 }} />);
+    expect(screen.queryByText('Fehlmeldungen')).not.toBeInTheDocument();
   });
 });
 

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createTestHost, TestClock, type TestHost } from '../test/test-platform';
+import { PrizeEditor } from './prize-editor';
 import { MIN_DRAW_INTERVAL_MS, REVEAL_SETTLE_MS } from './reveal';
 import { WIN_OVERLAY_MS } from './overlays';
 
@@ -94,7 +95,7 @@ describe('HostController draws', () => {
 });
 
 describe('HostController prizes and overlays', () => {
-  it('awards, shows the Gewinn overlay, then the round end after the Hauptpreis', () => {
+  it('awards, shows the Gewinn overlay, then the round end after the last prize', () => {
     t.host.startRound();
     for (let slot = 1; slot <= 4; slot += 1) {
       t.host.drawManual(slot);
@@ -113,6 +114,74 @@ describe('HostController prizes and overlays', () => {
     expect(t.host.overlays.state.value).toBeUndefined();
   });
 
+  it('plays a Superlotto as the fifth prize of its round only, with the large win', () => {
+    t.app.setPreferences({ sound: true });
+    new PrizeEditor(t.app).savePrize(1, 5, {
+      title: 'Grosser Früchtekorb',
+      description: '',
+      valueChf: undefined,
+      sponsor: '',
+      imageId: undefined,
+      winCondition: { kind: 'FULL_CARD' },
+    });
+    t.host.startRound();
+    expect(game().rounds.get(1)?.rules?.superlotto).toBe(true);
+    for (let slot = 1; slot <= 4; slot += 1) {
+      t.host.drawManual(slot);
+      t.host.award({ winners: [{ cardNo: String(slot) }] });
+      const overlay = t.host.overlays.state.value;
+      expect(overlay?.kind === 'WIN' && overlay.superlotto).toBe(false);
+      expect(t.platform.sound.play).not.toHaveBeenCalledWith('superlottoWin');
+    }
+    expect(game().phase).toBe('ROUND_RUNNING');
+    t.host.drawManual(50);
+    t.host.award({ winners: [{ cardNo: '77' }] });
+    const overlay = t.host.overlays.state.value;
+    expect(overlay?.kind === 'WIN' && overlay.superlotto).toBe(true);
+    expect(overlay?.kind === 'WIN' && overlay.title).toBe('Grosser Früchtekorb');
+    expect(t.platform.sound.play).toHaveBeenCalledWith('superlottoWin');
+    expect(game().phase).toBe('BETWEEN_ROUNDS');
+    t.host.startRound();
+    expect(game().rounds.get(2)?.rules?.superlotto).toBeUndefined();
+  });
+
+  it('keeps the Gewinn overlay for 60 s unless the next draw ends it', () => {
+    t.host.startRound();
+    t.host.drawManual(1);
+    t.host.award({ winners: [{ cardNo: '1' }] });
+    vi.advanceTimersByTime(59_999);
+    expect(t.host.overlays.state.value?.kind).toBe('WIN');
+    vi.advanceTimersByTime(1);
+    expect(t.host.overlays.state.value).toBeUndefined();
+    t.host.drawManual(2);
+    t.host.award({ winners: [{ cardNo: '2' }] });
+    expect(t.host.overlays.state.value?.kind).toBe('WIN');
+    t.host.drawManual(3);
+    expect(t.host.overlays.state.value).toBeUndefined();
+  });
+
+  it('ends the Gewinn overlay when the host skips the next prize or aborts the round', () => {
+    t.host.startRound();
+    t.host.drawManual(1);
+    t.host.award({ winners: [{ cardNo: '1' }] });
+    expect(t.host.skipPrize('Preis fehlt').ok).toBe(true);
+    expect(t.host.overlays.state.value).toBeUndefined();
+    t.host.drawManual(2);
+    t.host.award({ winners: [{ cardNo: '2' }] });
+    expect(t.host.abortRound('Stromausfall').ok).toBe(true);
+    expect(t.host.overlays.state.value).toBeUndefined();
+  });
+
+  it('shows the round end at once when the last prize is skipped after a win', () => {
+    t.host.startRound();
+    for (let slot = 1; slot <= 3; slot += 1) {
+      t.host.drawManual(slot);
+      t.host.award({ winners: [{ cardNo: String(slot) }] });
+    }
+    expect(t.host.skipPrize('Preis fehlt').ok).toBe(true);
+    expect(t.host.overlays.state.value?.kind).toBe('ROUND_END');
+  });
+
   it('shows names on the display only when the event allows it', () => {
     const session = t.app.session.value;
     if (session === undefined) throw new Error('no session');
@@ -123,10 +192,9 @@ describe('HostController prizes and overlays', () => {
     expect(overlay?.kind === 'WIN' && overlay.winners).toEqual([{ cardNo: '7', name: 'Anna' }]);
   });
 
-  it('records false claims, skips, revokes and completes', () => {
+  it('skips, revokes and completes', () => {
     t.host.startRound();
     t.host.drawManual(5);
-    expect(t.host.rejectClaim([5, 6], [6]).ok).toBe(true);
     expect(t.host.award({ winners: [{}] }).ok).toBe(true);
     expect(t.host.revokeAward('Karte falsch').ok).toBe(true);
     expect(t.host.skipPrize('').ok).toBe(false);

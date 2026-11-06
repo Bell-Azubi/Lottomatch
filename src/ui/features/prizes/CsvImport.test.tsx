@@ -9,8 +9,8 @@ import { CsvImport } from './CsvImport';
 
 const CSV = [
   '\uFEFFRunde;Preis;Titel;Beschreibung;Wert CHF;Sponsor;Gewinnregel',
-  '1;1;Zopf und Konfitüre;;25.–;Bäckerei Muster;1 Linie',
-  '1;Hauptpreis;Velo;Für Gross und Klein;1’000.50;;Volle Karte',
+  '1;1;Zopf und Konfitüre;;25.–;Bäckerei Muster;1 Reihe',
+  '1;4. Preis;Velo;Für Gross und Klein;1’000.50;;Volle Karte',
   '2;9;Falsch;;;;',
   '30;1;Zu weit;;;;',
 ].join('\r\n');
@@ -53,7 +53,7 @@ describe('CsvImport', () => {
       target: { files: [new File(['Titel;Wert\nA;5\n'], 'a.csv')] },
     });
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent(m.csv.missingColumns('Runde, Preis'));
+      expect(screen.getByRole('alert')).toHaveTextContent(m.csv.missingColumns('Gang, Preis'));
     });
   });
 

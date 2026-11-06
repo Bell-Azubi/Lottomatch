@@ -91,8 +91,8 @@ describe('issue messages', () => {
   it('has a specific message for every issue', () => {
     const texts = all.map((issue) => issueText(issue, de, 7));
     expect(texts.every((text) => text.length > 0)).toBe(true);
-    expect(texts[5]).toBe('Mindestens 7: so viele Runden wurden schon gestartet.');
-    expect(texts[7]).toBe('Gesperrt, solange eine Runde läuft.');
+    expect(texts[5]).toBe('Mindestens 7: so viele Gänge wurden schon gestartet.');
+    expect(texts[7]).toBe('Gesperrt, solange ein Gang läuft.');
     expect(texts.join(' ')).not.toContain('ß');
   });
 

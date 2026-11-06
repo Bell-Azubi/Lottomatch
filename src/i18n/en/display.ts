@@ -7,12 +7,21 @@ export const display: DisplayMessages = {
   latestNumber: (n, seq) => `Drawn last: ${n}, draw ${seq}`,
   ringTop: (round, total) => `ROUND ${round} OF ${total}`,
   ringBottom: (seq) => `DRAW ${seq}`,
-  ringMain: 'MAIN PRIZE',
+  ringSuperlotto: 'SUPERLOTTO',
   ringPractice: 'PRACTICE',
   fullscreenHint: 'Click or press F for fullscreen',
+  welcome: {
+    greeting: 'Welcome',
+    event: 'to the Lottomatch of the',
+    club: 'FC Laufenburg-Kaisten seniors',
+    luck: 'Good luck!',
+    ringTop: 'WELCOME',
+    ringBottom: 'FC LAUFENBURG-KAISTEN SENIORS',
+    mark: ['LOTTO', 'MATCH'],
+  },
   win: {
     title: 'Winner!',
-    mainTitle: 'Main prize!',
+    superlottoTitle: 'Superlotto!',
     card: (cardNo) => `Card ${cardNo}`,
   },
   roundEnd: {

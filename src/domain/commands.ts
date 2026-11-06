@@ -30,6 +30,15 @@ export type CommandResult = Result<readonly LogEvent[], DomainError>;
 export interface RoundContext {
   readonly totalRounds: number;
   readonly rules: RoundRules;
+  /** Rounds that play a Superlotto when they start (ADR-0027). */
+  readonly superlottoRounds: ReadonlySet<number>;
+}
+
+/** The rules frozen into a round when it starts. */
+function rulesFor(context: RoundContext, round: number): RoundRules {
+  return context.superlottoRounds.has(round)
+    ? { ...context.rules, superlotto: true }
+    : context.rules;
 }
 
 /** Validates events in order against a scratch state and returns them unchanged. */
@@ -89,7 +98,7 @@ export function startNextRound(state: GameState, context: RoundContext): Command
   if (state.phase === 'ROUND_RUNNING') return err(domainError('ROUND_RUNNING'));
   const round = nextRound(state, context.totalRounds);
   if (round === undefined) return err(domainError('NO_ROUND_LEFT'));
-  return emit(state, [{ type: 'ROUND_STARTED', round, rules: context.rules }]);
+  return emit(state, [{ type: 'ROUND_STARTED', round, rules: rulesFor(context, round) }]);
 }
 
 /** Host override: jumps to a round, aborting a running round with the same reason. */
@@ -112,7 +121,12 @@ export function jumpToRound(
   if (state.phase === 'ROUND_RUNNING' && state.currentRound !== undefined) {
     events.push({ type: 'ROUND_ABORTED', round: state.currentRound, reason: text });
   }
-  events.push({ type: 'ROUND_STARTED', round: target, rules: context.rules, reason: text });
+  events.push({
+    type: 'ROUND_STARTED',
+    round: target,
+    rules: rulesFor(context, target),
+    reason: text,
+  });
   return emit(state, events);
 }
 

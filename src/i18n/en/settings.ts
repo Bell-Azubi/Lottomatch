@@ -60,10 +60,6 @@ export const settings: SettingsMessages = {
     roundsHint: (min) => (min > 1 ? `1 to 50, at least ${min} (already started)` : '1 to 50'),
     maxNumber: 'Highest number (N)',
     maxNumberHint: '30 to 99; the board shows the numbers 1 to N',
-    card: 'Cards',
-    perLine: 'Numbers per line',
-    lines: 'Lines per card',
-    cardHint: (count) => `A full card has ${count} numbers.`,
     locked: 'Locked while a round is running.',
     template: 'Win rules (template)',
     templateHint:
@@ -71,18 +67,13 @@ export const settings: SettingsMessages = {
     slotRule: (slot) => `Win rule ${slot}`,
     customLabel: (slot) => `Custom rule for ${slot}`,
     rules: 'Rules',
-    lateClaim: 'Late claims',
-    lateClaimOptions: {
-      ALLOW: 'Admit',
-      REJECT: 'Reject',
-      HOST_DECIDES: 'Caller decides',
-    },
     tiePolicy: 'Several winning cards',
     tiePolicyOptions: { TIEBREAK: 'Tie-break', SHARE: 'Share' },
     tiebreakOrder: 'Tie-break',
     tiebreakOrderOptions: { HIGHEST: 'Highest number wins', LOWEST: 'Lowest number wins' },
     boardReset: 'Clear the board after each prize',
-    boardResetHint: 'Each prize gets its own numbers. Default: off.',
+    boardResetHint:
+      'Each prize gets its own numbers, only the Superlotto goes on with the board of prize 4. Default: off.',
     showNames: 'Show names on the display',
     showNamesHint:
       'Default: off. Otherwise the display shows the card number only (privacy, revFADP).',
@@ -105,8 +96,8 @@ export const settings: SettingsMessages = {
     rounds: { OUT_OF_RANGE: '1 to 50 rounds.' },
     belowPlayed: (min) => `At least ${min}: that many rounds have already started.`,
     maxNumber: { OUT_OF_RANGE: 'A whole number from 30 to 99.' },
-    perLine: { OUT_OF_RANGE: '3 to 9 numbers per line.' },
-    lines: { OUT_OF_RANGE: '2 to 6 lines.' },
+    perLine: { OUT_OF_RANGE: '3 to 9 numbers per row.' },
+    lines: { OUT_OF_RANGE: '2 to 6 rows.' },
     cardSize: 'A card has more numbers than the board.',
     template: 'A custom rule needs a label (at most 60 characters).',
     sponsors: {

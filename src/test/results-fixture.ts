@@ -26,7 +26,7 @@ const draw = (round: number, seq: number, number: number): LogEvent => ({
 
 /**
  * A played evening covering every result feature: a late claim, a false claim, a skip, an undo,
- * a Stechen with a revocation and re-award, a shared Hauptpreis, a handout, a correction and an
+ * a Stechen with a revocation and re-award, a shared fourth prize, a handout, a correction and an
  * aborted second round.
  */
 export const EVENING: readonly LogEvent[] = [
@@ -101,7 +101,7 @@ export const EVENING: readonly LogEvent[] = [
   draw(2, 1, 9),
   { type: 'ROUND_ABORTED', round: 2, reason: 'Stromausfall' },
   { type: 'SETTINGS_CHANGED', changes: [{ field: 'venue', from: '', to: 'Turnhalle' }] },
-  { type: 'PRIZES_CHANGED', action: 'Runde kopiert', rounds: [3, 4] },
+  { type: 'PRIZES_CHANGED', action: 'Gang kopiert', rounds: [3, 4] },
   { type: 'PIN_RESET' },
   { type: 'PERSONAL_DATA_ERASED', winners: 1 },
   { type: 'CONTROL_TAKEN_OVER' },

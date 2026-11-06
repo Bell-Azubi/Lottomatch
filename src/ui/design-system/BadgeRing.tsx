@@ -10,7 +10,7 @@ export interface BadgeRingProps {
   readonly variant?: BadgeVariant;
   readonly topText?: string | undefined;
   readonly bottomText?: string | undefined;
-  /** The band turns Club Red for the Hauptpreis. */
+  /** The band turns Club Red for the Superlotto. */
   readonly bandTone?: 'graphite' | 'red';
   /** Numeral in the field, rendered in Barlow Condensed ExtraBold. */
   readonly numeral?: string | undefined;

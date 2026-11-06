@@ -2,7 +2,8 @@ import type { PrizesMessages } from '../de-CH/prizes';
 
 export const prizes: PrizesMessages = {
   title: 'Prizes',
-  intro: (rounds) => `${rounds} rounds with four prizes each: prizes 1–3 and the main prize.`,
+  intro: (rounds) =>
+    `${rounds} rounds with four prizes each. The Superlotto joins as a fifth prize where the prize list has one.`,
   readOnly: 'View only: another window controls the game.',
   liveHint: 'Changes to running and upcoming rounds appear on the display immediately.',
   toolbar: 'Tools',
@@ -12,7 +13,7 @@ export const prizes: PrizesMessages = {
     prizes: 'Prizes',
     status: 'Status',
     action: 'Action',
-    complete: (filled) => `${filled} of 4 prizes entered`,
+    complete: (filled, total) => `${filled} of ${total} prizes entered`,
     gaps: (count) => (count === 1 ? '1 prize missing' : `${count} prizes missing`),
     allComplete: 'All prizes entered',
     totalGaps: (count) =>
@@ -76,18 +77,20 @@ export const prizes: PrizesMessages = {
   bulk: {
     title: 'Bulk editing',
     copy: 'Copy round',
-    copyBody: 'Copy the four prizes of a round to other rounds. Prizes there are replaced.',
+    copyBody:
+      'Copy the four prizes of a round to other rounds. Prizes there are replaced, the Superlotto stays untouched.',
     copyFrom: 'From round',
     copyTo: 'To rounds (for example 2-5, 8)',
     copyConfirm: 'Copy',
     copied: (count) => (count === 1 ? 'Copied to 1 round' : `Copied to ${count} rounds`),
     template: 'Apply win rules everywhere',
-    templateBody: 'Sets the template win rule from the settings on every prize.',
+    templateBody:
+      'Sets the template win rule from the settings on the four prizes of every round. The Superlotto keeps its rule.',
     templateConfirm: 'Apply',
     templated: 'Win rules applied',
     clear: 'Clear round',
     clearRound: 'Round',
-    clearBody: 'All prizes of the selected round are removed.',
+    clearBody: 'All prizes of the selected round are removed, including the Superlotto.',
     clearConfirm: 'Clear',
     cleared: (round) => `Round ${round} cleared`,
     skipped: (count) =>
@@ -101,7 +104,7 @@ export const prizes: PrizesMessages = {
     export: 'Export CSV',
     exported: 'CSV exported',
     title: 'Import prizes from CSV',
-    hint: 'Columns: Round; Prize; Title; Description; Value CHF; Sponsor; Win condition. Separator «;» or «,», UTF-8.',
+    hint: 'Columns: Round; Prize; Title; Description; Value CHF; Sponsor; Win condition. The Prize column holds 1. Preis to 4. Preis or Superlotto. Separator «;» or «,», UTF-8.',
     file: 'CSV file',
     reading: 'Reading file …',
     unreadable: 'The file cannot be read.',
@@ -125,15 +128,17 @@ export const prizes: PrizesMessages = {
     rowErrors: {
       ROUND_INVALID: 'The round is not a whole number.',
       ROUND_OUT_OF_RANGE: 'This round does not exist in the event.',
-      SLOT_INVALID: 'Prize must be 1, 2, 3 or main prize.',
+      SLOT_INVALID: 'Prize must be 1 to 4 or Superlotto.',
       TITLE_REQUIRED: 'The title is missing.',
       TITLE_TOO_LONG: 'The title is longer than 60 characters.',
       DESCRIPTION_TOO_LONG: 'The description is longer than 200 characters.',
       SPONSOR_TOO_LONG: 'The sponsor is longer than 60 characters.',
       VALUE_INVALID: 'The value is not a valid CHF amount.',
       CONDITION_INVALID: 'The win condition is longer than 60 characters.',
+      CONDITION_REMOVED:
+        'The win condition «2 rows» is no longer available. Please enter «1 row», «Full card» or a custom rule.',
       DUPLICATE: 'This round and prize appear more than once.',
-      AWARDED: 'This prize has already been awarded.',
+      AWARDED: 'This prize can no longer be changed: it is awarded or the round is running.',
     },
   },
   prepared: {

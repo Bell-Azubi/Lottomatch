@@ -8,7 +8,7 @@ const int = (min: number, max: number) =>
   v.pipe(v.number(), v.integer(), v.minValue(min), v.maxValue(max));
 const optional = v.exactOptional;
 
-export const slotSchema = v.picklist([1, 2, 3, 4]);
+export const slotSchema = v.picklist([1, 2, 3, 4, 5]);
 
 export const winConditionSchema = v.variant('kind', [
   v.object({ kind: v.literal('ONE_LINE') }),
@@ -29,6 +29,7 @@ const rulesSchema = v.object({
   perLine: int(1, 99),
   lines: int(1, 99),
   boardReset: v.picklist(['ROUND', 'PRIZE']),
+  superlotto: optional(v.literal(true)),
 });
 
 const money = v.pipe(v.number(), v.finite(), v.minValue(0), v.maxValue(10_000_000));

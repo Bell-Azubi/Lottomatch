@@ -19,7 +19,7 @@ export interface HostBarProps {
   readonly onShortcuts: () => void;
 }
 
-/** Bottom bar: display connection, Anzeige öffnen, Pause, Runde starten and host overrides. */
+/** Bottom bar: display connection, Anzeige öffnen, Pause, Gang starten and host overrides. */
 export function HostBar(props: HostBarProps) {
   const m = t(liveText).bar;
   const { display } = props;

@@ -97,7 +97,7 @@ describe('Anlässe', () => {
     expect(test.host.startRound().ok).toBe(true);
     renderWithServices(<EventsSection canEdit />, test);
     fireEvent.click(screen.getByRole('button', { name: 'Wechseln' }));
-    expect(within(dialog()).getByText(/Die laufende Runde bleibt gespeichert/)).toBeInTheDocument();
+    expect(within(dialog()).getByText(/Der laufende Gang bleibt gespeichert/)).toBeInTheDocument();
     fireEvent.click(within(dialog()).getByRole('button', { name: 'Trotzdem wechseln' }));
     await waitFor(() => {
       expect(activeName(test)).toBe('Lottomatch');

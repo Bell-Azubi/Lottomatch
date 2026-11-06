@@ -14,10 +14,12 @@ import { PrizeBar } from './PrizeBar';
 import { Stage } from './Stage';
 import { useDisplayChrome } from './useDisplayChrome';
 import { useReveal } from './useReveal';
+import { Welcome } from './Welcome';
 
 /**
  * Anzeige: read-only audience screen in its own window (FR-10). It renders the newest host
- * snapshot; with no host present, the persisted state.
+ * snapshot; with no host present, the persisted state. Until the first round starts it shows the
+ * welcome page.
  */
 export default function DisplayPage() {
   const m = t(displayText);
@@ -62,12 +64,18 @@ export default function DisplayPage() {
       }}
     >
       <h1 class="visually-hidden">{m.title}</h1>
-      <div class={styles.logo}>
-        <Logo size="display" />
-        {snapshot?.practice === true && <span class={styles.practice}>{m.ringPractice}</span>}
-      </div>
-      {snapshot !== undefined && (
+      {snapshot === undefined || snapshot.phase === 'READY' ? (
+        <Welcome
+          date={snapshot?.date}
+          venue={snapshot?.venue}
+          practice={snapshot?.practice === true}
+        />
+      ) : (
         <>
+          <div class={styles.logo}>
+            <Logo size="display" />
+            {snapshot.practice && <span class={styles.practice}>{m.ringPractice}</span>}
+          </div>
           <div class={styles.ring}>
             <RoundRing
               round={snapshot.round}
@@ -85,14 +93,14 @@ export default function DisplayPage() {
           <div class={styles.bar}>
             <PrizeBar snapshot={snapshot} images={app.platform.images} />
           </div>
-          {snapshot.overlay !== undefined && (
-            <Overlay
-              overlay={snapshot.overlay}
-              images={app.platform.images}
-              quiet={snapshot.performanceMode}
-            />
-          )}
         </>
+      )}
+      {snapshot?.overlay !== undefined && (
+        <Overlay
+          overlay={snapshot.overlay}
+          images={app.platform.images}
+          quiet={snapshot.performanceMode}
+        />
       )}
       {!fullscreen && <p class={styles.hint}>{m.fullscreenHint}</p>}
     </main>

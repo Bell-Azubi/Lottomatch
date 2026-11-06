@@ -1,10 +1,12 @@
 import { signal } from '@preact/signals';
 import { defaultSettings } from '../domain/settings';
+import { SUPERLOTTO_SLOT } from '../domain/types';
 import { loadMatch, parseMatches, type LoadFailure } from './loader';
 import type { StoragePersistence } from './ports';
 import type { Platform } from './platform';
 import { DEFAULT_PREFERENCES, type MatchKind, type MatchRecord, type Preferences } from './records';
 import { parsePreferences } from './schemas';
+import { isSlotLocked } from './selectors';
 import { MatchSession } from './session';
 import { WriteQueue } from './write-queue';
 
@@ -108,7 +110,7 @@ export class AppStore {
       return false;
     }
     const { catalogue, log, state } = loaded.value;
-    this.session.value = new MatchSession(
+    const session = new MatchSession(
       {
         clock: this.platform.clock,
         ids: this.platform.ids,
@@ -125,8 +127,29 @@ export class AppStore {
       log,
       state,
     );
+    this.session.value = session;
     this.phase.value = { kind: 'READY' };
+    this.addPrizeList(session);
     return true;
+  }
+
+  /**
+   * An event without any prize gets the prize list, also while it is being played; an event that is
+   * over stays as it was. A round that started without a Superlotto cannot play one (ADR-0028).
+   */
+  private addPrizeList(session: MatchSession): void {
+    const game = session.game.value;
+    if (!this.canWrite() || session.catalogue.value.prizes.length > 0) return;
+    if (game.phase === 'COMPLETED') return;
+    const { rounds } = session.match.value.settings;
+    const prizes = this.platform.initialPrizes.filter(
+      (prize) =>
+        prize.round <= rounds &&
+        (prize.slot !== SUPERLOTTO_SLOT || !isSlotLocked(game, prize.round, prize.slot)),
+    );
+    if (prizes.length === 0) return;
+    const changed = prizes.map((prize) => prize.round);
+    session.updateCatalogue({ prizes }, 'PRIZE_LIST_ADDED', changed);
   }
 
   /** Re-reads the active event from storage (after another window wrote it). */

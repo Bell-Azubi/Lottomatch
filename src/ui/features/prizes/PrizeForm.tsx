@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import type { ImageStore } from '../../../application/ports';
 import type { PrizeEditError, PrizeEditor } from '../../../application/prize-editor';
-import type { Prize, PrizeSlot, WinCondition, WinConditionKind } from '../../../domain/types';
+import type { Prize, PrizeSlot, WinCondition } from '../../../domain/types';
+import { conditionChoices } from '../../../domain/win-condition';
 import { commonText } from '../../../i18n/catalogues';
 import { conditionLabel } from '../../../i18n/labels';
 import { formatChf } from '../../../i18n/format';
@@ -32,8 +33,6 @@ export interface PrizeFormProps {
   readonly awarded: boolean;
   readonly readOnly: boolean;
 }
-
-const KINDS: readonly WinConditionKind[] = ['ONE_LINE', 'TWO_LINES', 'FULL_CARD', 'CUSTOM'];
 
 function AwardedView({
   prize,
@@ -176,7 +175,10 @@ export function PrizeForm({
         <SelectField
           label={m.form.condition}
           value={values.conditionKind}
-          options={KINDS.map((kind) => ({ value: kind, label: c.conditions[kind] }))}
+          options={conditionChoices(values.conditionKind).map((kind) => ({
+            value: kind,
+            label: c.conditions[kind],
+          }))}
           onValue={(conditionKind) => {
             set({ conditionKind });
           }}

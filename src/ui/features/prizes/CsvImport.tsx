@@ -1,7 +1,7 @@
 import { useId, useState } from 'preact/hooks';
 import { buildPreview, type CsvPreview } from '../../../application/prize-csv';
 import type { PrizeEditor } from '../../../application/prize-editor';
-import { isAwarded } from '../../../application/selectors';
+import { isSlotLocked } from '../../../application/selectors';
 import { commonText } from '../../../i18n/catalogues';
 import { formatChf } from '../../../i18n/format';
 import { conditionLabel } from '../../../i18n/labels';
@@ -106,7 +106,7 @@ export function CsvImport({
       const result = buildPreview(table.rows, table.headers, {
         totalRounds: settings.rounds,
         template: settings.template,
-        locked: (round, slot) => isAwarded(game, round, slot),
+        locked: (round, slot) => isSlotLocked(game, round, slot),
       });
       if (result.mapping.missing.length > 0) {
         setProblem(

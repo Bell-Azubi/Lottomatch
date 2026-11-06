@@ -26,10 +26,11 @@ import {
   latestResolvedSlot,
   poolDraws,
   runningRound,
+  slotsOfRound,
   type GameState,
 } from './state';
 import type { LogEnvelope, PrizeSlot, RoundRules } from './types';
-import { PRIZE_SLOTS } from './types';
+import { SUPERLOTTO_ROUND_SLOTS } from './types';
 
 type Action =
   | { kind: 'start' }
@@ -152,16 +153,18 @@ function assertInvariants(
   let running = 0;
   for (const round of state.rounds.values()) {
     const max = round.rules?.maxNumber ?? 99;
-    for (const slot of PRIZE_SLOTS) {
+    for (const slot of SUPERLOTTO_ROUND_SLOTS) {
       const numbers = poolDraws(round, slot).map((d) => d.number);
       // I1: unique integers in 1..N per pool.
       expect(new Set(numbers).size).toBe(numbers.length);
       expect(numbers.every((n) => Number.isInteger(n) && n >= 1 && n <= max)).toBe(true);
     }
     // I2: resolved prizes form a prefix in slot order.
-    const statuses = PRIZE_SLOTS.map((slot) => round.prizes[slot].status);
+    const statuses = slotsOfRound(round).map((slot) => round.prizes[slot].status);
     const firstOpen = statuses.indexOf('OPEN');
     if (firstOpen >= 0) expect(statuses.slice(firstOpen).every((s) => s === 'OPEN')).toBe(true);
+    // A completed round has resolved every prize it plays, the Superlotto included.
+    if (round.status === 'COMPLETED') expect(firstOpen).toBe(-1);
     if (round.status === 'RUNNING') {
       running += 1;
       expect(firstOpenSlot(round)).toBeDefined();
@@ -207,7 +210,7 @@ describe('invariants I1–I7 under arbitrary command sequences', () => {
         }),
         fc.array(actionArb, { maxLength: 160 }),
         (rules, actions) => {
-          const context: RoundContext = { totalRounds: 4, rules };
+          const context: RoundContext = { totalRounds: 4, rules, superlottoRounds: new Set([2]) };
           let state = initialGameState();
           const log: LogEnvelope[] = [];
           const rulesAtStart = new Map<number, RoundRules>();

@@ -43,7 +43,7 @@
   line-height: 1.05;
 }
 
-.mainWin .headline {
+.superlottoWin .headline {
   color: var(--accent-text);
 }
 
@@ -82,7 +82,8 @@
 
 .nextPrizes {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
   gap: clamp(8px, 2vh, 48px);
   width: 100%;
   margin: 0;

@@ -27,13 +27,14 @@ export const common: CommonMessages = {
   },
   practiceBadge: 'Practice',
   conditions: {
-    ONE_LINE: '1 line',
-    TWO_LINES: '2 lines',
+    ONE_LINE: '1 row',
+    TWO_LINES: '2 rows',
     FULL_CARD: 'Full card',
     CUSTOM: 'Custom rule',
   },
-  prizeSlot: (slot) => (slot === 4 ? 'Main prize' : `Prize ${slot}`),
-  prizeOfFour: (slot) => `Prize ${slot} of 4`,
+  prizeSlot: (slot) => (slot === 5 ? 'Superlotto' : `Prize ${slot}`),
+  prizeDisc: (slot) => (slot === 5 ? 'S' : String(slot)),
+  prizeOf: (slot, total) => (slot === 5 ? 'Superlotto' : `Prize ${slot} of ${total}`),
   roundOf: (round, total) => `Round ${round} of ${total}`,
   progress: {
     AWARDED: 'awarded',

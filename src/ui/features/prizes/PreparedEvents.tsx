@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import type { ImportError, ImportPreview } from '../../../application/backup-import';
 import { commitImport } from '../../../application/backup-import';
 import {
@@ -44,7 +44,10 @@ function preparedErrorText(error: PreparedEventError, m: PrizesMessages): string
   return error.code === 'UNAVAILABLE' ? m.prepared.unavailable : m.prepared.invalid;
 }
 
-/** One-click loading of prepared event files shipped in `public/events/` (FR-8). */
+/**
+ * One-click loading of prepared event files shipped in `public/events/` (FR-8). Without a shipped
+ * file there is nothing to load and no button; a failed check keeps it, and its dialog explains why.
+ */
 export function PreparedEvents({ readOnly }: { readonly readOnly: boolean }) {
   const m = t(prizesText);
   const c = t(commonText);
@@ -54,6 +57,16 @@ export function PreparedEvents({ readOnly }: { readonly readOnly: boolean }) {
   const [problem, setProblem] = useState<string | undefined>(undefined);
   const [preview, setPreview] = useState<ImportPreview | undefined>(undefined);
   const [busy, setBusy] = useState(false);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    let active = true;
+    void loadManifest(app.platform).then((result) => {
+      if (active) setVisible(!result.ok || result.value.length > 0);
+    });
+    return () => {
+      active = false;
+    };
+  }, [app.platform]);
   const show = async () => {
     setOpen(true);
     setEntries(undefined);
@@ -87,6 +100,7 @@ export function PreparedEvents({ readOnly }: { readonly readOnly: boolean }) {
   const close = () => {
     setOpen(false);
   };
+  if (!visible) return null;
   return (
     <>
       <Button disabled={readOnly} onClick={() => void show()}>

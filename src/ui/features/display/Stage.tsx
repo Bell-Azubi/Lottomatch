@@ -1,6 +1,6 @@
 import type { RefObject } from 'preact';
 import type { DisplaySnapshot } from '../../../application/sync-messages';
-import { MAIN_PRIZE_SLOT } from '../../../domain/types';
+import { SUPERLOTTO_SLOT } from '../../../domain/types';
 import { displayText } from '../../../i18n/catalogues';
 import { t } from '../../../i18n';
 import { BadgeRing } from '../../design-system/BadgeRing';
@@ -19,15 +19,15 @@ export interface StageProps {
 
 /**
  * The solid half of the split field: the latest number assembled into a badge, ringed with
- * "RUNDE 7 VON 24" and "ZIEHUNG 37" (HAUPTPREIS in red, ÜBUNG in practice), and the last five.
+ * "GANG 7 VON 24" and "ZIEHUNG 37" (SUPERLOTTO in red, ÜBUNG in practice), and the last five.
  */
 export function Stage({ snapshot, view, stageRef, lastFive }: StageProps) {
   const m = t(displayText);
-  const main = snapshot.prize?.slot === MAIN_PRIZE_SLOT;
+  const superlotto = snapshot.prize?.slot === SUPERLOTTO_SLOT;
   const topText = snapshot.practice
     ? m.ringPractice
-    : main
-      ? m.ringMain
+    : superlotto
+      ? m.ringSuperlotto
       : snapshot.round === undefined
         ? undefined
         : m.ringTop(snapshot.round, snapshot.totalRounds);
@@ -44,7 +44,7 @@ export function Stage({ snapshot, view, stageRef, lastFive }: StageProps) {
               variant="badge"
               topText={topText}
               bottomText={shown === undefined ? undefined : m.ringBottom(shown.seq)}
-              bandTone={main ? 'red' : 'graphite'}
+              bandTone={superlotto ? 'red' : 'graphite'}
               numeral={shown === undefined ? undefined : String(shown.number)}
             />
           </div>

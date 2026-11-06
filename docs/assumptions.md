@@ -5,11 +5,10 @@ architecture it has an ADR.
 
 1. **One laptop, one browser profile.** Host console and display are two windows of the same
    origin in the same browser. No cross-device sync in v1 (the `SyncTransport` port is the seam).
-2. **Physical cards are not known to the app.** The claim check verifies the numbers the
-   Kontrolle reads out; it cannot know a card's layout beyond the configured line length.
-3. **Card layout** defaults to 3 lines × 5 numbers; configurable 3–9 numbers per line and
-   2–6 lines, with `numbers per line × lines ≤ N`. Expected claim counts: 1 Linie = one line,
-   2 Linien = two lines, Volle Karte = all lines; Eigene Regel = any count ≥ 1.
+2. **Physical cards are not known to the app.** The Kontrolle checks a claimed card at the table;
+   the app only records the confirmed win (ADR-0025).
+3. **Card layout** is stored as 3 lines × 5 numbers for every new event. Since ADR-0025 it has no
+   effect and is no longer offered in the settings.
 4. **Ziehung n** is the 1-based position of a draw within its round (ADR-0015). After an undo
    the next draw reuses the freed position.
 5. **Stechen** draws one number per claimant from 1–N with replacement, so ties are possible
@@ -20,8 +19,8 @@ architecture it has an ADR.
    physical drum was refilled for the next prize (ADR-0009).
 8. **Aborting a round** keeps its awards; unresolved prizes stay open. A round aborted before
    any draw or award returns to "upcoming". Aborted rounds are resumed only through
-   "Zu Runde springen" (ADR-0008).
-9. **"Runde starten"** starts the lowest upcoming round after the last played round, falling
+   "Zu Gang springen" (ADR-0008).
+9. **"Gang starten"** starts the lowest upcoming round after the last played round, falling
    back to the lowest upcoming round overall.
 10. **Event completion** is an explicit host action after the last round ("Anlass
     abschliessen"); until then the latest award stays revocable.

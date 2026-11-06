@@ -38,6 +38,8 @@ export function buildSnapshot(input: SnapshotInput): DisplaySnapshot {
     seq: input.seq,
     matchId: input.matchId,
     practice: input.kind === 'PRACTICE',
+    ...(settings.date === '' ? {} : { date: settings.date }),
+    ...(settings.venue === '' ? {} : { venue: settings.venue }),
     phase: game.phase,
     ...(game.currentRound === undefined ? {} : { round: game.currentRound }),
     totalRounds: settings.rounds,

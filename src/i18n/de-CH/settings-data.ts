@@ -17,7 +17,7 @@ export const settingsData = {
     previewDate: 'Datum',
     previewKind: 'Art',
     previewKinds: { REAL: 'Anlass', PRACTICE: 'Übung' },
-    previewRounds: 'Runden',
+    previewRounds: 'Gänge',
     previewPrizes: 'Preise',
     previewImages: 'Bilder',
     previewLog: 'Einträge im Spielprotokoll',
@@ -58,7 +58,7 @@ export const settingsData = {
     resetHint:
       'Löscht alle Ziehungen und Gewinne des aktiven Anlasses. Einstellungen und Preise bleiben.',
     resetTitle: 'Anlass zurücksetzen?',
-    resetBody: 'Vorher eine Sicherung exportieren. Danach beginnt der Anlass wieder bei Runde 1.',
+    resetBody: 'Vorher eine Sicherung exportieren. Danach beginnt der Anlass wieder bei Gang 1.',
     resetWord: 'ZURÜCKSETZEN',
     resetPrompt: 'Zum Bestätigen «ZURÜCKSETZEN» eintippen',
     resetConfirm: 'Zurücksetzen',
@@ -105,7 +105,7 @@ export const settingsData = {
     serviceWorkerStates: {
       unsupported: 'vom Browser nicht unterstützt',
       failed: 'Registrierung fehlgeschlagen',
-      update: 'Update bereit (wird zwischen den Runden angeboten)',
+      update: 'Update bereit (wird zwischen den Gängen angeboten)',
       ready: 'bereit',
       pending: 'wird vorbereitet',
     },

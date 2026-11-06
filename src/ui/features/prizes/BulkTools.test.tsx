@@ -92,6 +92,13 @@ describe('PrintList', () => {
           sponsor: 'Bäckerei Muster',
           winCondition: { kind: 'ONE_LINE' as const },
         },
+        {
+          id: 'b',
+          round: 2,
+          slot: 5 as const,
+          title: 'Grosser Früchtekorb',
+          winCondition: { kind: 'FULL_CARD' as const },
+        },
       ],
     };
     const { container } = render(
@@ -106,7 +113,12 @@ describe('PrintList', () => {
     expect(container.textContent).toContain(m.print.heading('Lottomatch'));
     expect(container.textContent).toContain('Zopf');
     expect(container.textContent).toContain(m.print.sponsor('Bäckerei Muster'));
-    expect(container.textContent).toContain('Hauptpreis');
+    expect(container.textContent).toContain('Preis 4');
     expect(container.querySelectorAll('h2')).toHaveLength(24);
+    const rowsOf = (index: number) => container.querySelectorAll('table')[index]?.rows.length;
+    expect(rowsOf(0)).toBe(4);
+    expect(rowsOf(1)).toBe(5);
+    expect(container.textContent).toContain('Grosser Früchtekorb');
+    expect(container.querySelectorAll('table')[1]?.textContent).toContain('Superlotto');
   });
 });

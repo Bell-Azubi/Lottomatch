@@ -79,7 +79,7 @@ export interface Announcer {
   cancel(): void;
 }
 
-export type SoundCue = 'tick' | 'reveal' | 'win' | 'mainWin' | 'error';
+export type SoundCue = 'tick' | 'reveal' | 'win' | 'superlottoWin' | 'error';
 
 export interface SoundPlayer {
   play(cue: SoundCue): void;

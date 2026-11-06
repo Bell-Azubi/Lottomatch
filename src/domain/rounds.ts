@@ -8,7 +8,7 @@ export function roundStatus(state: GameState, round: number): RoundStatus {
 }
 
 /**
- * The round "Runde starten" begins: the lowest upcoming round from the current one on,
+ * The round "Gang starten" begins: the lowest upcoming round from the current one on,
  * else the lowest upcoming round overall; `undefined` when every round has been played.
  */
 export function nextRound(state: GameState, totalRounds: number): number | undefined {

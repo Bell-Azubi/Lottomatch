@@ -10,7 +10,6 @@ import {
   prizeFromDraft,
   referencedImages,
   removePrize,
-  roundCompleteness,
   snapshotOf,
   totalPrizeValue,
   upsertPrize,
@@ -121,8 +120,7 @@ describe('catalogue editing', () => {
     expect(conditionFor(custom, DEFAULT_TEMPLATE, 1, 2)).toEqual({ kind: 'ONE_LINE' });
   });
 
-  it('reports completeness and gaps', () => {
-    expect(roundCompleteness(catalogue, 1)).toBe(1);
+  it('reports gaps', () => {
     expect(findGaps(catalogue, 2)).toEqual([
       { round: 1, slots: [1, 2, 4] },
       { round: 2, slots: [2, 3, 4] },
@@ -154,7 +152,7 @@ describe('catalogue editing', () => {
     expect(prizeAt(result.catalogue, 2, 1)?.title).toBe('Preis 1');
     expect(prizeAt(result.catalogue, 2, 1)?.id).not.toBe('p1-1');
     expect(prizeAt(result.catalogue, 3, 2)?.id).toBe('p3-2');
-    expect(roundCompleteness(result.catalogue, 1)).toBe(1);
+    expect(findGaps(result.catalogue, 1)[0]?.slots).toEqual([2, 3, 4]);
   });
 
   it('applies the template to unlocked prizes', () => {

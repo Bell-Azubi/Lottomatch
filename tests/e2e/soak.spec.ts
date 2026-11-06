@@ -5,6 +5,7 @@ import {
   open,
   openDisplay,
   openHost,
+  prizesInRound,
   setAnimation,
   startRound,
   typeNumber,
@@ -76,16 +77,16 @@ async function createEvent(page: Page, name: string): Promise<void> {
   await expect(page.getByText(`«${name}» erstellt`)).toBeVisible();
 }
 
-/** Plays 24 rounds of four prizes each and completes the event. */
+/** Plays the 24 rounds of the prize list and completes the event. */
 async function playEvent(page: Page): Promise<void> {
   await openHost(page);
   for (let round = 1; round <= 24; round += 1) {
     await startRound(page, round);
-    for (let slot = 1; slot <= 4; slot += 1) {
+    for (let slot = 1; slot <= prizesInRound(round); slot += 1) {
       await typeNumber(page, slot * 10 + (round % 10));
       await confirmWin(page, `${round}-${slot}`);
     }
-    await expect(page.getByRole('heading', { name: `Runde ${round} ist fertig` })).toBeVisible();
+    await expect(page.getByRole('heading', { name: `Gang ${round} ist fertig` })).toBeVisible();
   }
   await page.getByRole('button', { name: 'Anlass abschliessen' }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Bestätigen' }).click();

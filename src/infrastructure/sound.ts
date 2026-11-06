@@ -25,7 +25,7 @@ export const CUES: Readonly<Record<SoundCue, readonly Tone[]>> = {
     { frequency: E5, start: 0.12, duration: 0.18, type: 'triangle', gain: 0.18 },
     { frequency: G5, start: 0.24, duration: 0.4, type: 'triangle', gain: 0.18 },
   ],
-  mainWin: [
+  superlottoWin: [
     { frequency: C5, start: 0, duration: 0.18, type: 'triangle', gain: 0.2 },
     { frequency: E5, start: 0.14, duration: 0.18, type: 'triangle', gain: 0.2 },
     { frequency: G5, start: 0.28, duration: 0.18, type: 'triangle', gain: 0.2 },

@@ -1,6 +1,11 @@
 import type { BrowserContext, Page } from '@playwright/test';
 import { expect } from './fixtures';
 
+/** How many prizes a round of the built-in prize list has. */
+export function prizesInRound(round: number): number {
+  return [4, 9, 14, 19, 24].includes(round) ? 5 : 4;
+}
+
 /** Opens a route and waits until the app has booted. */
 export async function open(page: Page, route = ''): Promise<void> {
   await page.goto(`./#/${route}`);
@@ -25,7 +30,7 @@ export async function openHost(page: Page): Promise<void> {
 /** Starts the next round from the host console, confirming the gap warning if shown. */
 export async function startRound(page: Page, round: number): Promise<void> {
   await page
-    .getByRole('button', { name: `Runde ${round} starten` })
+    .getByRole('button', { name: `Gang ${round} starten` })
     .first()
     .click();
   const confirm = page.getByRole('button', { name: 'Trotzdem starten' });
@@ -47,11 +52,10 @@ export function cell(page: Page, number: number) {
   return page.locator(`[data-number="${number}"]`).first();
 }
 
-/** Confirms the active prize without a number check, with a card number. */
+/** Confirms the active prize with a card number. */
 export async function confirmWin(page: Page, cardNo: string): Promise<void> {
   await page.keyboard.press('g');
   const dialog = page.getByRole('dialog');
-  await dialog.getByRole('button', { name: 'Ohne Prüfung bestätigen' }).click();
   await dialog.getByLabel('Kartennummer (optional)').fill(cardNo);
   await dialog.getByRole('button', { name: 'Gewinn bestätigen' }).click();
   await expect(dialog).toBeHidden();
@@ -61,6 +65,6 @@ export async function confirmWin(page: Page, cardNo: string): Promise<void> {
 export async function openDisplay(context: BrowserContext): Promise<Page> {
   const display = await context.newPage();
   await display.goto('./#/display');
-  await expect(display.getByRole('grid', { name: 'Lottoraster' })).toBeVisible();
+  await expect(display.getByRole('main')).toBeVisible();
   return display;
 }

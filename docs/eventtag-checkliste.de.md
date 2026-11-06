@@ -3,8 +3,9 @@
 ## Am Vortag
 
 - [ ] Preise vollständig erfasst; die Startseite meldet keine fehlenden Preise.
+- [ ] Preisliste geprüft; die Gänge mit Superlotto zeigen unter «Preise» «5 von 5 Preisen erfasst».
 - [ ] Gewinnregeln und Einstellungen mit dem Spielreglement abgeglichen.
-- [ ] Übung durchgespielt: eine Runde mit Drehen, Zahl eintragen, Gewinn prüfen, Fehlmeldung und
+- [ ] Übung durchgespielt: ein Gang mit Drehen, Zahl eintragen, Gewinn bestätigen und
       Stechen.
 - [ ] Sicherung exportiert und auf einem USB-Stick abgelegt.
 - [ ] Ersatzlaptop mit aktuellem Browser vorbereitet; die App einmal geöffnet (offline bereit) und
@@ -16,6 +17,7 @@
 - [ ] Projektor oder TV angeschlossen, Bildschirm erweitert (nicht gespiegelt).
 - [ ] Konsole und Anzeige geöffnet; die Anzeige im Vollbild auf dem Projektor.
 - [ ] In der Konsole steht «Anzeige verbunden».
+- [ ] Die Anzeige zeigt die Begrüssung; Datum und Ort stimmen.
 - [ ] Lesbarkeit von der hintersten Reihe geprüft.
 - [ ] Browser-Zoom in beiden Fenstern auf 100 % (Ctrl/Cmd + 0).
 - [ ] Ruhezustand, Bildschirmschoner und automatische Updates des Systems ausgeschaltet.
@@ -29,7 +31,7 @@
 - [ ] Eine Testzahl ziehen und wieder rückgängig machen (oder im Übungsanlass testen).
 - [ ] Flugmodus nach Bedarf wieder ausschalten; das Spiel braucht kein Netz.
 
-## Vor der ersten Runde
+## Vor dem ersten Gang
 
 - [ ] Richtiger Anlass aktiv (kein «Übung»-Abzeichen).
 - [ ] Checkliste «Bereit für den Anlass?» auf der Startseite durchgesehen.

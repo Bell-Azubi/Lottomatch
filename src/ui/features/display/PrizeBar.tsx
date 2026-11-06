@@ -1,5 +1,6 @@
 import type { ImageStore } from '../../../application/ports';
 import type { DisplaySnapshot } from '../../../application/sync-messages';
+import { SUPERLOTTO_SLOT } from '../../../domain/types';
 import { commonText } from '../../../i18n/catalogues';
 import { formatChf } from '../../../i18n/format';
 import { conditionLabel, prizeTitle } from '../../../i18n/labels';
@@ -36,7 +37,7 @@ export function PrizeBar({
             size="display"
           />
           <div class={styles.text}>
-            <p class={`${styles.title} ${prize.slot === 4 ? styles.main : ''}`}>
+            <p class={`${styles.title} ${prize.slot === SUPERLOTTO_SLOT ? styles.superlotto : ''}`}>
               {prizeTitle(prize.title, prize.slot, c)}
             </p>
             <p class={styles.meta}>
@@ -48,7 +49,7 @@ export function PrizeBar({
             </p>
           </div>
           <div class={styles.progress}>
-            <p class={styles.slot}>{c.prizeOfFour(prize.slot)}</p>
+            <p class={styles.slot}>{c.prizeOf(prize.slot, snapshot.progress.length)}</p>
             <PrizeProgress states={snapshot.progress} compact />
           </div>
         </>

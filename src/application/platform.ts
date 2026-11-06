@@ -1,3 +1,4 @@
+import type { Prize } from '../domain/types';
 import type {
   Announcer,
   Clock,
@@ -82,6 +83,8 @@ export interface Platform {
   readonly crypto: CryptoPort;
   readonly binary: BinaryCodec;
   readonly maintenance: Maintenance;
+  /** The prizes a new or untouched event starts with (ADR-0028). */
+  readonly initialPrizes: readonly Prize[];
   /** Fetches a same-origin text file relative to the app base (prepared event files). */
   readonly fetchText: (path: string) => Promise<string>;
   readonly build: BuildInfo;

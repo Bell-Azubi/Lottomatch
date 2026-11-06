@@ -36,7 +36,7 @@ export class MatchAdmin {
     return { matchId, version: 1, prizes };
   }
 
-  /** Creates an empty event with default settings and makes it active. */
+  /** Creates an event with default settings and makes it active; opening it adds the prize list. */
   async create(name: string): Promise<Result<MatchRecord, AdminError>> {
     if (!this.app.canWrite()) return err('READ_ONLY');
     const cleaned = validEventName(name);

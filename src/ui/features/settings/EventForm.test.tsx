@@ -35,13 +35,8 @@ describe('Anlass form', () => {
     type('Name', '  Herbstlotto  ');
     type('Datum', '2026-11-14');
     type('Ort (optional)', 'Mehrzweckhalle Kaisten');
-    type('Anzahl Runden', '20');
+    type('Anzahl Gänge', '20');
     type(/^Höchste Zahl/, '75');
-    type('Zahlen pro Linie', '4');
-    type('Linien pro Karte', '2');
-    fireEvent.change(screen.getByLabelText('Verspätete Meldungen'), {
-      target: { value: 'REJECT' },
-    });
     fireEvent.change(screen.getByLabelText('Mehrere Gewinnkarten'), { target: { value: 'SHARE' } });
     fireEvent.click(screen.getByRole('switch', { name: /Brett nach jedem Preis leeren/ }));
     fireEvent.click(screen.getByRole('switch', { name: /Namen auf der Anzeige zeigen/ }));
@@ -55,9 +50,6 @@ describe('Anlass form', () => {
       venue: 'Mehrzweckhalle Kaisten',
       rounds: 20,
       maxNumber: 75,
-      perLine: 4,
-      lines: 2,
-      lateClaimPolicy: 'REJECT',
       tiePolicy: 'SHARE',
       boardReset: 'PRIZE',
       showNamesOnDisplay: true,
@@ -65,24 +57,63 @@ describe('Anlass form', () => {
     });
     expect(messages()).toContain('Einstellungen gespeichert');
     expect(screen.getByLabelText('Name')).toHaveValue('Herbstlotto');
-    expect(screen.getByText('Eine volle Karte hat 8 Zahlen.')).toBeInTheDocument();
+  });
+
+  it('keeps the card layout and late-claim policy of an event without offering them', async () => {
+    const test = await createTestHost();
+    renderWithServices(<EventForm canEdit />, test);
+    expect(screen.queryByLabelText('Zahlen pro Linie')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Linien pro Karte')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Verspätete Meldungen')).not.toBeInTheDocument();
+    type('Ort (optional)', 'Turnhalle');
+    save();
+    expect(settingsOf(test)).toMatchObject({
+      venue: 'Turnhalle',
+      perLine: 5,
+      lines: 3,
+      lateClaimPolicy: 'HOST_DECIDES',
+    });
   });
 
   it('shows field errors and keeps the stored settings', async () => {
     const test = await createTestHost();
     renderWithServices(<EventForm canEdit />, test);
     type('Name', ' ');
-    type('Anzahl Runden', '0');
-    type('Zahlen pro Linie', '9');
-    type('Linien pro Karte', '6');
-    type(/^Höchste Zahl/, '30');
+    type('Anzahl Gänge', '0');
     save();
     expect(screen.getByText('Bitte einen Namen eingeben.')).toBeInTheDocument();
-    expect(screen.getByText('1 bis 50 Runden.')).toBeInTheDocument();
-    expect(screen.getByText('Eine Karte hat mehr Zahlen, als das Brett hat.')).toBeInTheDocument();
+    expect(screen.getByText('1 bis 50 Gänge.')).toBeInTheDocument();
     expect(screen.getByLabelText('Name')).toHaveAttribute('aria-invalid', 'true');
     expect(messages()).toContain('Bitte die markierten Felder korrigieren.');
     expect(settingsOf(test).name).toBe('Lottomatch');
+  });
+
+  it('offers 2 Reihen in the template only while the event still holds it (ADR-0026)', async () => {
+    const test = await createTestHost();
+    const choices = () =>
+      within(screen.getByLabelText('Gewinnregel Preis 3'))
+        .getAllByRole('option')
+        .map((option) => option.textContent);
+    const first = renderWithServices(<EventForm canEdit />, test);
+    expect(screen.getByLabelText('Gewinnregel Preis 3')).toHaveValue('ONE_LINE');
+    expect(choices()).toEqual(['1 Reihe', 'Volle Karte', 'Eigene Regel']);
+    first.unmount();
+    const session = test.app.session.value;
+    if (session === undefined) throw new Error('no session');
+    const settings = settingsOf(test);
+    session.updateSettings(
+      { ...settings, template: { ...settings.template, 3: { kind: 'TWO_LINES' } } },
+      [],
+    );
+    renderWithServices(<EventForm canEdit />, test);
+    expect(screen.getByLabelText('Gewinnregel Preis 3')).toHaveValue('TWO_LINES');
+    expect(choices()).toContain('2 Reihen');
+    fireEvent.change(screen.getByLabelText('Gewinnregel Preis 3'), {
+      target: { value: 'ONE_LINE' },
+    });
+    save();
+    expect(settingsOf(test).template[3]).toEqual({ kind: 'ONE_LINE' });
+    expect(choices()).not.toContain('2 Reihen');
   });
 
   it('edits custom win rules in the template', async () => {
@@ -96,7 +127,7 @@ describe('Anlass form', () => {
     type('Eigene Regel für Preis 2', 'Vier Ecken');
     save();
     expect(settingsOf(test).template[2]).toEqual({ kind: 'CUSTOM', label: 'Vier Ecken' });
-    expect(screen.getByLabelText('Gewinnregel Hauptpreis')).toHaveValue('FULL_CARD');
+    expect(screen.getByLabelText('Gewinnregel Preis 4')).toHaveValue('ONE_LINE');
   });
 
   it('validates the payout indicator', async () => {
@@ -118,15 +149,13 @@ describe('Anlass form', () => {
     });
   });
 
-  it('locks N, card layout and board reset while a round runs (I6)', async () => {
+  it('locks N and board reset while a round runs (I6)', async () => {
     const test = await createTestHost();
     expect(test.host.startRound().ok).toBe(true);
     renderWithServices(<EventForm canEdit />, test);
-    for (const label of [/^Höchste Zahl/, 'Zahlen pro Linie', 'Linien pro Karte']) {
-      expect(screen.getByLabelText(label)).toBeDisabled();
-    }
+    expect(screen.getByLabelText(/^Höchste Zahl/)).toBeDisabled();
     expect(screen.getByRole('switch', { name: /Brett nach jedem Preis leeren/ })).toBeDisabled();
-    expect(screen.getAllByText('Gesperrt, solange eine Runde läuft.').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Gesperrt, solange ein Gang läuft.').length).toBeGreaterThan(0);
     type('Ort (optional)', 'Turnhalle');
     save();
     expect(settingsOf(test).venue).toBe('Turnhalle');
@@ -138,10 +167,10 @@ describe('Anlass form', () => {
     expect(test.host.jumpToRound(7, 'Spätstart').ok).toBe(true);
     renderWithServices(<EventForm canEdit />, test);
     expect(screen.getByText('1 bis 50, mindestens 7 (bereits gestartet)')).toBeInTheDocument();
-    type('Anzahl Runden', '5');
+    type('Anzahl Gänge', '5');
     save();
     expect(
-      screen.getByText('Mindestens 7: so viele Runden wurden schon gestartet.'),
+      screen.getByText('Mindestens 7: so viele Gänge wurden schon gestartet.'),
     ).toBeInTheDocument();
   });
 

@@ -209,7 +209,7 @@ describe('awards and claims', () => {
     expect(errorCode(awardPrize(state, { winners: [], prize: PRIZE }))).toBe('INVALID_WINNERS');
   });
 
-  it('completes the round after the Hauptpreis', () => {
+  it('completes the round after the fourth prize', () => {
     let state = startedState();
     for (let i = 0; i < 4; i += 1) state = award(drawAll(state, [i + 10]));
     expect(roundOf(state, 1).status).toBe('COMPLETED');

@@ -5,5 +5,6 @@ declare const styles: {
   readonly host: string;
   readonly logo: string;
   readonly print: string;
+  readonly welcome: string;
 };
 export default styles;

@@ -5,6 +5,47 @@ All notable changes to this project are documented in this file. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Commits follow
 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [Unreleased]
+
+### Added
+
+- The prize list of the event is built in: 24 rounds, four prizes each, a Superlotto in rounds 4, 9,
+  14, 19 and 24. An event without prizes gets it when it opens, also while it is being played, unless
+  it is completed. The CSV import can still overwrite it (ADR-0028).
+- Welcome page on the display until the first round starts: greeting to the Lottomatch of the
+  FC Laufenburg-Kaisten Senioren, club badge, the event's date and venue. A round start replaces it
+  with the board.
+- Superlotto: a round whose prize list has one plays a fifth prize after the four, on the
+  same board until a full card. Only those rounds show its form in the Preise tab. It appears on the
+  display, the console, the print list, the results and in the CSV (ADR-0027).
+
+### Changed
+
+- The German texts say Gang instead of Runde, on the display ring too. The CSV export writes Gang,
+  and the import reads both, because the Excel sheet of the event says Runde.
+- The word Hauptpreis is gone: the fourth prize is called Preis 4, and the red highlight and the
+  large confetti belong to the Superlotto.
+- New events use 1 Reihe for all four prizes. Stored events keep their template.
+- The CSV import accepts `1. Preis` to `4. Preis` and `Superlotto`, and the export writes these
+  names. A row with `Hauptpreis` is reported as an error.
+
+- The Gewinn overlay on the display stays for 60 seconds instead of 12. The next draw still ends it
+  at once, and so does skipping a prize or aborting the round.
+- Gewinn prüfen opens Gewinn bestätigen directly: the numbers of a card are no longer typed in and
+  checked. Several cards can still be entered for Stechen or Teilen (ADR-0025).
+- The win conditions read 1 Reihe and 2 Reihen instead of 1 Linie and 2 Linien, in every view and
+  export. The CSV import still accepts the earlier wording, and stored data does not change.
+
+### Removed
+
+- The example event with its 96 sample prizes. The button for prepared events only appears when a
+  file is shipped.
+- The win condition 2 Reihen can no longer be chosen. New events use 1 Reihe for prize 3, a CSV row
+  with 2 Reihen is reported as an error, and stored events keep it until it is changed (ADR-0026).
+- Number check, Fehlmeldung and late-claim detection in Gewinn prüfen, and the settings that only
+  they used (Verspätete Meldungen, card layout). Stored events and backups stay valid and keep their
+  recorded false claims and late claims.
+
 ## [1.0.0] - 2026-11-05
 
 First release of Lottomatch Live for the FC Laufenburg-Kaisten Lottomatch.

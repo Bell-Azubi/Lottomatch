@@ -19,7 +19,10 @@ export function TotalsPanel({ totals }: { readonly totals: ResultsTotals }) {
     [m.handedOut, formatInteger(totals.handedOut)],
     [m.value, formatChf(totals.valueAwardedChf)],
     [m.draws, formatInteger(totals.draws)],
-    [m.falseClaims, formatInteger(totals.falseClaims)],
+    // Only events from before ADR-0025 can hold false claims.
+    ...(totals.falseClaims > 0
+      ? ([[m.falseClaims, formatInteger(totals.falseClaims)]] as const)
+      : []),
   ];
   return (
     <Panel className={styles.section} aria-labelledby="results-totals-title">

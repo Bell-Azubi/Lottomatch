@@ -26,3 +26,7 @@
 | [0022](0022-numeral-fonts-without-link-preload.md)             | Numeral fonts without a link preload                          |
 | [0023](0023-engine-limits-of-the-e2e-suite.md)                 | Engine limits of the E2E suite                                |
 | [0024](0024-firefox-and-webkit-e2e-in-the-playwright-image.md) | Firefox and WebKit E2E in the official Playwright image       |
+| [0025](0025-no-number-check-in-the-claim-dialog.md)            | No number check in the claim dialog                           |
+| [0026](0026-two-rows-no-longer-offered.md)                     | The win condition 2 Reihen is no longer offered               |
+| [0027](0027-superlotto-as-an-optional-fifth-prize.md)          | The Superlotto is an optional fifth prize                     |
+| [0028](0028-the-prize-list-ships-with-the-app.md)              | The prize list of the event ships with the app                |

@@ -1,11 +1,10 @@
-import { prizeAt, snapshotOf } from '../domain/catalogue';
+import { prizeAt, snapshotOf, superlottoRounds } from '../domain/catalogue';
 import * as commands from '../domain/commands';
 import type { DomainError } from '../domain/errors';
 import { err, ok, type Result } from '../domain/result';
 import { rulesOf } from '../domain/settings';
 import type { GameState } from '../domain/state';
 import type { HandoutStatus, LogEnvelope, PrizeSlot, TiebreakDraw, Winner } from '../domain/types';
-import { MAIN_PRIZE_SLOT } from '../domain/types';
 import type { AppStore } from './app-store';
 import { OverlayController } from './overlays';
 import { SPIN_DURATION_MS } from './records';
@@ -65,7 +64,11 @@ export class HostController {
 
   private context(session: MatchSession): commands.RoundContext {
     const { settings } = session.match.value;
-    return { totalRounds: settings.rounds, rules: rulesOf(settings) };
+    return {
+      totalRounds: settings.rounds,
+      rules: rulesOf(settings),
+      superlottoRounds: superlottoRounds(session.catalogue.value),
+    };
   }
 
   private spinDuration(): number {
@@ -119,7 +122,7 @@ export class HostController {
     return ok(undefined);
   }
 
-  /** Runde starten. */
+  /** Gang starten. */
   startRound(): ActionResult {
     const result = this.run((state, session) =>
       commands.startNextRound(state, this.context(session)),
@@ -144,14 +147,17 @@ export class HostController {
   /** Host override: abort the running round with a reason. */
   abortRound(reason: string): ActionResult {
     const result = this.run((state) => commands.abortRound(state, reason));
-    if (result.ok) this.reveal.clear();
-    return result.ok ? ok(undefined) : result;
+    if (!result.ok) return result;
+    this.reveal.clear();
+    this.overlays.hideTransient();
+    return ok(undefined);
   }
 
   /** Host override: skip the active prize with a reason. */
   skipPrize(reason: string): ActionResult {
     const result = this.run((state) => commands.skipPrize(state, reason));
     if (!result.ok) return result;
+    this.overlays.hideTransient();
     this.afterResolution();
     return ok(undefined);
   }
@@ -167,21 +173,10 @@ export class HostController {
     const result = this.run((state) => commands.awardPrize(state, { ...input, prize }));
     if (!result.ok) return result;
     const { sound, muted } = this.app.prefs.value;
-    if (sound && !muted)
-      this.app.platform.sound.play(view.slot === MAIN_PRIZE_SLOT ? 'mainWin' : 'win');
+    if (sound && !muted) this.app.platform.sound.play(view.superlotto ? 'superlottoWin' : 'win');
     this.overlays.showWin(view, prize.title, input.winners);
     this.afterResolution();
     return ok(undefined);
-  }
-
-  /** Fehlmeldung or rejected late claim; play continues. */
-  rejectClaim(
-    claimed: readonly number[],
-    missing: readonly number[],
-    lateSinceSeq?: number,
-  ): ActionResult {
-    const result = this.run((state) => commands.rejectClaim(state, claimed, missing, lateSinceSeq));
-    return result.ok ? ok(undefined) : result;
   }
 
   /** Revokes the latest award of the current round (FR-4). */

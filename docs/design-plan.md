@@ -52,15 +52,15 @@ Display 16:9 (split field: solid stage left ~40 %, striped board right ~60 %):
 
 ```
 +----------------------------------------------------------------+
-| [Logo]                                  Runde 7 von 24  (ring) |
+| [Logo]                                   Gang 7 von 24  (ring) |
 |                                                                |
-|     .--RUNDE 7 VON 24--.       1  2  3  4  5  6  7  8  9 10    |
+|     .--GANG 7 VON 24---.       1  2  3  4  5  6  7  8  9 10    |
 |    /   .------------.   \     11 12 13 14 15 16 17 18 19 20    |
 |   |   |      42      |   |      ...  (ten columns, Cream bands)|
 |    \   '------------'   /     81 82 83 84 85 86 87 88 89 90    |
 |     '----ZIEHUNG 37----'                                       |
 |        o  o  o  o  o           23 von 90 gezogen               |
-| [Bild]  Präsentkorb   1 Linie      Preis 2 von 4  [x][>][ ][ ] |  <- glass prize bar
+| [Bild]  Präsentkorb   1 Reihe      Preis 2 von 4  [x][>][ ][ ] |  <- glass prize bar
 +----------------------------------------------------------------+
 ```
 
@@ -68,12 +68,27 @@ Display 4:3 (split turns horizontal):
 
 ```
 +--------------------------------------------+
-| [Logo]                Runde 7 von 24 (ring)|
+| [Logo]                 Gang 7 von 24 (ring)|
 |   board 1-90, ten columns, Cream bands     |
 |                                            |
 |  ( 42 badge )   o o o o o   23 von 90      |
-| [Bild] Präsentkorb  1 Linie  [x][>][ ][ ]  |
+| [Bild] Präsentkorb  1 Reihe  [x][>][ ][ ]  |
 +--------------------------------------------+
+```
+
+Display welcome page until the first round starts (same split field; on 4:3 the split turns
+horizontal). The badge sits where the drawn numbers appear later; the greeting takes the place of the
+board:
+
+```
++----------------------------------------------------------------+
+|     .--HERZLICH WILLKOMMEN--.            [Vereinslogo]         |
+|    /   .------------.        \        Herzlich willkommen      |
+|   |   |    LOTTO     |        |        zum Lottomatch der      |
+|   |   |    MATCH     |        |   FC Laufenburg-Kaisten Senioren|
+|    \   '------------'        /      21.11.2026 · Mehrzweckhalle |
+|     '--FC LAUFENBURG-KAISTEN-'           ( Viel Glück! )       |
++----------------------------------------------------------------+
 ```
 
 Host console (opaque control plate left, banded board right):
@@ -82,8 +97,8 @@ Host console (opaque control plate left, banded board right):
 +----------------------------------------------------------------+
 | [Logo]  Start  Spiel  Preise  Auswertung  Einstellungen   (i)  |  <- glass header
 +------------------------+---------------------------------------+
-| Runde 7 von 24  (ring) |                                       |
-| Preis 2 von 4, 1 Linie |   board 1-90, column bands,           |
+| Gang 7 von 24   (ring) |                                       |
+| Preis 2 von 4, 1 Reihe |   board 1-90, column bands,           |
 | Präsentkorb            |   compact, clickable                  |
 |   ( 42 ) result well   |                                       |
 |       ( Drehen )       |                                       |
@@ -91,7 +106,7 @@ Host console (opaque control plate left, banded board right):
 |   Rückgängig           |                                       |
 |   Gewinn prüfen        |                                       |
 +------------------------+---------------------------------------+
-| Anzeige verbunden       Anzeige öffnen   Pause   Runde starten |
+| Anzeige verbunden       Anzeige öffnen   Pause    Gang starten |
 +----------------------------------------------------------------+
 ```
 
@@ -113,7 +128,7 @@ The first draft was reviewed for anything that would look the same in any other 
 6. **Loading used a spinner.** Replaced by a sweeping Gold arc on the BadgeRing primitive, the
    same arc the Drehen button uses as spin progress.
 7. **Confetti used the library's rainbow default.** Restricted to Gold, Cream and Red, larger
-   for the Hauptpreis, replaced by a static overlay under reduced motion.
+   for the Superlotto, replaced by a static overlay under reduced motion.
 8. **4:3 was a scaled 16:9.** Changed to a horizontal split so the board keeps ≥ 4.5 vh numerals.
 9. **Dialogs were plain centred boxes.** Changed to glass dialogs with a Cream edge highlight and
    a Gold hairline above the title, so they read as part of the badge family.

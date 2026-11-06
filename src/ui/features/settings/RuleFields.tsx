@@ -1,15 +1,14 @@
-import type { LateClaimPolicy, TiebreakOrder, TiePolicy } from '../../../domain/settings';
+import type { TiebreakOrder, TiePolicy } from '../../../domain/settings';
 import { t } from '../../../i18n';
 import { SelectField, TextArea, TextField, Toggle } from '../../design-system/Field';
 import type { DraftFieldsProps } from './GameFields';
 import { settingsText } from './messages';
 import styles from './Settings.module.css';
 
-const LATE: readonly LateClaimPolicy[] = ['HOST_DECIDES', 'ALLOW', 'REJECT'];
 const TIE: readonly TiePolicy[] = ['TIEBREAK', 'SHARE'];
 const ORDER: readonly TiebreakOrder[] = ['HIGHEST', 'LOWEST'];
 
-/** Claim and tie policies, board reset, display privacy, sponsors and the payout indicator. */
+/** Tie policy, board reset, display privacy, sponsors and the payout indicator. */
 export function RuleFields({ draft, update, errors, disabled, locked }: DraftFieldsProps) {
   const m = t(settingsText);
   return (
@@ -17,15 +16,6 @@ export function RuleFields({ draft, update, errors, disabled, locked }: DraftFie
       <fieldset class={styles.group}>
         <legend class={styles.legend}>{m.form.rules}</legend>
         <div class={styles.grid}>
-          <SelectField
-            label={m.form.lateClaim}
-            value={draft.lateClaimPolicy}
-            options={LATE.map((value) => ({ value, label: m.form.lateClaimOptions[value] }))}
-            onValue={(lateClaimPolicy) => {
-              update({ lateClaimPolicy });
-            }}
-            disabled={disabled}
-          />
           <SelectField
             label={m.form.tiePolicy}
             value={draft.tiePolicy}

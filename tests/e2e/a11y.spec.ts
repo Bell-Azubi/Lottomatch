@@ -54,9 +54,10 @@ test.describe('accessibility (WCAG 2.2 AA, axe)', () => {
   test('the display passes with every overlay', async ({ context, page }) => {
     await setAnimation(page, 'Aus');
     await openHost(page);
-    await startRound(page, 1);
     const display = await openDisplay(context);
-    await page.bringToFront();
+    await expect(display.getByRole('region', { name: 'Herzlich willkommen' })).toBeVisible();
+    await expectDisplayAccessible(display, page, 'welcome page');
+    await startRound(page, 1);
     await typeNumber(page, 33);
     await expect(display.getByText('Zuletzt gezogen: 33, Ziehung 1')).toBeAttached();
     await expectDisplayAccessible(display, page, 'display');
@@ -74,8 +75,8 @@ test.describe('accessibility (WCAG 2.2 AA, axe)', () => {
       await typeNumber(page, 40 + slot);
       await confirmWin(page, String(slot));
     }
-    await page.getByRole('button', { name: 'Rundenende anzeigen' }).click();
-    await expect(display.getByRole('region', { name: 'Runde 1 ist fertig' })).toBeVisible();
+    await page.getByRole('button', { name: 'Ende des Gangs anzeigen' }).click();
+    await expect(display.getByRole('region', { name: 'Gang 1 ist fertig' })).toBeVisible();
     await expectDisplayAccessible(display, page, 'round end overlay');
     await page.getByRole('button', { name: 'Spielleitung' }).click();
     await page.getByRole('dialog').getByRole('button', { name: 'Anlass abschliessen' }).click();

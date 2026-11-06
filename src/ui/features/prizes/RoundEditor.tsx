@@ -1,11 +1,10 @@
 import { useEffect, useRef } from 'preact/hooks';
 import type { ImageStore } from '../../../application/ports';
 import type { PrizeEditor } from '../../../application/prize-editor';
-import { isAwarded } from '../../../application/selectors';
+import { isAwarded, slotsForRound } from '../../../application/selectors';
 import { prizeAt, type Catalogue } from '../../../domain/catalogue';
-import type { ConditionTemplate } from '../../../domain/settings';
-import type { GameState } from '../../../domain/state';
-import { PRIZE_SLOTS } from '../../../domain/types';
+import { templateCondition, type ConditionTemplate } from '../../../domain/settings';
+import { roundOf, type GameState } from '../../../domain/state';
 import { commonText } from '../../../i18n/catalogues';
 import { t } from '../../../i18n';
 import { Button } from '../../design-system/Button';
@@ -25,7 +24,10 @@ export interface RoundEditorProps {
   readonly onClose: () => void;
 }
 
-/** The four prizes of one round; edits to running and upcoming rounds show live on the display. */
+/**
+ * The prizes of one round, with a Superlotto only where the list has one; edits to running and
+ * upcoming rounds show live on the display.
+ */
 export function RoundEditor({
   round,
   catalogue,
@@ -52,7 +54,7 @@ export function RoundEditor({
       </div>
       <p class={styles.hint}>{m.liveHint}</p>
       <div class={styles.slots}>
-        {PRIZE_SLOTS.map((slot) => (
+        {slotsForRound(roundOf(game, round), catalogue).map((slot) => (
           <section
             key={`${round}-${slot}`}
             class={styles.slot}
@@ -67,7 +69,7 @@ export function RoundEditor({
               round={round}
               slot={slot}
               prize={prizeAt(catalogue, round, slot)}
-              fallback={template[slot]}
+              fallback={templateCondition(template, slot)}
               awarded={isAwarded(game, round, slot)}
               readOnly={readOnly}
             />

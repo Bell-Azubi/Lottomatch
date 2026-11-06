@@ -65,7 +65,7 @@ describe('AuditLog', () => {
       expect.stringContaining('Gewinn widerrufen'),
       expect.stringContaining('rückgängig gemacht'),
     ]);
-    fireEvent.change(screen.getByLabelText('Runde'), { target: { value: '2' } });
+    fireEvent.change(screen.getByLabelText('Gang'), { target: { value: '2' } });
     expect(screen.getByText('Keine Einträge für diese Auswahl.')).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('Kategorie'), { target: { value: 'ALL' } });
     expect(
@@ -118,7 +118,7 @@ describe('round and print views', () => {
     expect(screen.getByText('1 Fehlmeldung')).toBeInTheDocument();
     expect(screen.getByText('1 Gewinn widerrufen')).toBeInTheDocument();
     expect(screen.getByText('CHF 50.50 · gestiftet von Bäckerei Frei')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Hauptpreis abgeholt' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Preis 4 abgeholt' }));
     expect(actions.onHandout).toHaveBeenCalledWith(1, 4, 'COLLECTED');
     fireEvent.click(screen.getByRole('button', { name: 'Präsentkorb abgeholt' }));
     expect(actions.onHandout).toHaveBeenCalledWith(1, 1, 'OPEN');

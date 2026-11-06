@@ -15,7 +15,11 @@ export const LOGO_SIZE = 139;
  * screens without a code change. It loads at low fetch priority: the scripts, styles and numeral
  * fonts that make the console usable come first (ADR-0019).
  */
-export function Logo({ size = 'host' }: { readonly size?: 'host' | 'display' | 'print' }) {
+export function Logo({
+  size = 'host',
+}: {
+  readonly size?: 'host' | 'display' | 'welcome' | 'print';
+}) {
   const [intrinsic, setIntrinsic] = useState(LOGO_SIZE);
   return (
     <span

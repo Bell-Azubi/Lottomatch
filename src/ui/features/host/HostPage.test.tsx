@@ -18,7 +18,7 @@ function drawnCount() {
 }
 
 async function startFirstRound() {
-  fireEvent.click(present(screen.getAllByRole('button', { name: 'Runde 1 starten' })[0]));
+  fireEvent.click(present(screen.getAllByRole('button', { name: 'Gang 1 starten' })[0]));
   fireEvent.click(await screen.findByRole('button', { name: 'Trotzdem starten' }));
   await screen.findByRole('button', { name: 'Drehen' });
 }
@@ -36,9 +36,9 @@ afterEach(() => {
 
 describe('HostPage', () => {
   it('starts the first round after confirming the prize gaps', async () => {
-    expect(screen.getByText('Noch keine Runde gestartet')).toBeInTheDocument();
+    expect(screen.getByText('Noch kein Gang gestartet')).toBeInTheDocument();
     await startFirstRound();
-    expect(screen.getByText('Preis 1 von 4 · 1 Linie')).toBeInTheDocument();
+    expect(screen.getByText('Preis 1 von 4 · 1 Reihe')).toBeInTheDocument();
     expect(screen.getByText('0 von 90 gezogen')).toBeInTheDocument();
   });
 
@@ -77,7 +77,7 @@ describe('HostPage', () => {
     await screen.findByRole('gridcell', { name: '50, zuletzt gezogen' });
     fireEvent.input(field, { target: { value: '50' } });
     fireEvent.submit(present(field.closest('form'), 'form'));
-    await screen.findByText('50 ist in dieser Runde bereits gezogen.');
+    await screen.findByText('50 ist in diesem Gang bereits gezogen.');
     fireEvent.click(screen.getByRole('button', { name: '7' }));
     fireEvent.click(screen.getByRole('button', { name: 'Ziffer löschen' }));
     fireEvent.click(screen.getByRole('button', { name: '0' }));
@@ -111,7 +111,7 @@ describe('HostPage', () => {
     fireEvent.click(within(pause).getByRole('button', { name: 'Pause anzeigen' }));
     expect(t.host.overlays.state.value).toMatchObject({ kind: 'PAUSE', resumeAt: '21:45' });
     key('g');
-    expect(await screen.findByRole('dialog', { name: /Gewinn prüfen/ })).toBeInTheDocument();
+    expect(await screen.findByRole('dialog', { name: /Gewinn bestätigen/ })).toBeInTheDocument();
     key(' ');
     expect(drawnCount()).toBe(0);
   });
@@ -156,9 +156,9 @@ describe('HostPage', () => {
       target: { value: 'Kein Preis' },
     });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Bestätigen' }));
-    await screen.findByText('Preis 2 von 4 · 1 Linie');
-    dialog = await open('Zu Runde springen');
-    fireEvent.change(within(dialog).getByLabelText('Runde'), { target: { value: '5' } });
+    await screen.findByText('Preis 2 von 4 · 1 Reihe');
+    dialog = await open('Zu Gang springen');
+    fireEvent.change(within(dialog).getByLabelText('Gang'), { target: { value: '5' } });
     fireEvent.input(within(dialog).getByLabelText('Grund (wird protokolliert)'), {
       target: { value: 'Zeitplan' },
     });
@@ -166,25 +166,25 @@ describe('HostPage', () => {
     await waitFor(() => {
       expect(t.app.session.value?.game.value.currentRound).toBe(5);
     });
-    dialog = await open('Runde abbrechen');
+    dialog = await open('Gang abbrechen');
     fireEvent.input(within(dialog).getByLabelText('Grund (wird protokolliert)'), {
       target: { value: 'Ende' },
     });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Bestätigen' }));
     expect(
-      (await screen.findAllByRole('button', { name: 'Runde 5 starten' })).length,
+      (await screen.findAllByRole('button', { name: 'Gang 5 starten' })).length,
     ).toBeGreaterThan(0);
     dialog = await open('Anlass abschliessen');
     fireEvent.click(within(dialog).getByRole('button', { name: 'Bestätigen' }));
     await screen.findByRole('heading', { name: 'Anlass abgeschlossen' });
   });
 
-  it('revokes the latest win and shows the round summary after the Hauptpreis', async () => {
+  it('revokes the latest win and shows the round summary after the last prize', async () => {
     await startFirstRound();
     for (let slot = 1; slot <= 4; slot += 1) t.host.award({ winners: [{ cardNo: String(slot) }] });
-    await screen.findByRole('heading', { name: 'Runde 1 ist fertig' });
-    expect(screen.getByText('Nächste Runde: 2')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Rundenende anzeigen' }));
+    await screen.findByRole('heading', { name: 'Gang 1 ist fertig' });
+    expect(screen.getByText('Nächster Gang: 2')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Ende des Gangs anzeigen' }));
     expect(t.host.overlays.state.value?.kind).toBe('ROUND_END');
     fireEvent.click(screen.getByRole('button', { name: 'Spielleitung' }));
     const dialog = await screen.findByRole('dialog', { name: 'Spielleitung' });
@@ -194,7 +194,7 @@ describe('HostPage', () => {
     });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Bestätigen' }));
     await screen.findByRole('button', { name: 'Drehen' });
-    expect(screen.getByText('Preis 4 von 4 · Volle Karte')).toBeInTheDocument();
+    expect(screen.getByText('Preis 4 von 4 · 1 Reihe')).toBeInTheDocument();
   });
 
   it('locks every control in a read-only window', async () => {

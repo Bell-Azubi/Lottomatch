@@ -21,6 +21,20 @@
   margin: clamp(10px, 2.75vh, 35px);
 }
 
+.welcome {
+  width: clamp(64px, 20vh, var(--logo-max));
+  height: clamp(64px, 20vh, var(--logo-max));
+  margin: clamp(8px, 2vh, 35px);
+}
+
+@media (max-aspect-ratio: 3/2) {
+  .welcome {
+    width: clamp(64px, 16vh, var(--logo-max));
+    height: clamp(64px, 16vh, var(--logo-max));
+    margin: clamp(4px, 1.2vh, 24px);
+  }
+}
+
 .print {
   width: 22mm;
   height: 22mm;

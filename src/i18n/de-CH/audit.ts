@@ -4,10 +4,10 @@ export const audit = {
   intro:
     'Jede Ziehung, jeder Gewinn und jeder Eingriff wird hier festgehalten; nichts wird gelöscht.',
   category: 'Kategorie',
-  round: 'Runde',
+  round: 'Gang',
   allCategories: 'Alle Kategorien',
-  allRounds: 'Alle Runden',
-  roundOption: (round: number): string => `Runde ${round}`,
+  allRounds: 'Alle Gänge',
+  roundOption: (round: number): string => `Gang ${round}`,
   categories: {
     DRAWS: 'Ziehungen',
     CLAIMS: 'Gewinne und Fehlmeldungen',
@@ -20,14 +20,14 @@ export const audit = {
   more: 'Weitere Einträge anzeigen',
   empty: 'Keine Einträge für diese Auswahl.',
   entry: (seq: number): string => `Nr. ${seq}`,
-  prize: (round: number, slot: string): string => `Runde ${round}, ${slot}`,
+  prize: (round: number, slot: string): string => `Gang ${round}, ${slot}`,
   card: (cardNo: string): string => `Karte ${cardNo}`,
   noCard: 'ohne Kartennummer',
   events: {
     roundStarted: (round: number, max: number): string =>
-      `Runde ${round} gestartet (Zahlen 1–${max})`,
+      `Gang ${round} gestartet (Zahlen 1–${max})`,
     roundJumped: (round: number, reason: string): string =>
-      `Zu Runde ${round} gesprungen: ${reason}`,
+      `Zu Gang ${round} gesprungen: ${reason}`,
     numberDrawn: (number: number, seq: number, manual: boolean): string =>
       manual ? `${number} eingetragen (Ziehung ${seq})` : `${number} gezogen (Ziehung ${seq})`,
     drawUndone: (seq: number, number: number | undefined): string =>
@@ -46,7 +46,7 @@ export const audit = {
         ? `Gewinn widerrufen, ${prize}: ${reason}`
         : `Gewinn widerrufen, ${prize} (${cards}): ${reason}`,
     skipped: (prize: string, reason: string): string => `Preis übersprungen, ${prize}: ${reason}`,
-    aborted: (round: number, reason: string): string => `Runde ${round} abgebrochen: ${reason}`,
+    aborted: (round: number, reason: string): string => `Gang ${round} abgebrochen: ${reason}`,
     corrected: (prize: string, cards: string, reason: string): string =>
       reason === ''
         ? `Gewinnkarte korrigiert, ${prize}: ${cards}`
@@ -58,9 +58,7 @@ export const audit = {
     settingChange: (field: string, from: string, to: string): string =>
       `${field} von «${from}» auf «${to}»`,
     prizes: (action: string, rounds: string): string =>
-      rounds === ''
-        ? `Preise geändert: ${action}`
-        : `Preise geändert: ${action} (Runden ${rounds})`,
+      rounds === '' ? `Preise geändert: ${action}` : `Preise geändert: ${action} (Gänge ${rounds})`,
     pinReset: 'PIN zurückgesetzt',
     personalDataErased: (count: number): string =>
       count === 1 ? 'Namen gelöscht (1 Gewinnkarte)' : `Namen gelöscht (${count} Gewinnkarten)`,

@@ -12,7 +12,7 @@ import {
   type RoundStatus,
 } from '../domain/state';
 import type { HandoutStatus, LogEnvelope, PrizeSlot, WinCondition, Winner } from '../domain/types';
-import { PRIZE_SLOTS } from '../domain/types';
+import { slotsForRound } from './selectors';
 
 /** A winner of an awarded prize, with the draw that completed the checked claim. */
 export interface WinnerResult {
@@ -252,7 +252,9 @@ function summariseRound(number: number, input: ResultsInput, facts: LogFacts): R
     draws: round.draws.length,
     falseClaims: facts.falseClaims.get(number) ?? 0,
     revokedAwards: facts.revoked.get(number) ?? 0,
-    prizes: PRIZE_SLOTS.map((slot) => prizeResult(round, slot, input, facts)),
+    prizes: slotsForRound(round, input.catalogue).map((slot) =>
+      prizeResult(round, slot, input, facts),
+    ),
   };
 }
 

@@ -1,7 +1,7 @@
 # Lottomatch Live — FC Laufenburg-Kaisten
 
 The caller's console and the audience's big screen for the FC Laufenburg-Kaisten Lottomatch: draw
-numbers by spin or from a physical drum, check claims, award 24 rounds × 4 prizes and show
+numbers by spin or from a physical drum, confirm wins, award 24 rounds × 4 prizes, plus a Superlotto in selected rounds, and show
 everything legibly on a projector, from one laptop and without a network once loaded.
 
 Lottomatch Live is a static progressive web app on GitHub Pages. Every browser keeps its own data
@@ -142,7 +142,9 @@ empty. Export a backup before the switch and import it afterwards.
 ## Shipping a prepared event file
 
 Prepared events let the organiser load a whole prize list on the event laptop with one click
-(Preise → "Vorbereiteten Anlass laden").
+(Preise → "Vorbereiteten Anlass laden"). None is shipped at the moment, and the button only appears
+once the manifest lists a file. The prize list of the event is built in
+(`src/application/event-prize-list.ts`), and the CSV import can overwrite it.
 
 1. In the app, prepare the event (Einstellungen → Anlass, Preise) without playing any round, then
    export it: Einstellungen → Daten → "Sicherung exportieren".
@@ -153,7 +155,7 @@ Prepared events let the organiser load a whole prize list on the event laptop wi
    to `public/events/index.json`:
 
    ```json
-   { "file": "<name>.json", "name": "Lottomatch 2027", "description": "24 Runden, Stand März" }
+   { "file": "<name>.json", "name": "Lottomatch 2027", "description": "24 Gänge, Stand März" }
    ```
 
 4. Open a pull request. CI checks every file in `public/events/`: it must be listed in the
@@ -162,13 +164,12 @@ Prepared events let the organiser load a whole prize list on the event laptop wi
    shows a preview before anything is created. After the merge the file is part of the site and
    of the offline cache.
 
-`public/events/beispiel-lottomatch.json` is a complete example.
-
 ## Replacing the logo
 
 The badge is `public/brand/fclk-logo.png` (trimmed to 139 × 139 px, transparent background). A
 higher-resolution PNG (≥ 1024 px, square, trimmed) can replace it in place; the display then grows
-the logo to about 11 vh on large screens without a code change. For a vector version, change
+the logo to about 11 vh on large screens, and to about 20 vh on the display's welcome page, without
+a code change. For a vector version, change
 `LOGO_URL` in `src/ui/design-system/Logo.tsx`. Regenerate the favicon and the icons in
 `public/icons/` from the new file at the sizes of the existing ones.
 

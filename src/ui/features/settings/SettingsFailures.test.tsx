@@ -144,7 +144,7 @@ describe('Über: service-worker and storage states', () => {
     expect(await screen.findByText('bereit')).toBeInTheDocument();
     test.pwa.markUpdateReady();
     expect(
-      await screen.findByText('Update bereit (wird zwischen den Runden angeboten)'),
+      await screen.findByText('Update bereit (wird zwischen den Gängen angeboten)'),
     ).toBeInTheDocument();
     test.pwa.markFailed();
     expect(await screen.findByText('Registrierung fehlgeschlagen')).toBeInTheDocument();

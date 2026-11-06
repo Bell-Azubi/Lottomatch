@@ -5,10 +5,10 @@ export const results = {
   eventLine: (name: string, date: string): string => (date === '' ? name : `${name} · ${date}`),
   totals: {
     title: 'Übersicht',
-    roundsPlayed: 'Runden gespielt',
+    roundsPlayed: 'Gänge gespielt',
     roundsValue: (done: number, total: number): string => `${done} von ${total}`,
-    roundsAborted: 'Runden abgebrochen',
-    roundRunning: 'Runde läuft',
+    roundsAborted: 'Gänge abgebrochen',
+    roundRunning: 'Gang läuft',
     prizesAwarded: 'Preise vergeben',
     prizesSkipped: 'Preise übersprungen',
     prizesOpen: 'Preise offen',
@@ -19,16 +19,16 @@ export const results = {
     falseClaims: 'Fehlmeldungen',
   },
   rounds: {
-    title: 'Runden',
+    title: 'Gänge',
     show: 'Anzeigen',
-    played: 'Gespielte Runden',
-    all: 'Alle Runden',
+    played: 'Gespielte Gänge',
+    all: 'Alle Gänge',
     openOnly: 'Nur nicht abgeholte Preise',
-    empty: 'Noch keine Runde gespielt.',
+    empty: 'Noch kein Gang gespielt.',
     emptyOpen: 'Alle vergebenen Preise sind abgeholt.',
   },
   round: {
-    title: (round: number): string => `Runde ${round}`,
+    title: (round: number): string => `Gang ${round}`,
     status: {
       UPCOMING: 'ausstehend',
       RUNNING: 'läuft',
@@ -44,10 +44,10 @@ export const results = {
       count === 1 ? '1 Fehlmeldung' : `${count} Fehlmeldungen`,
     revoked: (count: number): string =>
       count === 1 ? '1 Gewinn widerrufen' : `${count} Gewinne widerrufen`,
-    print: (round: number): string => `Runde ${round} drucken`,
+    print: (round: number): string => `Gang ${round} drucken`,
   },
   table: {
-    caption: (round: number): string => `Preise der Runde ${round}`,
+    caption: (round: number): string => `Preise von Gang ${round}`,
     prize: 'Preis',
     condition: 'Gewinnregel',
     winners: 'Gewinnkarte',
@@ -99,7 +99,7 @@ export const results = {
   print: {
     all: 'Gewinnerliste drucken',
     title: 'Gewinnerliste',
-    roundTitle: (round: number): string => `Runde ${round}`,
+    roundTitle: (round: number): string => `Gang ${round}`,
     collected: 'Abgeholt',
     printedAt: (when: string): string => `Gedruckt am ${when}`,
     empty: 'Noch keine Gewinne.',
@@ -112,7 +112,7 @@ export const results = {
     privacy: 'Exporte enthalten Namen nur, wenn welche erfasst sind.',
   },
   csv: {
-    round: 'Runde',
+    round: 'Gang',
     slot: 'Preis',
     title: 'Titel',
     condition: 'Gewinnregel',

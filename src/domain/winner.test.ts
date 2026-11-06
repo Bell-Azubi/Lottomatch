@@ -1,10 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  expectedClaimSize,
-  sameCondition,
-  textLength,
-  validateWinCondition,
-} from './win-condition';
+import { conditionChoices, sameCondition, textLength, validateWinCondition } from './win-condition';
 import { hasPersonalData, normaliseWinner, redactWinner } from './winner';
 
 describe('winners', () => {
@@ -30,14 +25,10 @@ describe('winners', () => {
 });
 
 describe('win conditions', () => {
-  const layout = { perLine: 5, lines: 3 };
-
-  it('derives the expected claim size from the card layout', () => {
-    expect(expectedClaimSize({ kind: 'ONE_LINE' }, layout)).toBe(5);
-    expect(expectedClaimSize({ kind: 'TWO_LINES' }, layout)).toBe(10);
-    expect(expectedClaimSize({ kind: 'FULL_CARD' }, layout)).toBe(15);
-    expect(expectedClaimSize({ kind: 'CUSTOM', label: 'Ecken' }, layout)).toBeUndefined();
-    expect(expectedClaimSize({ kind: 'FULL_CARD' }, { perLine: 9, lines: 2 })).toBe(18);
+  it('offers 2 Reihen only where it is already stored (ADR-0026)', () => {
+    expect(conditionChoices('ONE_LINE')).toEqual(['ONE_LINE', 'FULL_CARD', 'CUSTOM']);
+    expect(conditionChoices('CUSTOM')).toEqual(['ONE_LINE', 'FULL_CARD', 'CUSTOM']);
+    expect(conditionChoices('TWO_LINES')).toEqual(['ONE_LINE', 'FULL_CARD', 'CUSTOM', 'TWO_LINES']);
   });
 
   it('compares and validates conditions', () => {
