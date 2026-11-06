@@ -7,7 +7,7 @@ import type {
   TiebreakOrder,
   TiePolicy,
 } from '../../../domain/settings';
-import type { PrizeSlot, WinCondition, WinConditionKind } from '../../../domain/types';
+import type { StandardSlot, WinCondition, WinConditionKind } from '../../../domain/types';
 import type { SettingsMessages } from '../../../i18n/de-CH/settings';
 
 export interface ConditionDraft {
@@ -24,7 +24,7 @@ export interface EventDraft {
   readonly maxNumber: string;
   readonly perLine: string;
   readonly lines: string;
-  readonly template: Readonly<Record<PrizeSlot, ConditionDraft>>;
+  readonly template: Readonly<Record<StandardSlot, ConditionDraft>>;
   readonly lateClaimPolicy: LateClaimPolicy;
   readonly tiePolicy: TiePolicy;
   readonly tiebreakOrder: TiebreakOrder;

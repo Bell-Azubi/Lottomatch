@@ -2,10 +2,10 @@
 declare const styles: {
   readonly bar: string;
   readonly condition: string;
-  readonly main: string;
   readonly meta: string;
   readonly progress: string;
   readonly slot: string;
+  readonly superlotto: string;
   readonly text: string;
   readonly title: string;
 };

@@ -1,14 +1,15 @@
 import { cleanText, isIntegerInRange, LIMITS } from './limits';
 import type { GameState } from './state';
-import type { BoardReset, PrizeSlot, RoundRules, WinCondition } from './types';
+import type { BoardReset, PrizeSlot, RoundRules, StandardSlot, WinCondition } from './types';
+import { SUPERLOTTO_SLOT } from './types';
 import { textLength, validateWinCondition } from './win-condition';
 
 export type LateClaimPolicy = 'ALLOW' | 'REJECT' | 'HOST_DECIDES';
 export type TiePolicy = 'TIEBREAK' | 'SHARE';
 export type TiebreakOrder = 'HIGHEST' | 'LOWEST';
 
-/** Win-condition template, one condition per slot. */
-export type ConditionTemplate = Readonly<Record<PrizeSlot, WinCondition>>;
+/** Win-condition template, one condition for each of the four prizes. */
+export type ConditionTemplate = Readonly<Record<StandardSlot, WinCondition>>;
 
 /** Payout-ratio indicator (Could): prize value against stakes; off by default. */
 export interface PayoutSettings {
@@ -41,8 +42,16 @@ export const DEFAULT_TEMPLATE: ConditionTemplate = {
   1: { kind: 'ONE_LINE' },
   2: { kind: 'ONE_LINE' },
   3: { kind: 'ONE_LINE' },
-  4: { kind: 'FULL_CARD' },
+  4: { kind: 'ONE_LINE' },
 };
+
+/** The Superlotto has no template entry: a full card, unless its prize says otherwise. */
+const SUPERLOTTO_CONDITION: WinCondition = { kind: 'FULL_CARD' };
+
+/** The condition a slot has without a rule of its own. */
+export function templateCondition(template: ConditionTemplate, slot: PrizeSlot): WinCondition {
+  return slot === SUPERLOTTO_SLOT ? SUPERLOTTO_CONDITION : template[slot];
+}
 
 /** Defaults for a new event (24 rounds, 1–90, 3 × 5 cards). */
 export function defaultSettings(name: string, date = ''): MatchSettings {

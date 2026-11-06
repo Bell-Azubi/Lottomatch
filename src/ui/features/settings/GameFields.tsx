@@ -1,5 +1,5 @@
 import type { SettingsField } from '../../../domain/settings';
-import type { PrizeSlot } from '../../../domain/types';
+import type { StandardSlot } from '../../../domain/types';
 import { PRIZE_SLOTS } from '../../../domain/types';
 import { conditionChoices } from '../../../domain/win-condition';
 import { commonText } from '../../../i18n/catalogues';
@@ -31,7 +31,7 @@ export function GameFields({
   const m = t(settingsText);
   const c = t(commonText);
   const lockedHint = locked ? m.form.locked : undefined;
-  const setCondition = (slot: PrizeSlot, patch: Partial<ConditionDraft>) => {
+  const setCondition = (slot: StandardSlot, patch: Partial<ConditionDraft>) => {
     update({ template: { ...draft.template, [slot]: { ...draft.template[slot], ...patch } } });
   };
   return (

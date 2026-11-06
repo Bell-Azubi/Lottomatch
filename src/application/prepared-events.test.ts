@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { webCrypto } from '../infrastructure/crypto';
 import { createTestHost } from '../test/test-platform';
 import { commitImport } from './backup-import';
-import exampleEvent from '../../public/events/beispiel-lottomatch.json?raw';
+import { PREPARED_EVENT } from '../test/prepared-event-fixture';
 import manifestText from '../../public/events/index.json?raw';
 import { loadManifest, loadPreparedEvent, MANIFEST_PATH, parseManifest } from './prepared-events';
 
@@ -34,21 +34,16 @@ describe('manifest', () => {
     });
   });
 
-  it('ships a valid manifest in the repository', async () => {
+  it('ships no prepared event: prize lists come from the CSV import', async () => {
     const manifest = await loadManifest(platformServing({ [MANIFEST_PATH]: manifestText }));
-    expect(manifest.ok && manifest.value.map((entry) => entry.file)).toEqual([
-      'beispiel-lottomatch.json',
-    ]);
+    expect(manifest).toEqual({ ok: true, value: [] });
   });
 });
 
 describe('prepared event files', () => {
-  it('previews the shipped example: 24 rounds, 96 prizes, no personal data', async () => {
-    const platform = platformServing({ 'events/beispiel-lottomatch.json': exampleEvent });
-    const preview = await loadPreparedEvent(platform, {
-      file: 'beispiel-lottomatch.json',
-      name: 'Beispiel',
-    });
+  it('previews a prepared file: 24 rounds, 96 prizes, no personal data', async () => {
+    const platform = platformServing({ 'events/anlass.json': PREPARED_EVENT });
+    const preview = await loadPreparedEvent(platform, { file: 'anlass.json', name: 'Anlass' });
     expect(preview.ok).toBe(true);
     if (!preview.ok) return;
     expect(preview.value).toMatchObject({
@@ -63,14 +58,11 @@ describe('prepared event files', () => {
     expect(new Set(preview.value.file.prizes.map((p) => `${p.round}-${p.slot}`)).size).toBe(96);
   });
 
-  it('imports the example as a new active event', async () => {
+  it('imports a prepared file as a new active event', async () => {
     const host = await createTestHost();
     const before = host.app.session.value?.matchId;
-    const platform = platformServing({ 'events/beispiel-lottomatch.json': exampleEvent });
-    const preview = await loadPreparedEvent(platform, {
-      file: 'beispiel-lottomatch.json',
-      name: 'Beispiel',
-    });
+    const platform = platformServing({ 'events/anlass.json': PREPARED_EVENT });
+    const preview = await loadPreparedEvent(platform, { file: 'anlass.json', name: 'Anlass' });
     if (!preview.ok) throw new Error('preview failed');
     const imported = await commitImport(host.app, host.admin, preview.value.file);
     expect(imported.ok).toBe(true);

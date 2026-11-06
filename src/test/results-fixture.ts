@@ -26,7 +26,7 @@ const draw = (round: number, seq: number, number: number): LogEvent => ({
 
 /**
  * A played evening covering every result feature: a late claim, a false claim, a skip, an undo,
- * a Stechen with a revocation and re-award, a shared Hauptpreis, a handout, a correction and an
+ * a Stechen with a revocation and re-award, a shared fourth prize, a handout, a correction and an
  * aborted second round.
  */
 export const EVENING: readonly LogEvent[] = [

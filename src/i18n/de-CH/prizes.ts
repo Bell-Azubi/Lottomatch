@@ -2,7 +2,7 @@
 export const prizes = {
   title: 'Preise',
   intro: (rounds: number): string =>
-    `${rounds} Runden mit je vier Preisen: Preis 1–3 und Hauptpreis.`,
+    `${rounds} Runden mit je vier Preisen. Das Superlotto kommt als fünfter Preis dazu, wo es in der Preisliste steht.`,
   readOnly: 'Nur Ansicht: Ein anderes Fenster steuert das Spiel.',
   liveHint: 'Änderungen an laufenden und kommenden Runden erscheinen sofort auf der Anzeige.',
   toolbar: 'Werkzeuge',
@@ -12,7 +12,7 @@ export const prizes = {
     prizes: 'Preise',
     status: 'Stand',
     action: 'Aktion',
-    complete: (filled: number): string => `${filled} von 4 Preisen erfasst`,
+    complete: (filled: number, total: number): string => `${filled} von ${total} Preisen erfasst`,
     gaps: (count: number): string => (count === 1 ? '1 Preis fehlt' : `${count} Preise fehlen`),
     allComplete: 'Alle Preise erfasst',
     totalGaps: (count: number): string =>
@@ -78,19 +78,21 @@ export const prizes = {
   bulk: {
     title: 'Sammelbearbeitung',
     copy: 'Runde kopieren',
-    copyBody: 'Die vier Preise einer Runde in andere Runden kopieren. Preise dort werden ersetzt.',
+    copyBody:
+      'Die vier Preise einer Runde in andere Runden kopieren. Preise dort werden ersetzt, das Superlotto bleibt unberührt.',
     copyFrom: 'Von Runde',
     copyTo: 'In die Runden (zum Beispiel 2-5, 8)',
     copyConfirm: 'Kopieren',
     copied: (count: number): string =>
       count === 1 ? 'In 1 Runde kopiert' : `In ${count} Runden kopiert`,
     template: 'Gewinnregeln überall anwenden',
-    templateBody: 'Setzt bei allen Preisen die Gewinnregel der Vorlage aus den Einstellungen.',
+    templateBody:
+      'Setzt bei den vier Preisen jeder Runde die Gewinnregel der Vorlage aus den Einstellungen. Das Superlotto behält seine Regel.',
     templateConfirm: 'Anwenden',
     templated: 'Gewinnregeln angewendet',
     clear: 'Runde leeren',
     clearRound: 'Runde',
-    clearBody: 'Alle Preise der gewählten Runde werden entfernt.',
+    clearBody: 'Alle Preise der gewählten Runde werden entfernt, auch das Superlotto.',
     clearConfirm: 'Leeren',
     cleared: (round: number): string => `Runde ${round} geleert`,
     skipped: (count: number): string =>
@@ -104,7 +106,7 @@ export const prizes = {
     export: 'CSV exportieren',
     exported: 'CSV exportiert',
     title: 'Preise aus CSV importieren',
-    hint: 'Spalten: Runde; Preis; Titel; Beschreibung; Wert CHF; Sponsor; Gewinnregel. Trennzeichen «;» oder «,», UTF-8.',
+    hint: 'Spalten: Runde; Preis; Titel; Beschreibung; Wert CHF; Sponsor; Gewinnregel. In der Spalte Preis steht 1. Preis bis 4. Preis oder Superlotto. Trennzeichen «;» oder «,», UTF-8.',
     file: 'CSV-Datei',
     reading: 'Datei wird gelesen …',
     unreadable: 'Die Datei kann nicht gelesen werden.',
@@ -130,7 +132,7 @@ export const prizes = {
     rowErrors: {
       ROUND_INVALID: 'Die Runde ist keine ganze Zahl.',
       ROUND_OUT_OF_RANGE: 'Diese Runde gibt es im Anlass nicht.',
-      SLOT_INVALID: 'Preis muss 1, 2, 3 oder Hauptpreis sein.',
+      SLOT_INVALID: 'Preis muss 1. Preis bis 4. Preis oder Superlotto sein.',
       TITLE_REQUIRED: 'Der Titel fehlt.',
       TITLE_TOO_LONG: 'Der Titel ist länger als 60 Zeichen.',
       DESCRIPTION_TOO_LONG: 'Die Beschreibung ist länger als 200 Zeichen.',
@@ -140,7 +142,8 @@ export const prizes = {
       CONDITION_REMOVED:
         'Die Gewinnregel «2 Reihen» gibt es nicht mehr. Bitte «1 Reihe», «Volle Karte» oder eine eigene Regel eintragen.',
       DUPLICATE: 'Diese Runde und dieser Preis kommen mehrfach vor.',
-      AWARDED: 'Dieser Preis ist bereits vergeben.',
+      AWARDED:
+        'Dieser Preis kann nicht mehr geändert werden: Er ist vergeben oder die Runde läuft.',
     },
   },
   prepared: {

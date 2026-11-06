@@ -1,8 +1,7 @@
-import { fireEvent, screen } from '@testing-library/preact';
+import { act, fireEvent, screen } from '@testing-library/preact';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import exampleEvent from '../../../../public/events/beispiel-lottomatch.json?raw';
-import manifestText from '../../../../public/events/index.json?raw';
 import { prizes as m } from '../../../i18n/de-CH/prizes';
+import { PREPARED_EVENT } from '../../../test/prepared-event-fixture';
 import { createTestHost, renderWithServices } from '../../../test/test-platform';
 import { toasts } from '../../design-system/toast-store';
 import { importErrorText, PreparedEvents } from './PreparedEvents';
@@ -22,13 +21,13 @@ describe('PreparedEvents', () => {
   it('lists, previews and loads a prepared event as a new active event', async () => {
     const host = await createTestHost({
       fetchText: serve({
-        'events/index.json': manifestText,
-        'events/beispiel-lottomatch.json': exampleEvent,
+        'events/index.json': '[{"file":"anlass.json","name":"Anlass"}]',
+        'events/anlass.json': PREPARED_EVENT,
       }),
     });
     const before = host.app.session.value?.matchId;
     renderWithServices(<PreparedEvents readOnly={false} />, host);
-    fireEvent.click(screen.getByRole('button', { name: m.prepared.open }));
+    fireEvent.click(await screen.findByRole('button', { name: m.prepared.open }));
     fireEvent.click(await screen.findByRole('button', { name: m.prepared.preview }));
     expect(await screen.findByText(m.prepared.facts(24, 96))).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Zurück' }));
@@ -40,15 +39,32 @@ describe('PreparedEvents', () => {
     expect(toasts.value.at(-1)?.message).toBe(m.prepared.loaded('Lottomatch 2026 (Beispiel)'));
   });
 
-  it('explains an unavailable or empty list and broken files', async () => {
+  it('has no button while no file is shipped', async () => {
+    const fetchText = serve({ 'events/index.json': '[]' });
+    const host = await createTestHost({ fetchText });
+    renderWithServices(<PreparedEvents readOnly={false} />, host);
+    await vi.waitFor(() => {
+      expect(fetchText).toHaveBeenCalled();
+    });
+    await act(() => Promise.resolve());
+    expect(screen.queryByRole('button', { name: m.prepared.open })).toBeNull();
+  });
+
+  it('explains an unavailable list', async () => {
     const host = await createTestHost({ fetchText: serve({}) });
     renderWithServices(<PreparedEvents readOnly={false} />, host);
-    fireEvent.click(screen.getByRole('button', { name: m.prepared.open }));
+    fireEvent.click(await screen.findByRole('button', { name: m.prepared.open }));
     expect(await screen.findByRole('alert')).toHaveTextContent(m.prepared.unavailable);
+  });
 
-    const empty = await createTestHost({ fetchText: serve({ 'events/index.json': '[]' }) });
-    renderWithServices(<PreparedEvents readOnly={false} />, empty);
-    fireEvent.click(screen.getAllByRole('button', { name: m.prepared.open })[1] ?? document.body);
+  it('explains a list that became empty after the page opened', async () => {
+    const fetchText = vi
+      .fn<(path: string) => Promise<string>>()
+      .mockResolvedValueOnce('[{"file":"a.json","name":"A"}]')
+      .mockResolvedValue('[]');
+    const host = await createTestHost({ fetchText });
+    renderWithServices(<PreparedEvents readOnly={false} />, host);
+    fireEvent.click(await screen.findByRole('button', { name: m.prepared.open }));
     expect(await screen.findByText(m.prepared.none)).toBeInTheDocument();
   });
 
@@ -60,7 +76,7 @@ describe('PreparedEvents', () => {
       }),
     });
     renderWithServices(<PreparedEvents readOnly={false} />, host);
-    fireEvent.click(screen.getByRole('button', { name: m.prepared.open }));
+    fireEvent.click(await screen.findByRole('button', { name: m.prepared.open }));
     fireEvent.click(await screen.findByRole('button', { name: m.prepared.preview }));
     expect(await screen.findByRole('alert')).toHaveTextContent(m.prepared.importErrors.NOT_JSON);
   });

@@ -72,7 +72,8 @@ export const settings: SettingsMessages = {
     tiebreakOrder: 'Tie-break',
     tiebreakOrderOptions: { HIGHEST: 'Highest number wins', LOWEST: 'Lowest number wins' },
     boardReset: 'Clear the board after each prize',
-    boardResetHint: 'Each prize gets its own numbers. Default: off.',
+    boardResetHint:
+      'Each prize gets its own numbers, only the Superlotto goes on with the board of prize 4. Default: off.',
     showNames: 'Show names on the display',
     showNamesHint:
       'Default: off. Otherwise the display shows the card number only (privacy, revFADP).',

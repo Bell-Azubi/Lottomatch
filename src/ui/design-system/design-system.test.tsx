@@ -40,8 +40,8 @@ describe('BadgeRing (single ring primitive)', () => {
     expect(container.querySelector('text:not(:has(textPath))')?.textContent).toBe('42');
   });
 
-  it('turns the band red for the Hauptpreis and draws segments and progress', () => {
-    const { container } = render(<BadgeRing bandTone="red" topText="HAUPTPREIS" />);
+  it('turns the band red for the Superlotto and draws segments and progress', () => {
+    const { container } = render(<BadgeRing bandTone="red" topText="SUPERLOTTO" />);
     expect(container.querySelector('[data-layer="band"] circle')?.getAttribute('class')).toMatch(
       /bandRed/,
     );
@@ -66,7 +66,10 @@ describe('BadgeRing (single ring primitive)', () => {
     expect(screen.getByText('1 von 24 Runden gespielt')).toBeInTheDocument();
     render(<PrizeProgress states={['AWARDED', 'ACTIVE', 'SKIPPED', 'UPCOMING']} />);
     expect(screen.getByText('Preis 3: übersprungen')).toBeInTheDocument();
-    expect(screen.getByText('Hauptpreis: offen')).toBeInTheDocument();
+    expect(screen.getByText('Preis 4: offen')).toBeInTheDocument();
+    render(<PrizeProgress states={['AWARDED', 'AWARDED', 'AWARDED', 'AWARDED', 'ACTIVE']} />);
+    expect(screen.getByText('Superlotto: aktiv')).toBeInTheDocument();
+    expect(screen.getByText('S')).toBeInTheDocument();
     render(<Ball number={42} label="42" />);
   });
 });

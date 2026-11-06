@@ -1,7 +1,7 @@
 # Lottomatch Live — FC Laufenburg-Kaisten
 
 The caller's console and the audience's big screen for the FC Laufenburg-Kaisten Lottomatch: draw
-numbers by spin or from a physical drum, confirm wins, award 24 rounds × 4 prizes and show
+numbers by spin or from a physical drum, confirm wins, award 24 rounds × 4 prizes, plus a Superlotto in selected rounds, and show
 everything legibly on a projector, from one laptop and without a network once loaded.
 
 Lottomatch Live is a static progressive web app on GitHub Pages. Every browser keeps its own data
@@ -142,7 +142,9 @@ empty. Export a backup before the switch and import it afterwards.
 ## Shipping a prepared event file
 
 Prepared events let the organiser load a whole prize list on the event laptop with one click
-(Preise → "Vorbereiteten Anlass laden").
+(Preise → "Vorbereiteten Anlass laden"). None is shipped at the moment, and the button only appears
+once the manifest lists a file. The prize list of the event is built in
+(`src/application/event-prize-list.ts`), and the CSV import can overwrite it.
 
 1. In the app, prepare the event (Einstellungen → Anlass, Preise) without playing any round, then
    export it: Einstellungen → Daten → "Sicherung exportieren".
@@ -161,8 +163,6 @@ Prepared events let the organiser load a whole prize list on the event laptop wi
    (`src/application/shipped-events.test.ts`). On the event laptop the app validates it again and
    shows a preview before anything is created. After the merge the file is part of the site and
    of the offline cache.
-
-`public/events/beispiel-lottomatch.json` is a complete example.
 
 ## Replacing the logo
 

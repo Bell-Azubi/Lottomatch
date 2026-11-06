@@ -41,23 +41,84 @@ describe('header mapping', () => {
   });
 });
 
+describe('a list with a Superlotto', () => {
+  const entry = (line: number, round: string, slot: string, title: string) => ({
+    line,
+    cells: { Runde: round, Preis: slot, Titel: title },
+  });
+
+  it('imports 1. Preis to 4. Preis and the Superlotto with their default rules', () => {
+    const preview = buildPreview(
+      [
+        entry(2, '4', '1. Preis', 'Vorderschinken'),
+        entry(3, '4', '4. Preis', 'Wein'),
+        entry(4, '4', 'Superlotto', 'Grosser Früchtekorb'),
+      ],
+      ['Runde', 'Preis', 'Titel'],
+      options,
+    );
+    expect(preview.errors).toEqual([]);
+    expect(preview.rows.map(({ slot, draft }) => [slot, draft.winCondition.kind])).toEqual([
+      [1, 'ONE_LINE'],
+      [4, 'ONE_LINE'],
+      [5, 'FULL_CARD'],
+    ]);
+  });
+
+  it('gives a round its Superlotto when the list names one without a prize yet', () => {
+    const preview = buildPreview(
+      [entry(2, '6', 'Superlotto', ''), entry(3, '6', '1. Preis', '')],
+      ['Runde', 'Preis', 'Titel'],
+      options,
+    );
+    expect(preview.rows.map(({ slot, draft }) => [slot, draft.title])).toEqual([[5, 'Superlotto']]);
+    expect(preview.errors).toEqual([{ line: 3, code: 'TITLE_REQUIRED' }]);
+  });
+
+  it('reports a Superlotto for a round that is closed to it', () => {
+    const preview = buildPreview(
+      [entry(2, '1', 'Superlotto', 'Grosser Früchtekorb')],
+      ['Runde', 'Preis', 'Titel'],
+      { ...options, locked: (_round, slot) => slot === 5 },
+    );
+    expect(preview.errors).toEqual([{ line: 2, code: 'AWARDED' }]);
+  });
+
+  it('exports the names of the list, which import back', () => {
+    const { rows } = exportTable({
+      prizes: [
+        { id: 'a', round: 4, slot: 5, title: 'Korb', winCondition: { kind: 'FULL_CARD' } },
+        { id: 'b', round: 4, slot: 2, title: '1/2 Schüfeli', winCondition: { kind: 'ONE_LINE' } },
+      ],
+    });
+    expect(rows.map((cells) => cells[1])).toEqual(['2. Preis', 'Superlotto']);
+    expect(rows.map((cells) => parseSlot(cells[1] ?? ''))).toEqual([2, 5]);
+  });
+});
+
 describe('cell parsing', () => {
   it.each([
     ['1', 1],
     ['Preis 2', 2],
     ['p3', 3],
     ['4', 4],
-    ['Hauptpreis', 4],
-    ['Main prize', 4],
-    ['HP', 4],
     ['2.', 2],
+    ['1. Preis', 1],
+    ['4. preis', 4],
+    ['3 Preis', 3],
+    ['Superlotto', 5],
+    ['SUPER LOTTO', 5],
+    ['5', 5],
   ])('parses slot %j', (raw, slot) => {
     expect(parseSlot(raw)).toBe(slot);
   });
 
-  it.each(['0', '5', 'Preis', 'zwei', ''])('rejects slot %j', (raw) => {
-    expect(parseSlot(raw)).toBeUndefined();
-  });
+  it.each(['0', '6', 'Preis', 'zwei', '1. Superlotto', 'Hauptpreis', ''])(
+    'rejects slot %j',
+    (raw) => {
+      expect(parseSlot(raw)).toBeUndefined();
+    },
+  );
 
   it('parses known win conditions and keeps other text as a custom rule', () => {
     expect(parseCondition('1 Reihe')).toEqual({ kind: 'ONE_LINE' });
@@ -74,7 +135,7 @@ describe('buildPreview', () => {
     const preview = buildPreview(
       [
         row(2, ['1', '1', 'Präsentkorb', 'Mit Wein', '1’000.50', 'Bäckerei Muster', '']),
-        row(3, ['1', 'Hauptpreis', 'Velo', '', '50.–', '', 'Vier Ecken']),
+        row(3, ['1', '4. Preis', 'Velo', '', '50.–', '', 'Vier Ecken']),
       ],
       headers,
       options,
@@ -187,7 +248,8 @@ describe('export round trip', () => {
     );
     const { headers: exportHeaders, rows } = exportTable(catalogue);
     expect(rows.map((cells) => cells[0])).toEqual(['1', '2']);
-    expect(rows[1]?.[1]).toBe('Hauptpreis');
+    expect(rows[0]?.[1]).toBe('1. Preis');
+    expect(rows[1]?.[1]).toBe('4. Preis');
     const text = excelCsv.serialize(exportHeaders, rows);
     expect(text.startsWith('\uFEFFRunde;Preis;Titel')).toBe(true);
     expect(text).toContain('\r\n');

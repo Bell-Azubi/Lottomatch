@@ -118,7 +118,7 @@ describe('round and print views', () => {
     expect(screen.getByText('1 Fehlmeldung')).toBeInTheDocument();
     expect(screen.getByText('1 Gewinn widerrufen')).toBeInTheDocument();
     expect(screen.getByText('CHF 50.50 · gestiftet von Bäckerei Frei')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Hauptpreis abgeholt' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Preis 4 abgeholt' }));
     expect(actions.onHandout).toHaveBeenCalledWith(1, 4, 'COLLECTED');
     fireEvent.click(screen.getByRole('button', { name: 'Präsentkorb abgeholt' }));
     expect(actions.onHandout).toHaveBeenCalledWith(1, 1, 'OPEN');

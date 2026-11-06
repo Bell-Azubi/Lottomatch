@@ -32,8 +32,9 @@ export const common: CommonMessages = {
     FULL_CARD: 'Full card',
     CUSTOM: 'Custom rule',
   },
-  prizeSlot: (slot) => (slot === 4 ? 'Main prize' : `Prize ${slot}`),
-  prizeOfFour: (slot) => `Prize ${slot} of 4`,
+  prizeSlot: (slot) => (slot === 5 ? 'Superlotto' : `Prize ${slot}`),
+  prizeDisc: (slot) => (slot === 5 ? 'S' : String(slot)),
+  prizeOf: (slot, total) => (slot === 5 ? 'Superlotto' : `Prize ${slot} of ${total}`),
   roundOf: (round, total) => `Round ${round} of ${total}`,
   progress: {
     AWARDED: 'awarded',

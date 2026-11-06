@@ -26,7 +26,7 @@ describe('defaults', () => {
     });
     expect(base.template[1]).toEqual({ kind: 'ONE_LINE' });
     expect(base.template[3]).toEqual({ kind: 'ONE_LINE' });
-    expect(base.template[4]).toEqual({ kind: 'FULL_CARD' });
+    expect(base.template[4]).toEqual({ kind: 'ONE_LINE' });
     expect(base.lateClaimPolicy).toBe('HOST_DECIDES');
     expect(base.tiePolicy).toBe('TIEBREAK');
     expect(validateSettings(base)).toEqual([]);

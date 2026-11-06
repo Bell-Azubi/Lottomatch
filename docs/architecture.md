@@ -118,7 +118,7 @@ sequenceDiagram
 stateDiagram-v2
   [*] --> UPCOMING
   UPCOMING --> RUNNING: ROUND_STARTED (Runde starten or Zu Runde springen)
-  RUNNING --> COMPLETED: Hauptpreis awarded or skipped
+  RUNNING --> COMPLETED: last prize awarded or skipped
   COMPLETED --> RUNNING: AWARD_REVOKED (latest award, current round)
   RUNNING --> ABORTED: ROUND_ABORTED after a draw or award
   RUNNING --> UPCOMING: ROUND_ABORTED before any draw or award

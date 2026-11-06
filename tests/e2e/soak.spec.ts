@@ -5,6 +5,7 @@ import {
   open,
   openDisplay,
   openHost,
+  prizesInRound,
   setAnimation,
   startRound,
   typeNumber,
@@ -76,12 +77,12 @@ async function createEvent(page: Page, name: string): Promise<void> {
   await expect(page.getByText(`«${name}» erstellt`)).toBeVisible();
 }
 
-/** Plays 24 rounds of four prizes each and completes the event. */
+/** Plays the 24 rounds of the prize list and completes the event. */
 async function playEvent(page: Page): Promise<void> {
   await openHost(page);
   for (let round = 1; round <= 24; round += 1) {
     await startRound(page, round);
-    for (let slot = 1; slot <= 4; slot += 1) {
+    for (let slot = 1; slot <= prizesInRound(round); slot += 1) {
       await typeNumber(page, slot * 10 + (round % 10));
       await confirmWin(page, `${round}-${slot}`);
     }

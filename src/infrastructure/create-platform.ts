@@ -1,5 +1,6 @@
 import type { BuildInfo, Platform } from '../application/platform';
 import type { DocumentStore, EventStore, ImageStore } from '../application/ports';
+import { EVENT_PRIZE_LIST } from '../application/event-prize-list';
 import { binaryCodec, fetchText } from './binary';
 import { CryptoRandomSource, uuidGenerator, webCrypto } from './crypto';
 import { excelCsv } from './csv';
@@ -82,6 +83,7 @@ export async function createPlatform(build: BuildInfo): Promise<Platform> {
     screen: new BrowserScreenControl(),
     crypto: webCrypto,
     binary: binaryCodec,
+    initialPrizes: EVENT_PRIZE_LIST,
     fetchText,
     build,
     diagnostics,

@@ -7,7 +7,11 @@ import { SCHEMA_VERSION } from '../domain/types';
 
 export const RULES: RoundRules = { maxNumber: 90, perLine: 5, lines: 3, boardReset: 'ROUND' };
 export const PRIZE_RULES: RoundRules = { ...RULES, boardReset: 'PRIZE' };
-export const CONTEXT = { totalRounds: 24, rules: RULES } as const;
+export const CONTEXT = {
+  totalRounds: 24,
+  rules: RULES,
+  superlottoRounds: new Set<number>(),
+} as const;
 
 /** Wraps an event in an envelope at the next log position. */
 export function envelopeFor(

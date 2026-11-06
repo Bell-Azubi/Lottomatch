@@ -9,11 +9,23 @@ All notable changes to this project are documented in this file. The format foll
 
 ### Added
 
+- The prize list of the event is built in: 24 rounds, four prizes each, a Superlotto in rounds 4, 9,
+  14, 19 and 24. An event without prizes gets it when it opens, also while it is being played, unless
+  it is completed. The CSV import can still overwrite it (ADR-0028).
 - Welcome page on the display until the first round starts: greeting to the Lottomatch of the
   FC Laufenburg-Kaisten Senioren, club badge, the event's date and venue. A round start replaces it
   with the board.
+- Superlotto: a round whose prize list has one plays a fifth prize after the four, on the
+  same board until a full card. Only those rounds show its form in the Preise tab. It appears on the
+  display, the console, the print list, the results and in the CSV (ADR-0027).
 
 ### Changed
+
+- The word Hauptpreis is gone: the fourth prize is called Preis 4, and the red highlight and the
+  large confetti belong to the Superlotto.
+- New events use 1 Reihe for all four prizes. Stored events keep their template.
+- The CSV import accepts `1. Preis` to `4. Preis` and `Superlotto`, and the export writes these
+  names. A row with `Hauptpreis` is reported as an error.
 
 - The Gewinn overlay on the display stays for 60 seconds instead of 12. The next draw still ends it
   at once, and so does skipping a prize or aborting the round.
@@ -24,6 +36,8 @@ All notable changes to this project are documented in this file. The format foll
 
 ### Removed
 
+- The example event with its 96 sample prizes. The button for prepared events only appears when a
+  file is shipped.
 - The win condition 2 Reihen can no longer be chosen. New events use 1 Reihe for prize 3, a CSV row
   with 2 Reihen is reported as an error, and stored events keep it until it is changed (ADR-0026).
 - Number check, Fehlmeldung and late-claim detection in Gewinn prüfen, and the settings that only

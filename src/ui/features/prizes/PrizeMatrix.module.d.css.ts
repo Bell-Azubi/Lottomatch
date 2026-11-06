@@ -14,6 +14,7 @@ declare const styles: {
   readonly round: string;
   readonly selected: string;
   readonly status: string;
+  readonly superlotto: string;
   readonly table: string;
   readonly warning: string;
 };

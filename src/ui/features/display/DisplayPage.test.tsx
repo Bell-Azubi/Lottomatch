@@ -175,7 +175,7 @@ describe('DisplayPage', () => {
     expect(screen.getByText('Gleich geht’s los')).toBeInTheDocument();
   });
 
-  it('shows the Hauptpreis and practice lettering and the light theme', () => {
+  it('shows a gap by its slot name, practice lettering and the light theme', () => {
     push(
       snapshot({
         practice: true,
@@ -184,8 +184,22 @@ describe('DisplayPage', () => {
       }),
     );
     expect(screen.getAllByText('ÜBUNG').length).toBeGreaterThan(0);
-    expect(screen.getByText('Hauptpreis')).toBeInTheDocument();
+    expect(screen.getByText('Preis 4')).toBeInTheDocument();
     expect(document.documentElement.dataset['theme']).toBe('light');
+  });
+
+  it('counts five prizes in a Superlotto round and rings the Superlotto', () => {
+    const progress = ['AWARDED', 'ACTIVE', 'UPCOMING', 'UPCOMING', 'UPCOMING'] as const;
+    push(snapshot({ progress: [...progress] }));
+    expect(screen.getByText('Preis 2 von 5')).toBeInTheDocument();
+    push(
+      snapshot({
+        prize: { slot: 5, title: 'Früchtekorb', condition: { kind: 'FULL_CARD' } },
+        progress: ['AWARDED', 'AWARDED', 'AWARDED', 'AWARDED', 'ACTIVE'],
+      }),
+    );
+    expect(screen.getByText('Superlotto')).toBeInTheDocument();
+    expect(screen.getAllByText('SUPERLOTTO').length).toBeGreaterThan(0);
   });
 
   it.each<[DisplayOverlay, string]>([
@@ -194,11 +208,11 @@ describe('DisplayPage', () => {
         kind: 'WIN',
         id: 'o1',
         round: 3,
-        slot: 4,
+        slot: 5,
         title: 'Velo',
         condition: { kind: 'FULL_CARD' },
         winners: [{ cardNo: '17' }, { name: 'Anna' }],
-        main: true,
+        superlotto: true,
       },
       'Karte 17',
     ],

@@ -1,8 +1,9 @@
 import { validatePrize, type Catalogue, type PrizeDraft, type SlotLock } from '../domain/catalogue';
 import { cleanText, isIntegerInRange, LIMITS } from '../domain/limits';
 import { chfToPlain, parseChf } from '../domain/money';
-import type { ConditionTemplate } from '../domain/settings';
+import { templateCondition, type ConditionTemplate } from '../domain/settings';
 import type { PrizeSlot, WinCondition } from '../domain/types';
+import { SUPERLOTTO_SLOT } from '../domain/types';
 import { textLength } from '../domain/win-condition';
 import type { CsvRow } from './ports';
 import type { PrizeImport } from './prize-editor';
@@ -75,15 +76,18 @@ export function mapHeaders(headers: readonly string[]): HeaderMapping {
   };
 }
 
-/** `1`–`4`, `Preis 2`, `P3`, `Hauptpreis`, `HP`, `Main prize`. */
+/** `1`–`5`, `Preis 2`, `2. Preis`, `P3`, `Superlotto`. */
 export function parseSlot(raw: string): PrizeSlot | undefined {
   const text = normaliseHeader(raw);
-  if (['hauptpreis', 'hp', 'main prize', 'main', 'haupt'].includes(text)) return 4;
-  const match = /^(?:preis|prize|p)?\s*([1-4])\.?$/.exec(text);
+  if (['superlotto', 'super-lotto', 'super lotto'].includes(text)) return SUPERLOTTO_SLOT;
+  const match = /^(?:(?:preis|prize|p)\s*)?([1-5])\.?(?:\s*(?:preis|prize))?$/.exec(text);
   if (match === null) return undefined;
   const slot = Number(match[1]);
-  return slot === 1 || slot === 2 || slot === 3 || slot === 4 ? slot : undefined;
+  return slot === 1 || slot === 2 || slot === 3 || slot === 4 || slot === 5 ? slot : undefined;
 }
+
+/** How the list names the Superlotto, and its title until a prize is entered. */
+const SUPERLOTTO_NAME = 'Superlotto';
 
 const CONDITIONS: readonly [WinCondition, readonly string[]][] = [
   [
@@ -200,13 +204,15 @@ function parseRow(
   const condition = parseCondition(cell(row, mapping, 'condition'));
   if (condition === 'TOO_LONG') return 'CONDITION_INVALID';
   if (condition === 'REMOVED') return 'CONDITION_REMOVED';
+  const title = cell(row, mapping, 'title');
   const draft: PrizeDraft = {
-    title: cell(row, mapping, 'title'),
+    // A list may name a Superlotto round before its prize is known: the round still gets one.
+    title: title === '' && slot === SUPERLOTTO_SLOT ? SUPERLOTTO_NAME : title,
     description: cell(row, mapping, 'description'),
     valueChf: value.value,
     sponsor: cell(row, mapping, 'sponsor'),
     imageId: undefined,
-    winCondition: condition ?? options.template[slot],
+    winCondition: condition ?? templateCondition(options.template, slot),
   };
   const issue = draftIssue(draft);
   if (issue !== undefined) return issue;
@@ -260,7 +266,7 @@ export function exportTable(catalogue: Catalogue): { headers: string[]; rows: st
     .sort((a, b) => a.round - b.round || a.slot - b.slot)
     .map((prize) => [
       String(prize.round),
-      prize.slot === 4 ? 'Hauptpreis' : String(prize.slot),
+      prize.slot === SUPERLOTTO_SLOT ? SUPERLOTTO_NAME : `${prize.slot}. Preis`,
       prize.title,
       prize.description ?? '',
       prize.valueChf === undefined ? '' : chfToPlain(prize.valueChf),

@@ -36,7 +36,7 @@ describe('describeAudit', () => {
     expect(text).toContain('Ziehung 7 (Zahl 77) rückgängig gemacht');
     expect(text).toContain('Gewinn nach Stechen bestätigt, Runde 1, Preis 3: Karte 30');
     expect(text).toContain('Gewinn widerrufen, Runde 1, Preis 3 (Karte 30): Karte falsch gelesen');
-    expect(text).toContain('Gewinn bestätigt, Runde 1, Hauptpreis: Karte 1, Karte 2');
+    expect(text).toContain('Gewinn bestätigt, Runde 1, Preis 4: Karte 1, Karte 2');
     expect(text).toContain('Preis abgeholt, Runde 1, Preis 1');
     expect(text).toContain('Gewinnkarte korrigiert, Runde 1, Preis 1: Karte 18 (Tippfehler)');
     expect(text).toContain('Runde 2 abgebrochen: Stromausfall');
@@ -58,7 +58,7 @@ describe('describeAudit', () => {
   it('renders English sentences with the same structure', () => {
     const text = sentences('en');
     expect(text).toContain('Round 1 started (numbers 1–90)');
-    expect(text).toContain('Win confirmed, round 1, Main prize: card 1, card 2');
+    expect(text).toContain('Win confirmed, round 1, Prize 4: card 1, card 2');
     expect(text).toContain('Draw 7 (number 77) undone');
     expect(text).toHaveLength(EVENING.length + EXTRA.length);
   });

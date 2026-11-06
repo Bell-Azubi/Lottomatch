@@ -1,6 +1,11 @@
 import type { BrowserContext, Page } from '@playwright/test';
 import { expect } from './fixtures';
 
+/** How many prizes a round of the built-in prize list has. */
+export function prizesInRound(round: number): number {
+  return [4, 9, 14, 19, 24].includes(round) ? 5 : 4;
+}
+
 /** Opens a route and waits until the app has booted. */
 export async function open(page: Page, route = ''): Promise<void> {
   await page.goto(`./#/${route}`);

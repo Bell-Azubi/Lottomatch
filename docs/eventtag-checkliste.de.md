@@ -3,6 +3,7 @@
 ## Am Vortag
 
 - [ ] Preise vollständig erfasst; die Startseite meldet keine fehlenden Preise.
+- [ ] Preisliste geprüft; die Runden mit Superlotto zeigen unter «Preise» «5 von 5 Preisen erfasst».
 - [ ] Gewinnregeln und Einstellungen mit dem Spielreglement abgeglichen.
 - [ ] Übung durchgespielt: eine Runde mit Drehen, Zahl eintragen, Gewinn bestätigen und
       Stechen.

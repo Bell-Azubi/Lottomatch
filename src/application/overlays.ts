@@ -46,7 +46,7 @@ export class OverlayController {
         ...(w.cardNo === undefined ? {} : { cardNo: w.cardNo }),
         ...(showNames && w.name !== undefined ? { name: w.name } : {}),
       })),
-      main: view.main,
+      superlotto: view.superlotto,
     };
     this.winTimer = setTimeout(() => {
       this.winTimer = undefined;
@@ -66,7 +66,7 @@ export class OverlayController {
     if (this.current.value?.kind !== 'WIN') this.showRoundEnd();
   }
 
-  /** Rundenende: the next round's four prizes. */
+  /** Rundenende: the next round's prizes. */
   showRoundEnd(): void {
     const session = this.app.session.value;
     this.roundEndPending = false;

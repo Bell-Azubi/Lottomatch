@@ -103,6 +103,7 @@ export function createTestPlatform(overrides: Partial<Platform> = {}): Platform 
     },
     crypto: webCrypto,
     binary: binaryCodec,
+    initialPrizes: [],
     fetchText: vi.fn(() => Promise.reject(new Error('fetchText not stubbed'))),
     build: {
       version: '1.0.0',

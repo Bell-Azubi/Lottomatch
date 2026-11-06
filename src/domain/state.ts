@@ -7,7 +7,7 @@ import type {
   TiebreakDraw,
   Winner,
 } from './types';
-import { PRIZE_SLOTS } from './types';
+import { PRIZE_SLOTS, SUPERLOTTO_ROUND_SLOTS, SUPERLOTTO_SLOT } from './types';
 
 export type RoundStatus = 'UPCOMING' | 'RUNNING' | 'COMPLETED' | 'ABORTED';
 export type PrizeStatus = 'OPEN' | 'AWARDED' | 'SKIPPED';
@@ -81,7 +81,7 @@ export function emptyRound(round: number): RoundState {
     round,
     status: 'UPCOMING',
     draws: [],
-    prizes: { 1: OPEN_PRIZE, 2: OPEN_PRIZE, 3: OPEN_PRIZE, 4: OPEN_PRIZE },
+    prizes: { 1: OPEN_PRIZE, 2: OPEN_PRIZE, 3: OPEN_PRIZE, 4: OPEN_PRIZE, 5: OPEN_PRIZE },
     runs: 0,
     rejectedClaims: 0,
     revokedAwards: 0,
@@ -99,9 +99,14 @@ export function runningRound(state: GameState): RoundState | undefined {
   return state.rounds.get(state.currentRound);
 }
 
+/** The prizes a round plays: the four, plus the Superlotto when it started with one. */
+export function slotsOfRound(round: RoundState): readonly PrizeSlot[] {
+  return round.rules?.superlotto === true ? SUPERLOTTO_ROUND_SLOTS : PRIZE_SLOTS;
+}
+
 /** First unresolved slot of a round (I2: prizes resolve in slot order). */
 export function firstOpenSlot(round: RoundState): PrizeSlot | undefined {
-  return PRIZE_SLOTS.find((slot) => round.prizes[slot].status === 'OPEN');
+  return slotsOfRound(round).find((slot) => round.prizes[slot].status === 'OPEN');
 }
 
 /** The prize that is currently being played for. */
@@ -110,10 +115,14 @@ export function activeSlot(state: GameState): PrizeSlot | undefined {
   return round === undefined ? undefined : firstOpenSlot(round);
 }
 
-/** Draws that form the pool of a slot under the round's board-reset rule. */
+/**
+ * Draws that form the pool of a slot under the round's board-reset rule. The Superlotto never gets
+ * a board of its own: it goes on with the numbers of the fourth prize (ADR-0027).
+ */
 export function poolDraws(round: RoundState, slot: PrizeSlot): readonly DrawEntry[] {
-  if (round.rules?.boardReset === 'PRIZE') return round.draws.filter((d) => d.slot === slot);
-  return round.draws;
+  if (round.rules?.boardReset !== 'PRIZE') return round.draws;
+  const continued = slot === SUPERLOTTO_SLOT ? 4 : slot;
+  return round.draws.filter((d) => d.slot === slot || d.slot === continued);
 }
 
 export interface ActivePool {
@@ -144,11 +153,7 @@ export function remainingNumbers(pool: ActivePool): number[] {
 
 /** Highest resolved slot of a round, which is always the latest resolution (I2). */
 export function latestResolvedSlot(round: RoundState): PrizeSlot | undefined {
-  for (let index = PRIZE_SLOTS.length - 1; index >= 0; index -= 1) {
-    const slot = PRIZE_SLOTS[index];
-    if (slot !== undefined && round.prizes[slot].status !== 'OPEN') return slot;
-  }
-  return undefined;
+  return slotsOfRound(round).findLast((slot) => round.prizes[slot].status !== 'OPEN');
 }
 
 /** Log sequence of the latest award or skip in a round, or 0. */
@@ -159,10 +164,10 @@ export function latestResolutionLogSeq(round: RoundState): number {
 
 /** True when every prize of the round is awarded or skipped. */
 export function isRoundResolved(round: RoundState): boolean {
-  return PRIZE_SLOTS.every((slot) => round.prizes[slot].status !== 'OPEN');
+  return slotsOfRound(round).every((slot) => round.prizes[slot].status !== 'OPEN');
 }
 
 /** True when any prize in the round has been resolved. */
 export function hasResolution(round: RoundState): boolean {
-  return PRIZE_SLOTS.some((slot) => round.prizes[slot].status !== 'OPEN');
+  return slotsOfRound(round).some((slot) => round.prizes[slot].status !== 'OPEN');
 }

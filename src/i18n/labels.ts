@@ -6,7 +6,7 @@ export function conditionLabel(condition: WinCondition, m: CommonMessages): stri
   return condition.kind === 'CUSTOM' ? condition.label : m.conditions[condition.kind];
 }
 
-/** Prize title, falling back to "Preis 2" / "Hauptpreis" for gaps (FR-8). */
+/** Prize title, falling back to "Preis 2" / "Superlotto" for gaps (FR-8). */
 export function prizeTitle(title: string | undefined, slot: number, m: CommonMessages): string {
   return title === undefined || title === '' ? m.prizeSlot(slot) : title;
 }

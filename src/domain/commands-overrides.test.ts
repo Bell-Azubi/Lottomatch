@@ -32,7 +32,7 @@ describe('revocation (FR-4, I4)', () => {
     expect(roundOf(state, 1).revokedAwards).toBe(1);
   });
 
-  it('reopens a completed round when its Hauptpreis is revoked', () => {
+  it('reopens a completed round when its last prize is revoked', () => {
     let state = startedState();
     for (let i = 0; i < 4; i += 1) state = award(drawAll(state, [i + 1]));
     state = run(state, revokeLatestAward(state, 'Fehler'));

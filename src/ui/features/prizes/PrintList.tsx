@@ -1,6 +1,5 @@
-import { prizeAt, type Catalogue } from '../../../domain/catalogue';
+import { conditionFor, plannedSlots, prizeAt, type Catalogue } from '../../../domain/catalogue';
 import type { MatchSettings } from '../../../domain/settings';
-import { PRIZE_SLOTS } from '../../../domain/types';
 import { commonText } from '../../../i18n/catalogues';
 import { formatCalendarDate, formatChf, formatDateTime } from '../../../i18n/format';
 import { conditionLabel, prizeTitle } from '../../../i18n/labels';
@@ -42,9 +41,9 @@ export function PrintList({ settings, catalogue, printedAt }: PrintListProps) {
           <h2 class={styles.roundTitle}>{m.print.round(round)}</h2>
           <table class={styles.table}>
             <tbody>
-              {PRIZE_SLOTS.map((slot) => {
+              {plannedSlots(catalogue, round).map((slot) => {
                 const prize = prizeAt(catalogue, round, slot);
-                const condition = prize?.winCondition ?? settings.template[slot];
+                const condition = conditionFor(catalogue, settings.template, round, slot);
                 return (
                   <tr key={slot}>
                     <th scope="row" class={styles.slot}>

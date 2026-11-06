@@ -1,7 +1,6 @@
 import { downloadBackup } from '../../../application/backup-export';
 import { nextRoundPreview } from '../../../application/selectors';
-import { PRIZE_SLOTS } from '../../../domain/types';
-import { roundOf } from '../../../domain/state';
+import { roundOf, slotsOfRound } from '../../../domain/state';
 import { commonText, liveText } from '../../../i18n/catalogues';
 import { conditionLabel, prizeTitle } from '../../../i18n/labels';
 import { t } from '../../../i18n';
@@ -54,7 +53,7 @@ export function RoundSummary({ onStartRound, onComplete, readOnly }: RoundSummar
         <>
           <h2>{m.summary.roundDone(last.round)}</h2>
           <ul class={styles.winners}>
-            {PRIZE_SLOTS.map((slot) => {
+            {slotsOfRound(last).map((slot) => {
               const outcome = last.prizes[slot];
               const cards = outcome.award?.winners.map((w) => w.cardNo ?? '–').join(', ');
               return (

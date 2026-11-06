@@ -67,6 +67,23 @@ describe('PrizeEditor: single prizes', () => {
     expect(prizeAt(catalogueOf(host), 1, 1)?.title).toBe('Zopf');
   });
 
+  it('lets a Superlotto join a round only before it starts', async () => {
+    const host = await setup();
+    expect(host.editor.savePrize(2, 5, draft('Früchtekorb')).ok).toBe(true);
+    expect(host.host.startRound().ok).toBe(true);
+    const closed = host.editor.savePrize(1, 5, draft('Zu spät'));
+    expect(!closed.ok && closed.error).toEqual({ code: 'LOCKED' });
+    const imported = host.editor.importPrizes([
+      { round: 1, slot: 5, draft: draft('Zu spät') },
+      { round: 2, slot: 5, draft: draft('Grosser Früchtekorb') },
+    ]);
+    expect(imported.ok && imported.value).toEqual({ imported: 1, skipped: 1 });
+    expect(prizeAt(catalogueOf(host), 1, 5)).toBeUndefined();
+    expect(prizeAt(catalogueOf(host), 2, 5)?.title).toBe('Grosser Früchtekorb');
+    expect(host.host.abortRound('Fehlstart').ok).toBe(true);
+    expect(host.editor.savePrize(1, 5, draft('Doch noch')).ok).toBe(true);
+  });
+
   it('refuses changes in a read-only window and without an event', async () => {
     const host = await setup();
     host.app.setWriteGuard(() => false);
@@ -81,14 +98,14 @@ describe('PrizeEditor: bulk tools and import', () => {
   it('copies a round, applies the template and clears a round', async () => {
     const host = await setup();
     host.editor.savePrize(1, 1, draft('Zopf', { winCondition: { kind: 'FULL_CARD' } }));
-    host.editor.savePrize(1, 4, draft('Velo'));
+    host.editor.savePrize(1, 4, draft('Velo', { winCondition: { kind: 'FULL_CARD' } }));
     const copied = host.editor.copyRound(1, [2, 3, 1]);
     expect(copied.ok && copied.value.skipped).toEqual([]);
     expect(prizeAt(catalogueOf(host), 3, 4)?.title).toBe('Velo');
     const templated = host.editor.applyTemplateEverywhere();
     expect(templated.ok).toBe(true);
     expect(prizeAt(catalogueOf(host), 2, 1)?.winCondition).toEqual({ kind: 'ONE_LINE' });
-    expect(prizeAt(catalogueOf(host), 2, 4)?.winCondition).toEqual({ kind: 'FULL_CARD' });
+    expect(prizeAt(catalogueOf(host), 2, 4)?.winCondition).toEqual({ kind: 'ONE_LINE' });
     expect(host.editor.clearRound(2).ok).toBe(true);
     expect(catalogueOf(host).prizes.filter((p) => p.round === 2)).toEqual([]);
   });

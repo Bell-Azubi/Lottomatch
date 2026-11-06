@@ -120,8 +120,8 @@ describe('speech and sound', () => {
       createGain: vi.fn(node),
     };
     const player = new WebAudioPlayer(() => context as unknown as AudioContext);
-    player.play('mainWin');
-    expect(context.createOscillator).toHaveBeenCalledTimes(CUES.mainWin.length);
+    player.play('superlottoWin');
+    expect(context.createOscillator).toHaveBeenCalledTimes(CUES.superlottoWin.length);
     expect(context.resume).toHaveBeenCalled();
     new WebAudioPlayer(undefined).play('tick');
   });

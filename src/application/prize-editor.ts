@@ -20,7 +20,7 @@ import type { Prize, PrizeSlot } from '../domain/types';
 import type { AppStore } from './app-store';
 import type { ImageError } from './ports';
 import { parseCatalogue } from './schemas';
-import { isAwarded } from './selectors';
+import { isSlotLocked } from './selectors';
 import type { MatchSession } from './session';
 
 export type PrizeEditError =
@@ -47,8 +47,9 @@ interface EditContext {
 }
 
 /**
- * Prize catalogue use cases (FR-8). Awarded prizes are read-only; every change goes through the
- * session (audited once the event started) and unreferenced images are collected afterwards.
+ * Prize catalogue use cases (FR-8). Awarded prizes are read-only, and an imported Superlotto can
+ * only join a round before it starts; every change goes through the session (audited once the event
+ * started) and unreferenced images are collected afterwards.
  */
 export class PrizeEditor {
   /** Images uploaded in a form that has not been saved yet; protected from collection. */
@@ -64,7 +65,7 @@ export class PrizeEditor {
     return ok({
       session,
       catalogue: session.catalogue.value,
-      lock: (round, slot) => isAwarded(game, round, slot),
+      lock: (round, slot) => isSlotLocked(game, round, slot),
       totalRounds: session.match.value.settings.rounds,
     });
   }

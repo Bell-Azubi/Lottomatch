@@ -4,7 +4,6 @@ declare const styles: {
   readonly content: string;
   readonly headline: string;
   readonly layer: string;
-  readonly mainWin: string;
   readonly nextCondition: string;
   readonly nextPrize: string;
   readonly nextPrizes: string;
@@ -17,6 +16,7 @@ declare const styles: {
   readonly sponsors: string;
   readonly sponsorsTitle: string;
   readonly sub: string;
+  readonly superlottoWin: string;
   readonly winner: string;
   readonly winners: string;
 };

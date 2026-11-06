@@ -7,7 +7,7 @@ export const display: DisplayMessages = {
   latestNumber: (n, seq) => `Drawn last: ${n}, draw ${seq}`,
   ringTop: (round, total) => `ROUND ${round} OF ${total}`,
   ringBottom: (seq) => `DRAW ${seq}`,
-  ringMain: 'MAIN PRIZE',
+  ringSuperlotto: 'SUPERLOTTO',
   ringPractice: 'PRACTICE',
   fullscreenHint: 'Click or press F for fullscreen',
   welcome: {
@@ -21,7 +21,7 @@ export const display: DisplayMessages = {
   },
   win: {
     title: 'Winner!',
-    mainTitle: 'Main prize!',
+    superlottoTitle: 'Superlotto!',
     card: (cardNo) => `Card ${cardNo}`,
   },
   roundEnd: {

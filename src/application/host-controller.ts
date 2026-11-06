@@ -1,11 +1,10 @@
-import { prizeAt, snapshotOf } from '../domain/catalogue';
+import { prizeAt, snapshotOf, superlottoRounds } from '../domain/catalogue';
 import * as commands from '../domain/commands';
 import type { DomainError } from '../domain/errors';
 import { err, ok, type Result } from '../domain/result';
 import { rulesOf } from '../domain/settings';
 import type { GameState } from '../domain/state';
 import type { HandoutStatus, LogEnvelope, PrizeSlot, TiebreakDraw, Winner } from '../domain/types';
-import { MAIN_PRIZE_SLOT } from '../domain/types';
 import type { AppStore } from './app-store';
 import { OverlayController } from './overlays';
 import { SPIN_DURATION_MS } from './records';
@@ -65,7 +64,11 @@ export class HostController {
 
   private context(session: MatchSession): commands.RoundContext {
     const { settings } = session.match.value;
-    return { totalRounds: settings.rounds, rules: rulesOf(settings) };
+    return {
+      totalRounds: settings.rounds,
+      rules: rulesOf(settings),
+      superlottoRounds: superlottoRounds(session.catalogue.value),
+    };
   }
 
   private spinDuration(): number {
@@ -170,8 +173,7 @@ export class HostController {
     const result = this.run((state) => commands.awardPrize(state, { ...input, prize }));
     if (!result.ok) return result;
     const { sound, muted } = this.app.prefs.value;
-    if (sound && !muted)
-      this.app.platform.sound.play(view.slot === MAIN_PRIZE_SLOT ? 'mainWin' : 'win');
+    if (sound && !muted) this.app.platform.sound.play(view.superlotto ? 'superlottoWin' : 'win');
     this.overlays.showWin(view, prize.title, input.winners);
     this.afterResolution();
     return ok(undefined);

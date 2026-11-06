@@ -72,7 +72,8 @@ export const settings = {
     tiebreakOrder: 'Stechen',
     tiebreakOrderOptions: { HIGHEST: 'Höchste Zahl gewinnt', LOWEST: 'Tiefste Zahl gewinnt' },
     boardReset: 'Brett nach jedem Preis leeren',
-    boardResetHint: 'Jeder Preis bekommt seine eigenen Zahlen. Standard: aus.',
+    boardResetHint:
+      'Jeder Preis bekommt seine eigenen Zahlen, nur das Superlotto läuft auf dem Brett von Preis 4 weiter. Standard: aus.',
     showNames: 'Namen auf der Anzeige zeigen',
     showNamesHint:
       'Standard: aus. Die Anzeige zeigt sonst nur die Kartennummer (Datenschutz, revDSG).',

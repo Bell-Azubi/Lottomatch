@@ -9,14 +9,22 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
    Vorjahresanlass als Vorlage duplizieren (Einstellungen und Preise, ohne Ziehungen und Gewinner).
 2. **Anlass einstellen.** Name, Datum, Ort, Anzahl Runden (Standard 24), höchste Zahl (Standard 90)
    und die Gewinnregel-Vorlage:
-   Preis 1 «1 Reihe», Preis 2 «1 Reihe», Preis 3 «1 Reihe», Hauptpreis «Volle Karte».
+   Preis 1 bis Preis 4 je «1 Reihe». Das Superlotto gilt für die volle Karte.
    Die Vorlage mit dem Spielreglement des Vereins abgleichen.
 3. **Regeln festlegen.** Mehrere Gewinnkarten (Stechen oder Teilen, beim Stechen gewinnt die höchste oder die tiefste
    Zahl) und ob das Brett nach jedem Preis geleert wird (Standard: nein, die Zahlen gelten für alle
-   vier Preise der Runde).
-4. **Preise erfassen.** Unter «Preise» pro Runde vier Preise eintragen: Titel, Beschreibung, Wert in
-   CHF, Sponsor, Bild und Gewinnregel. Schneller geht es mit dem CSV-Import aus Excel oder mit einer
-   vorbereiteten Anlass-Datei. Fehlt ein Preis, zeigt die Anzeige «Preis 2» und die Gewinnregel.
+   Preise der Runde). Das Superlotto läuft immer auf dem Brett von Preis 4 weiter.
+4. **Preise prüfen.** Die Preisliste des Anlasses ist im Programm hinterlegt: Ein Anlass ohne Preise
+   bekommt alle 24 Runden und das Superlotto in den Runden 4, 9, 14, 19 und 24.
+   Unter «Preise» lassen sich pro Runde Titel, Beschreibung, Wert in CHF, Sponsor, Bild und
+   Gewinnregel ändern. Eine geänderte Excel-Liste bringt der CSV-Import herein. Fehlt ein Preis,
+   zeigt die Anzeige «Preis 2» und die Gewinnregel.
+   Steht in der Liste bei einer Runde ein Superlotto, kommt es als fünfter Preis dazu und lässt sich
+   dort bearbeiten, auch wenn der Titel in der Liste noch leer ist. Runden ohne Superlotto in der
+   Liste haben keine Einstellung dafür. Es muss vor
+   dem Start der Runde importiert sein. Gespielt wird es nach Preis 4, ohne das Brett zu leeren, bis
+   jemand die volle Karte hat. In der Spalte «Preis» steht `1. Preis` bis `4. Preis` oder
+   `Superlotto`. In Excel die Liste mit dem Dateityp «CSV UTF-8» speichern.
 5. **Darstellung prüfen.** Anzeige-Thema «Dunkler Saal», Animationsdauer, Ton und Sprachansage
    (auf Wunsch mit Ziffernwiederholung: «zweiundvierzig – vier, zwei»).
 6. **PIN (optional).** Eine 4- bis 8-stellige PIN schützt «Preise» und «Einstellungen» vor
@@ -63,8 +71,8 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
    Preis.
 6. **Gewinnanzeige.** Nach jedem bestätigten Gewinn zeigt die Anzeige den Gewinn 60 Sekunden lang.
    Die nächste gezogene Zahl beendet die Gewinnanzeige sofort.
-7. **Rundenende.** Nach dem Hauptpreis zeigt die Konsole eine Zusammenfassung und die nächste
-   Runde, die Anzeige die vier Preise der nächsten Runde. Weiter mit «Runde starten».
+7. **Rundenende.** Nach dem letzten Preis zeigt die Konsole eine Zusammenfassung und die nächste
+   Runde, die Anzeige die Preise der nächsten Runde. Weiter mit «Runde starten».
 
 ## Tastenkürzel
 

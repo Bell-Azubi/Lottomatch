@@ -32,7 +32,7 @@ export function RoundRing({
   );
 }
 
-/** Progress of the four prizes: awarded Gold, active Cream ring, upcoming Graphite, skipped ruled. */
+/** Progress of a round's prizes: awarded Gold, active Cream ring, upcoming Graphite, skipped ruled. */
 export function PrizeProgress({
   states,
   compact = false,
@@ -48,7 +48,7 @@ export function PrizeProgress({
         return (
           <li key={slot} class={styles.progressItem}>
             <span class={`${styles.disc} ${styles[`disc${state}`]}`} aria-hidden="true">
-              {slot === 4 ? 'H' : slot}
+              {m.prizeDisc(slot)}
             </span>
             <span class={compact ? 'visually-hidden' : styles.progressLabel}>
               {m.prizeSlot(slot)}: {m.progress[state]}

@@ -6,7 +6,7 @@ export const display = {
   latestNumber: (n: number, seq: number): string => `Zuletzt gezogen: ${n}, Ziehung ${seq}`,
   ringTop: (round: number, total: number): string => `RUNDE ${round} VON ${total}`,
   ringBottom: (seq: number): string => `ZIEHUNG ${seq}`,
-  ringMain: 'HAUPTPREIS',
+  ringSuperlotto: 'SUPERLOTTO',
   ringPractice: 'ÜBUNG',
   fullscreenHint: 'Klicken oder F drücken für Vollbild',
   welcome: {
@@ -20,7 +20,7 @@ export const display = {
   },
   win: {
     title: 'Gewinn!',
-    mainTitle: 'Hauptpreis!',
+    superlottoTitle: 'Superlotto!',
     card: (cardNo: string): string => `Karte ${cardNo}`,
   },
   roundEnd: {

@@ -87,7 +87,13 @@ describe('formatting (C5)', () => {
     expect(conditionLabel({ kind: 'TWO_LINES' }, common)).toBe('2 Reihen');
     expect(conditionLabel({ kind: 'CUSTOM', label: 'Ecken' }, common)).toBe('Ecken');
     expect(prizeTitle(undefined, 2, common)).toBe('Preis 2');
-    expect(prizeTitle('', 4, common)).toBe('Hauptpreis');
+    expect(prizeTitle('', 4, common)).toBe('Preis 4');
+    expect(prizeTitle('', 5, common)).toBe('Superlotto');
     expect(prizeTitle('Velo', 4, common)).toBe('Velo');
+    expect(common.prizeOf(2, 4)).toBe('Preis 2 von 4');
+    expect(common.prizeOf(2, 5)).toBe('Preis 2 von 5');
+    expect(common.prizeOf(5, 5)).toBe('Superlotto');
+    expect(common.prizeDisc(4)).toBe('4');
+    expect(common.prizeDisc(5)).toBe('S');
   });
 });

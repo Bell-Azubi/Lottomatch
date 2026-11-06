@@ -1,11 +1,17 @@
-/** Prize position within a round; 4 is the Hauptpreis. */
-export type PrizeSlot = 1 | 2 | 3 | 4;
+/** One of the four prizes every round has. */
+export type StandardSlot = 1 | 2 | 3 | 4;
 
-/** All slots in the fixed order in which prizes resolve. */
-export const PRIZE_SLOTS: readonly PrizeSlot[] = [1, 2, 3, 4];
+/** Prize position within a round: the four prizes and, in selected rounds, the Superlotto. */
+export type PrizeSlot = StandardSlot | 5;
 
-/** The Hauptpreis slot. */
-export const MAIN_PRIZE_SLOT: PrizeSlot = 4;
+/** The four prizes of every round, in the fixed order in which they resolve. */
+export const PRIZE_SLOTS: readonly StandardSlot[] = [1, 2, 3, 4];
+
+/** The Superlotto: an optional fifth prize, played after the four (ADR-0027). */
+export const SUPERLOTTO_SLOT = 5;
+
+/** The slots of a round with a Superlotto, in the order in which they resolve. */
+export const SUPERLOTTO_ROUND_SLOTS: readonly PrizeSlot[] = [...PRIZE_SLOTS, SUPERLOTTO_SLOT];
 
 /** What a card must show to win a prize. `TWO_LINES` stays for stored data only (ADR-0026). */
 export type WinCondition =
@@ -55,6 +61,8 @@ export interface RoundRules {
   readonly perLine: number;
   readonly lines: number;
   readonly boardReset: BoardReset;
+  /** The round plays a Superlotto. Absent in every round without one, and in older logs. */
+  readonly superlotto?: true;
 }
 
 /** What was awarded, captured at award time so results stay verifiable. */

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createTestHost, TestClock, type TestHost } from '../test/test-platform';
+import { PrizeEditor } from './prize-editor';
 import { MIN_DRAW_INTERVAL_MS, REVEAL_SETTLE_MS } from './reveal';
 import { WIN_OVERLAY_MS } from './overlays';
 
@@ -94,7 +95,7 @@ describe('HostController draws', () => {
 });
 
 describe('HostController prizes and overlays', () => {
-  it('awards, shows the Gewinn overlay, then the round end after the Hauptpreis', () => {
+  it('awards, shows the Gewinn overlay, then the round end after the last prize', () => {
     t.host.startRound();
     for (let slot = 1; slot <= 4; slot += 1) {
       t.host.drawManual(slot);
@@ -111,6 +112,37 @@ describe('HostController prizes and overlays', () => {
     if (overlay?.kind === 'ROUND_END') expect(overlay.next?.round).toBe(2);
     expect(t.host.startRound().ok).toBe(true);
     expect(t.host.overlays.state.value).toBeUndefined();
+  });
+
+  it('plays a Superlotto as the fifth prize of its round only, with the large win', () => {
+    t.app.setPreferences({ sound: true });
+    new PrizeEditor(t.app).savePrize(1, 5, {
+      title: 'Grosser Früchtekorb',
+      description: '',
+      valueChf: undefined,
+      sponsor: '',
+      imageId: undefined,
+      winCondition: { kind: 'FULL_CARD' },
+    });
+    t.host.startRound();
+    expect(game().rounds.get(1)?.rules?.superlotto).toBe(true);
+    for (let slot = 1; slot <= 4; slot += 1) {
+      t.host.drawManual(slot);
+      t.host.award({ winners: [{ cardNo: String(slot) }] });
+      const overlay = t.host.overlays.state.value;
+      expect(overlay?.kind === 'WIN' && overlay.superlotto).toBe(false);
+      expect(t.platform.sound.play).not.toHaveBeenCalledWith('superlottoWin');
+    }
+    expect(game().phase).toBe('ROUND_RUNNING');
+    t.host.drawManual(50);
+    t.host.award({ winners: [{ cardNo: '77' }] });
+    const overlay = t.host.overlays.state.value;
+    expect(overlay?.kind === 'WIN' && overlay.superlotto).toBe(true);
+    expect(overlay?.kind === 'WIN' && overlay.title).toBe('Grosser Früchtekorb');
+    expect(t.platform.sound.play).toHaveBeenCalledWith('superlottoWin');
+    expect(game().phase).toBe('BETWEEN_ROUNDS');
+    t.host.startRound();
+    expect(game().rounds.get(2)?.rules?.superlotto).toBeUndefined();
   });
 
   it('keeps the Gewinn overlay for 60 s unless the next draw ends it', () => {

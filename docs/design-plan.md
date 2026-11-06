@@ -128,7 +128,7 @@ The first draft was reviewed for anything that would look the same in any other 
 6. **Loading used a spinner.** Replaced by a sweeping Gold arc on the BadgeRing primitive, the
    same arc the Drehen button uses as spin progress.
 7. **Confetti used the library's rainbow default.** Restricted to Gold, Cream and Red, larger
-   for the Hauptpreis, replaced by a static overlay under reduced motion.
+   for the Superlotto, replaced by a static overlay under reduced motion.
 8. **4:3 was a scaled 16:9.** Changed to a horizontal split so the board keeps ≥ 4.5 vh numerals.
 9. **Dialogs were plain centred boxes.** Changed to glass dialogs with a Cream edge highlight and
    a Gold hairline above the title, so they read as part of the badge family.

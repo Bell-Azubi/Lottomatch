@@ -22,7 +22,7 @@ function WinOverlay({ overlay, quiet }: { readonly overlay: Win; readonly quiet:
     if (quiet || prefersReducedMotion()) return undefined;
     let cleanup: (() => void) | undefined;
     let active = true;
-    void celebrate(overlay.main, styles.confetti)
+    void celebrate(overlay.superlotto, styles.confetti)
       .then((dispose) => {
         if (active) cleanup = dispose;
         else dispose();
@@ -32,10 +32,10 @@ function WinOverlay({ overlay, quiet }: { readonly overlay: Win; readonly quiet:
       active = false;
       cleanup?.();
     };
-  }, [overlay.id, overlay.main, quiet]);
+  }, [overlay.id, overlay.superlotto, quiet]);
   return (
-    <div class={`${styles.content} ${overlay.main ? styles.mainWin : ''}`}>
-      <p class={styles.headline}>{overlay.main ? m.win.mainTitle : m.win.title}</p>
+    <div class={`${styles.content} ${overlay.superlotto ? styles.superlottoWin : ''}`}>
+      <p class={styles.headline}>{overlay.superlotto ? m.win.superlottoTitle : m.win.title}</p>
       <p class={styles.prize}>{prizeTitle(overlay.title, overlay.slot, c)}</p>
       <p class={styles.sub}>{conditionLabel(overlay.condition, c)}</p>
       <ul class={styles.winners}>

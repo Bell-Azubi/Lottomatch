@@ -34,8 +34,10 @@ export const common = {
     FULL_CARD: 'Volle Karte',
     CUSTOM: 'Eigene Regel',
   } satisfies Record<WinConditionKind, string>,
-  prizeSlot: (slot: number): string => (slot === 4 ? 'Hauptpreis' : `Preis ${slot}`),
-  prizeOfFour: (slot: number): string => `Preis ${slot} von 4`,
+  prizeSlot: (slot: number): string => (slot === 5 ? 'Superlotto' : `Preis ${slot}`),
+  prizeDisc: (slot: number): string => (slot === 5 ? 'S' : String(slot)),
+  prizeOf: (slot: number, total: number): string =>
+    slot === 5 ? 'Superlotto' : `Preis ${slot} von ${total}`,
   roundOf: (round: number, total: number): string => `Runde ${round} von ${total}`,
   progress: {
     AWARDED: 'vergeben',

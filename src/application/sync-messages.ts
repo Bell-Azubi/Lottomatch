@@ -18,7 +18,7 @@ const overlaySchema = v.variant('kind', [
       v.array(v.object({ cardNo: optional(text(20)), name: optional(text(80)) })),
       v.maxLength(50),
     ),
-    main: v.boolean(),
+    superlotto: v.boolean(),
   }),
   v.object({
     kind: v.literal('ROUND_END'),
@@ -36,7 +36,7 @@ const overlaySchema = v.variant('kind', [
               imageId: optional(text(64)),
             }),
           ),
-          v.maxLength(4),
+          v.maxLength(5),
         ),
       }),
     ),
@@ -77,7 +77,7 @@ export const snapshotSchema = v.object({
       condition: winConditionSchema,
     }),
   ),
-  progress: v.pipe(v.array(progressSchema), v.maxLength(4)),
+  progress: v.pipe(v.array(progressSchema), v.maxLength(5)),
   maxNumber: int(1, 99),
   drawn: v.pipe(v.array(int(1, 99)), v.maxLength(99)),
   latest: optional(

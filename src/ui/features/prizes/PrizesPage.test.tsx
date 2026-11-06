@@ -1,10 +1,20 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/preact';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { prizeAt } from '../../../domain/catalogue';
+import { PrizeEditor } from '../../../application/prize-editor';
+import { prizeAt, type PrizeDraft } from '../../../domain/catalogue';
 import { prizes as m } from '../../../i18n/de-CH/prizes';
 import { createTestHost, renderWithServices, type TestHost } from '../../../test/test-platform';
 import { toasts } from '../../design-system/toast-store';
 import PrizesPage from './PrizesPage';
+
+const FRUIT_BASKET: PrizeDraft = {
+  title: 'Grosser Früchtekorb',
+  description: '',
+  valueChf: undefined,
+  sponsor: '',
+  imageId: undefined,
+  winCondition: { kind: 'FULL_CARD' },
+};
 
 function catalogue(host: TestHost) {
   const session = host.app.session.value;
@@ -71,7 +81,7 @@ describe('PrizesPage', () => {
     const host = await createTestHost();
     renderWithServices(<PrizesPage />, host);
     fireEvent.click(screen.getByRole('button', { name: m.matrix.editRound(2) }));
-    const slot = slotSection('Hauptpreis');
+    const slot = slotSection('Preis 4');
     fireEvent.input(input(slot, m.form.value), { target: { value: '-5' } });
     fireEvent.change(within(slot).getByLabelText(m.form.condition), {
       target: { value: 'CUSTOM' },
@@ -88,6 +98,52 @@ describe('PrizesPage', () => {
       kind: 'CUSTOM',
       label: 'Vier Ecken',
     });
+  });
+
+  it('has a Superlotto form only in a round whose list has one', async () => {
+    const host = await createTestHost();
+    expect(new PrizeEditor(host.app).savePrize(4, 5, FRUIT_BASKET).ok).toBe(true);
+    renderWithServices(<PrizesPage />, host);
+    fireEvent.click(screen.getByRole('button', { name: m.matrix.editRound(3) }));
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(4);
+    expect(screen.queryByRole('heading', { name: 'Superlotto', level: 3 })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: m.matrix.editRound(4) }));
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(5);
+    const slot = slotSection('Superlotto');
+    expect(input(slot, m.form.title).value).toBe('Grosser Früchtekorb');
+    expect(within(slot).getByLabelText(m.form.condition)).toHaveValue('FULL_CARD');
+    expect(screen.getAllByText('Grosser Früchtekorb')).toHaveLength(2);
+    expect(screen.getByText(m.matrix.complete(1, 5))).toBeInTheDocument();
+    expect(screen.getAllByText(m.matrix.complete(0, 4))).toHaveLength(23);
+    expect(screen.getByText(m.matrix.totalGaps(96))).toBeInTheDocument();
+    fireEvent.input(input(slot, m.form.title), { target: { value: 'Riesiger Früchtekorb' } });
+    fireEvent.click(within(slot).getByRole('button', { name: m.form.save }));
+    expect(prizeAt(catalogue(host), 4, 5)?.title).toBe('Riesiger Früchtekorb');
+    expect(toasts.value.at(-1)?.message).toBe(m.form.saved('Superlotto'));
+    fireEvent.click(within(slot).getByRole('button', { name: m.form.remove }));
+    expect(prizeAt(catalogue(host), 4, 5)).toBeUndefined();
+    expect(screen.queryByRole('heading', { name: 'Superlotto', level: 3 })).toBeNull();
+  });
+
+  it('has no Superlotto form in a round that started without one', async () => {
+    const host = await createTestHost();
+    expect(host.host.startRound().ok).toBe(true);
+    renderWithServices(<PrizesPage />, host);
+    fireEvent.click(screen.getByRole('button', { name: m.matrix.editRound(1) }));
+    expect(screen.queryByRole('heading', { name: 'Superlotto', level: 3 })).toBeNull();
+  });
+
+  it('keeps the form of a Superlotto removed from a running round', async () => {
+    const host = await createTestHost();
+    expect(new PrizeEditor(host.app).savePrize(1, 5, FRUIT_BASKET).ok).toBe(true);
+    expect(host.host.startRound().ok).toBe(true);
+    renderWithServices(<PrizesPage />, host);
+    fireEvent.click(screen.getByRole('button', { name: m.matrix.editRound(1) }));
+    fireEvent.click(within(slotSection('Superlotto')).getByRole('button', { name: m.form.remove }));
+    await waitFor(() => {
+      expect(screen.getByText(m.editor.gap('Superlotto'))).toBeInTheDocument();
+    });
+    expect(screen.getByText(m.matrix.complete(0, 5))).toBeInTheDocument();
   });
 
   it('uploads and removes an image', async () => {

@@ -6,7 +6,7 @@ const CSV = [
   '1;1;Grüner Präsentkorb;Mit Käse und Würsten;50.–;Bäckerei Müller;1 Reihe',
   '1;2;Gutschein «Zum Löwen»;Für 2 Personen;1’000.50;;1 Reihe',
   '1;3;Fondue-Set;;80,50;Metzgerei Öhri;1 Reihe',
-  '1;Hauptpreis;Velo;Citybike;650;;Volle Karte',
+  '1;4. Preis;Velo;Citybike;650;;Volle Karte',
   '2;1;;;;;1 Reihe',
 ].join('\r\n');
 

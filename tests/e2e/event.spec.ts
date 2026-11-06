@@ -1,25 +1,28 @@
 import { readFile } from 'node:fs/promises';
 import { expect, test } from './fixtures';
-import { confirmWin, open, openHost, setAnimation, startRound, typeNumber } from './helpers';
+import {
+  confirmWin,
+  open,
+  openHost,
+  prizesInRound,
+  setAnimation,
+  startRound,
+  typeNumber,
+} from './helpers';
 
 test.describe('full event (§11 E2E 1)', () => {
-  test('prepares prizes, plays all 24 rounds and exports the results', async ({ page }) => {
+  test('starts with the prize list, plays all 24 rounds and exports the results', async ({
+    page,
+  }) => {
     test.setTimeout(420_000);
     await setAnimation(page, 'Aus');
     await open(page, 'prizes');
-    await page.getByRole('button', { name: 'Vorbereiteten Anlass laden' }).click();
-    const dialog = page.getByRole('dialog');
-    await dialog
-      .getByRole('listitem')
-      .filter({ hasText: 'Lottomatch 2026' })
-      .getByRole('button', { name: 'Vorschau' })
-      .click();
-    await dialog.getByRole('button', { name: 'Als neuen Anlass laden' }).click();
-    await expect(page.getByText(/geladen und aktiviert/)).toBeVisible();
+    await expect(page.getByText('Alle Preise erfasst')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Vorbereiteten Anlass laden' })).toHaveCount(0);
     await openHost(page);
     for (let round = 1; round <= 24; round += 1) {
       await startRound(page, round);
-      for (let slot = 1; slot <= 4; slot += 1) {
+      for (let slot = 1; slot <= prizesInRound(round); slot += 1) {
         await typeNumber(page, slot * 10 + (round % 10));
         await confirmWin(page, `${round}-${slot}`);
       }

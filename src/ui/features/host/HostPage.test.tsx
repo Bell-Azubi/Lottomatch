@@ -179,7 +179,7 @@ describe('HostPage', () => {
     await screen.findByRole('heading', { name: 'Anlass abgeschlossen' });
   });
 
-  it('revokes the latest win and shows the round summary after the Hauptpreis', async () => {
+  it('revokes the latest win and shows the round summary after the last prize', async () => {
     await startFirstRound();
     for (let slot = 1; slot <= 4; slot += 1) t.host.award({ winners: [{ cardNo: String(slot) }] });
     await screen.findByRole('heading', { name: 'Runde 1 ist fertig' });
@@ -194,7 +194,7 @@ describe('HostPage', () => {
     });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Bestätigen' }));
     await screen.findByRole('button', { name: 'Drehen' });
-    expect(screen.getByText('Preis 4 von 4 · Volle Karte')).toBeInTheDocument();
+    expect(screen.getByText('Preis 4 von 4 · 1 Reihe')).toBeInTheDocument();
   });
 
   it('locks every control in a read-only window', async () => {

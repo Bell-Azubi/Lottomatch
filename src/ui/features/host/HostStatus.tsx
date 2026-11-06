@@ -45,9 +45,9 @@ export function HostStatus({
       {view === undefined ? (
         <p class={styles.phase}>{phaseText}</p>
       ) : (
-        <div class={`${styles.prize} ${view.main ? styles.main : ''}`}>
+        <div class={`${styles.prize} ${view.superlotto ? styles.superlotto : ''}`}>
           <p class={styles.slot}>
-            {c.prizeOfFour(view.slot)} · {conditionLabel(view.condition, c)}
+            {c.prizeOf(view.slot, progress.length)} · {conditionLabel(view.condition, c)}
           </p>
           <div class={styles.prizeRow}>
             <PrizeImage

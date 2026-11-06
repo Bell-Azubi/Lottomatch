@@ -127,7 +127,7 @@ describe('Anlass form', () => {
     type('Eigene Regel für Preis 2', 'Vier Ecken');
     save();
     expect(settingsOf(test).template[2]).toEqual({ kind: 'CUSTOM', label: 'Vier Ecken' });
-    expect(screen.getByLabelText('Gewinnregel Hauptpreis')).toHaveValue('FULL_CARD');
+    expect(screen.getByLabelText('Gewinnregel Preis 4')).toHaveValue('ONE_LINE');
   });
 
   it('validates the payout indicator', async () => {

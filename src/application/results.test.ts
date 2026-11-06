@@ -69,7 +69,7 @@ describe('computeResults', () => {
   });
 
   it('keeps skip reasons and the Stechen passes with the winning claimant', () => {
-    const [, skipped, stechen, main] = round(results(), 1).prizes;
+    const [, skipped, stechen, fourth] = round(results(), 1).prizes;
     expect(skipped).toMatchObject({
       status: 'SKIPPED',
       skipReason: 'Kein Preis vorhanden',
@@ -101,13 +101,13 @@ describe('computeResults', () => {
       ],
       winner: 1,
     });
-    expect(main).toMatchObject({
+    expect(fourth).toMatchObject({
       title: undefined,
       condition: { kind: 'FULL_CARD' },
       handout: 'OPEN',
     });
-    expect(main?.winners.map((winner) => winner.cardNo)).toEqual(['1', '2']);
-    expect(main?.tiebreak).toBeUndefined();
+    expect(fourth?.winners.map((winner) => winner.cardNo)).toEqual(['1', '2']);
+    expect(fourth?.tiebreak).toBeUndefined();
   });
 
   it('describes aborted and upcoming rounds from the catalogue and template', () => {
@@ -122,7 +122,7 @@ describe('computeResults', () => {
       startedAt: undefined,
       durationMs: undefined,
     });
-    expect(third.prizes[3]?.condition).toEqual({ kind: 'FULL_CARD' });
+    expect(third.prizes[3]?.condition).toEqual({ kind: 'ONE_LINE' });
     expect(all.rounds).toHaveLength(24);
   });
 
