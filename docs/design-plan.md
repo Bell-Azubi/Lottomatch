@@ -60,7 +60,7 @@ Display 16:9 (split field: solid stage left ~40 %, striped board right ~60 %):
 |    \   '------------'   /     81 82 83 84 85 86 87 88 89 90    |
 |     '----ZIEHUNG 37----'                                       |
 |        o  o  o  o  o           23 von 90 gezogen               |
-| [Bild]  Präsentkorb   1 Linie      Preis 2 von 4  [x][>][ ][ ] |  <- glass prize bar
+| [Bild]  Präsentkorb   1 Reihe      Preis 2 von 4  [x][>][ ][ ] |  <- glass prize bar
 +----------------------------------------------------------------+
 ```
 
@@ -72,7 +72,7 @@ Display 4:3 (split turns horizontal):
 |   board 1-90, ten columns, Cream bands     |
 |                                            |
 |  ( 42 badge )   o o o o o   23 von 90      |
-| [Bild] Präsentkorb  1 Linie  [x][>][ ][ ]  |
+| [Bild] Präsentkorb  1 Reihe  [x][>][ ][ ]  |
 +--------------------------------------------+
 ```
 
@@ -98,7 +98,7 @@ Host console (opaque control plate left, banded board right):
 | [Logo]  Start  Spiel  Preise  Auswertung  Einstellungen   (i)  |  <- glass header
 +------------------------+---------------------------------------+
 | Runde 7 von 24  (ring) |                                       |
-| Preis 2 von 4, 1 Linie |   board 1-90, column bands,           |
+| Preis 2 von 4, 1 Reihe |   board 1-90, column bands,           |
 | Präsentkorb            |   compact, clickable                  |
 |   ( 42 ) result well   |                                       |
 |       ( Drehen )       |                                       |

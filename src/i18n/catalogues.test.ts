@@ -84,7 +84,7 @@ describe('formatting (C5)', () => {
   });
 
   it('labels conditions and gaps', () => {
-    expect(conditionLabel({ kind: 'TWO_LINES' }, common)).toBe('2 Linien');
+    expect(conditionLabel({ kind: 'TWO_LINES' }, common)).toBe('2 Reihen');
     expect(conditionLabel({ kind: 'CUSTOM', label: 'Ecken' }, common)).toBe('Ecken');
     expect(prizeTitle(undefined, 2, common)).toBe('Preis 2');
     expect(prizeTitle('', 4, common)).toBe('Hauptpreis');

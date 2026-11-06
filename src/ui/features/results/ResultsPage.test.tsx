@@ -121,7 +121,7 @@ describe('ResultsPage', () => {
     expect([...bytes.slice(0, 3)]).toEqual([0xef, 0xbb, 0xbf]);
     const csv = await blobText(csvBlob);
     expect(csv.startsWith('Runde;Preis;Titel;Gewinnregel;Wert CHF')).toBe(true);
-    expect(csv).toContain('1;Preis 1;;1 Linie;;;17;Anna Muster;;5;');
+    expect(csv).toContain('1;Preis 1;;1 Reihe;;;17;Anna Muster;;5;');
     expect(csv.endsWith('\r\n')).toBe(true);
     fireEvent.click(screen.getByRole('button', { name: 'Auswertung als JSON' }));
     const [jsonName, jsonBlob] = download.mock.calls[1] ?? [];

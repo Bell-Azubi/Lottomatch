@@ -96,8 +96,8 @@ export const settings = {
     belowPlayed: (min: number): string =>
       `Mindestens ${min}: so viele Runden wurden schon gestartet.`,
     maxNumber: { OUT_OF_RANGE: 'Eine ganze Zahl von 30 bis 99.' },
-    perLine: { OUT_OF_RANGE: '3 bis 9 Zahlen pro Linie.' },
-    lines: { OUT_OF_RANGE: '2 bis 6 Linien.' },
+    perLine: { OUT_OF_RANGE: '3 bis 9 Zahlen pro Reihe.' },
+    lines: { OUT_OF_RANGE: '2 bis 6 Reihen.' },
     cardSize: 'Eine Karte hat mehr Zahlen, als das Brett hat.',
     template: 'Eine eigene Regel braucht eine Bezeichnung (höchstens 60 Zeichen).',
     sponsors: {

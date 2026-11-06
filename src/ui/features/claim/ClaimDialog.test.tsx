@@ -45,7 +45,7 @@ afterEach(() => {
 describe('ClaimDialog (FR-6, ADR-0025)', () => {
   it('opens directly on Gewinn bestätigen, without a number check', async () => {
     await setup();
-    expect(dialog()).toHaveTextContent('Gewinn bestätigen: Preis 1 · 1 Linie');
+    expect(dialog()).toHaveTextContent('Gewinn bestätigen: Preis 1 · 1 Reihe');
     expect(within(dialog()).queryByLabelText('Zahl auf der Karte')).not.toBeInTheDocument();
     expect(cardFields()).toHaveLength(1);
     expect(round()?.prizes[1].status).toBe('OPEN');

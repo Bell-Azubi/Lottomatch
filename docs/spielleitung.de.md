@@ -9,7 +9,7 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
    Vorjahresanlass als Vorlage duplizieren (Einstellungen und Preise, ohne Ziehungen und Gewinner).
 2. **Anlass einstellen.** Name, Datum, Ort, Anzahl Runden (Standard 24), höchste Zahl (Standard 90)
    und die Gewinnregel-Vorlage:
-   Preis 1 «1 Linie», Preis 2 «1 Linie», Preis 3 «2 Linien», Hauptpreis «Volle Karte».
+   Preis 1 «1 Reihe», Preis 2 «1 Reihe», Preis 3 «2 Reihen», Hauptpreis «Volle Karte».
    Die Vorlage mit dem Spielreglement des Vereins abgleichen.
 3. **Regeln festlegen.** Mehrere Gewinnkarten (Stechen oder Teilen, beim Stechen gewinnt die höchste oder die tiefste
    Zahl) und ob das Brett nach jedem Preis geleert wird (Standard: nein, die Zahlen gelten für alle

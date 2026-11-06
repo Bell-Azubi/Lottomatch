@@ -38,7 +38,7 @@ describe('winnerTable', () => {
       '1',
       'Preis 1',
       'Präsentkorb',
-      '1 Linie',
+      '1 Reihe',
       '50.50',
       'Bäckerei Frei',
       '18',

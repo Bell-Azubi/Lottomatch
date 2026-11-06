@@ -1,7 +1,7 @@
 import type { WinCondition } from '../domain/types';
 import type { CommonMessages } from './de-CH/common';
 
-/** "1 Linie", "2 Linien", "Volle Karte" or the custom rule's own label. */
+/** "1 Reihe", "2 Reihen", "Volle Karte" or the custom rule's own label. */
 export function conditionLabel(condition: WinCondition, m: CommonMessages): string {
   return condition.kind === 'CUSTOM' ? condition.label : m.conditions[condition.kind];
 }

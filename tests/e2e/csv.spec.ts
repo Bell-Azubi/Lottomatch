@@ -3,11 +3,11 @@ import { open } from './helpers';
 
 const CSV = [
   'Runde;Preis;Titel;Beschreibung;Wert CHF;Sponsor;Gewinnregel',
-  '1;1;Grüner Präsentkorb;Mit Käse und Würsten;50.–;Bäckerei Müller;1 Linie',
-  '1;2;Gutschein «Zum Löwen»;Für 2 Personen;1’000.50;;1 Linie',
-  '1;3;Fondue-Set;;80,50;Metzgerei Öhri;2 Linien',
+  '1;1;Grüner Präsentkorb;Mit Käse und Würsten;50.–;Bäckerei Müller;1 Reihe',
+  '1;2;Gutschein «Zum Löwen»;Für 2 Personen;1’000.50;;1 Reihe',
+  '1;3;Fondue-Set;;80,50;Metzgerei Öhri;2 Reihen',
   '1;Hauptpreis;Velo;Citybike;650;;Volle Karte',
-  '2;1;;;;;1 Linie',
+  '2;1;;;;;1 Reihe',
 ].join('\r\n');
 
 test.describe('CSV import (FR-8, E2E 9)', () => {

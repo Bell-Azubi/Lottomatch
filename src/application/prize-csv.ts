@@ -86,8 +86,38 @@ export function parseSlot(raw: string): PrizeSlot | undefined {
 }
 
 const CONDITIONS: readonly [WinCondition, readonly string[]][] = [
-  [{ kind: 'ONE_LINE' }, ['1 linie', 'eine linie', '1 line', 'one line', 'linie', 'line']],
-  [{ kind: 'TWO_LINES' }, ['2 linien', 'zwei linien', '2 lines', 'two lines']],
+  [
+    { kind: 'ONE_LINE' },
+    [
+      '1 reihe',
+      'eine reihe',
+      'reihe',
+      '1 row',
+      'one row',
+      'row',
+      // Earlier wording, still in existing Excel files.
+      '1 linie',
+      'eine linie',
+      'linie',
+      '1 line',
+      'one line',
+      'line',
+    ],
+  ],
+  [
+    { kind: 'TWO_LINES' },
+    [
+      '2 reihen',
+      'zwei reihen',
+      '2 rows',
+      'two rows',
+      // Earlier wording, still in existing Excel files.
+      '2 linien',
+      'zwei linien',
+      '2 lines',
+      'two lines',
+    ],
+  ],
   [{ kind: 'FULL_CARD' }, ['volle karte', 'voll', 'full card', 'full house', 'karte voll']],
 ];
 
@@ -213,9 +243,9 @@ export function buildPreview(
 function conditionText(condition: WinCondition): string {
   switch (condition.kind) {
     case 'ONE_LINE':
-      return '1 Linie';
+      return '1 Reihe';
     case 'TWO_LINES':
-      return '2 Linien';
+      return '2 Reihen';
     case 'FULL_CARD':
       return 'Volle Karte';
     case 'CUSTOM':

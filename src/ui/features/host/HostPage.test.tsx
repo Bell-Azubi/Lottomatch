@@ -38,7 +38,7 @@ describe('HostPage', () => {
   it('starts the first round after confirming the prize gaps', async () => {
     expect(screen.getByText('Noch keine Runde gestartet')).toBeInTheDocument();
     await startFirstRound();
-    expect(screen.getByText('Preis 1 von 4 · 1 Linie')).toBeInTheDocument();
+    expect(screen.getByText('Preis 1 von 4 · 1 Reihe')).toBeInTheDocument();
     expect(screen.getByText('0 von 90 gezogen')).toBeInTheDocument();
   });
 
@@ -156,7 +156,7 @@ describe('HostPage', () => {
       target: { value: 'Kein Preis' },
     });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Bestätigen' }));
-    await screen.findByText('Preis 2 von 4 · 1 Linie');
+    await screen.findByText('Preis 2 von 4 · 1 Reihe');
     dialog = await open('Zu Runde springen');
     fireEvent.change(within(dialog).getByLabelText('Runde'), { target: { value: '5' } });
     fireEvent.input(within(dialog).getByLabelText('Grund (wird protokolliert)'), {

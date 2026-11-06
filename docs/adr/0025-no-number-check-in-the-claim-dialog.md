@@ -37,4 +37,4 @@ The data format does not change (schema version 1):
 - False claims and late claims of new events are not recorded. The Auswertung lists false claims only
   for events that hold them. The column for late claims in the winner CSV stays, so the file format is
   unchanged.
-- The win conditions (1 Linie, 2 Linien, Volle Karte, Eigene Regel) are now labels for the hall.
+- The win conditions (1 Reihe, 2 Reihen, Volle Karte, Eigene Regel) are now labels for the hall.

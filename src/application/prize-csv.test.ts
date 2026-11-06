@@ -60,7 +60,10 @@ describe('cell parsing', () => {
   });
 
   it('parses known win conditions and keeps other text as a custom rule', () => {
+    expect(parseCondition('1 Reihe')).toEqual({ kind: 'ONE_LINE' });
+    expect(parseCondition('2 Reihen')).toEqual({ kind: 'TWO_LINES' });
     expect(parseCondition('1 Linie')).toEqual({ kind: 'ONE_LINE' });
+    expect(parseCondition('2 Linien')).toEqual({ kind: 'TWO_LINES' });
     expect(parseCondition('Two lines')).toEqual({ kind: 'TWO_LINES' });
     expect(parseCondition('Volle Karte')).toEqual({ kind: 'FULL_CARD' });
     expect(parseCondition('  Vier   Ecken ')).toEqual({ kind: 'CUSTOM', label: 'Vier Ecken' });

@@ -29,8 +29,8 @@ export const common = {
   },
   practiceBadge: 'Übung',
   conditions: {
-    ONE_LINE: '1 Linie',
-    TWO_LINES: '2 Linien',
+    ONE_LINE: '1 Reihe',
+    TWO_LINES: '2 Reihen',
     FULL_CARD: 'Volle Karte',
     CUSTOM: 'Eigene Regel',
   } satisfies Record<WinConditionKind, string>,

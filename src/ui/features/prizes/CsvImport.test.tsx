@@ -9,7 +9,7 @@ import { CsvImport } from './CsvImport';
 
 const CSV = [
   '\uFEFFRunde;Preis;Titel;Beschreibung;Wert CHF;Sponsor;Gewinnregel',
-  '1;1;Zopf und Konfitüre;;25.–;Bäckerei Muster;1 Linie',
+  '1;1;Zopf und Konfitüre;;25.–;Bäckerei Muster;1 Reihe',
   '1;Hauptpreis;Velo;Für Gross und Klein;1’000.50;;Volle Karte',
   '2;9;Falsch;;;;',
   '30;1;Zu weit;;;;',

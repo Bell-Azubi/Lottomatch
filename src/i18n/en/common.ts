@@ -27,8 +27,8 @@ export const common: CommonMessages = {
   },
   practiceBadge: 'Practice',
   conditions: {
-    ONE_LINE: '1 line',
-    TWO_LINES: '2 lines',
+    ONE_LINE: '1 row',
+    TWO_LINES: '2 rows',
     FULL_CARD: 'Full card',
     CUSTOM: 'Custom rule',
   },

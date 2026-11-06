@@ -70,7 +70,7 @@ test.describe('undo and revoke (FR-4)', () => {
     await dialog.getByRole('button', { name: 'Letzten Gewinn widerrufen' }).click();
     await dialog.getByLabel('Grund (wird protokolliert)').fill('Karte falsch gelesen');
     await dialog.getByRole('button', { name: 'Bestätigen' }).click();
-    await expect(page.getByText('Preis 1 von 4 · 1 Linie')).toBeVisible();
+    await expect(page.getByText('Preis 1 von 4 · 1 Reihe')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Rückgängig' })).toBeEnabled();
   });
 });

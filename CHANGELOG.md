@@ -19,6 +19,8 @@ All notable changes to this project are documented in this file. The format foll
   at once, and so does skipping a prize or aborting the round.
 - Gewinn prüfen opens Gewinn bestätigen directly: the numbers of a card are no longer typed in and
   checked. Several cards can still be entered for Stechen or Teilen (ADR-0025).
+- The win conditions read 1 Reihe and 2 Reihen instead of 1 Linie and 2 Linien, in every view and
+  export. The CSV import still accepts the earlier wording, and stored data does not change.
 
 ### Removed
 

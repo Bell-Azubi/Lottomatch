@@ -95,8 +95,8 @@ export const settings: SettingsMessages = {
     rounds: { OUT_OF_RANGE: '1 to 50 rounds.' },
     belowPlayed: (min) => `At least ${min}: that many rounds have already started.`,
     maxNumber: { OUT_OF_RANGE: 'A whole number from 30 to 99.' },
-    perLine: { OUT_OF_RANGE: '3 to 9 numbers per line.' },
-    lines: { OUT_OF_RANGE: '2 to 6 lines.' },
+    perLine: { OUT_OF_RANGE: '3 to 9 numbers per row.' },
+    lines: { OUT_OF_RANGE: '2 to 6 rows.' },
     cardSize: 'A card has more numbers than the board.',
     template: 'A custom rule needs a label (at most 60 characters).',
     sponsors: {
