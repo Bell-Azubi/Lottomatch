@@ -4,7 +4,7 @@ import { t } from '../../i18n';
 import { BadgeRing, type SegmentState } from './BadgeRing';
 import styles from './Rings.module.css';
 
-/** Round ring: one segment per round, always beside the text "Runde 7 von 24". */
+/** Round ring: one segment per round, always beside the text "Gang 7 von 24". */
 export function RoundRing({
   round,
   total,

@@ -4,7 +4,7 @@ export const display = {
   waiting: 'Gleich geht’s los',
   latest: 'Zuletzt gezogen',
   latestNumber: (n: number, seq: number): string => `Zuletzt gezogen: ${n}, Ziehung ${seq}`,
-  ringTop: (round: number, total: number): string => `RUNDE ${round} VON ${total}`,
+  ringTop: (round: number, total: number): string => `GANG ${round} VON ${total}`,
   ringBottom: (seq: number): string => `ZIEHUNG ${seq}`,
   ringSuperlotto: 'SUPERLOTTO',
   ringPractice: 'ÜBUNG',
@@ -24,9 +24,9 @@ export const display = {
     card: (cardNo: string): string => `Karte ${cardNo}`,
   },
   roundEnd: {
-    title: (round: number): string => `Runde ${round} ist fertig`,
-    next: (round: number): string => `Runde ${round}: diese Preise warten`,
-    allPlayed: 'Alle Runden sind gespielt',
+    title: (round: number): string => `Gang ${round} ist fertig`,
+    next: (round: number): string => `Gang ${round}: diese Preise warten`,
+    allPlayed: 'Alle Gänge sind gespielt',
   },
   pause: {
     resume: (time: string): string => `Weiter um ${time} Uhr`,

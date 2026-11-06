@@ -65,7 +65,7 @@ describe('AuditLog', () => {
       expect.stringContaining('Gewinn widerrufen'),
       expect.stringContaining('rückgängig gemacht'),
     ]);
-    fireEvent.change(screen.getByLabelText('Runde'), { target: { value: '2' } });
+    fireEvent.change(screen.getByLabelText('Gang'), { target: { value: '2' } });
     expect(screen.getByText('Keine Einträge für diese Auswahl.')).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('Kategorie'), { target: { value: 'ALL' } });
     expect(

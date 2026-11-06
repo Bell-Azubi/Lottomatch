@@ -19,8 +19,8 @@ architecture it has an ADR.
    physical drum was refilled for the next prize (ADR-0009).
 8. **Aborting a round** keeps its awards; unresolved prizes stay open. A round aborted before
    any draw or award returns to "upcoming". Aborted rounds are resumed only through
-   "Zu Runde springen" (ADR-0008).
-9. **"Runde starten"** starts the lowest upcoming round after the last played round, falling
+   "Zu Gang springen" (ADR-0008).
+9. **"Gang starten"** starts the lowest upcoming round after the last played round, falling
    back to the lowest upcoming round overall.
 10. **Event completion** is an explicit host action after the last round ("Anlass
     abschliessen"); until then the latest award stays revocable.

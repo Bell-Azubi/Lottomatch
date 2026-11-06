@@ -53,7 +53,7 @@ describe('CsvImport', () => {
       target: { files: [new File(['Titel;Wert\nA;5\n'], 'a.csv')] },
     });
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent(m.csv.missingColumns('Runde, Preis'));
+      expect(screen.getByRole('alert')).toHaveTextContent(m.csv.missingColumns('Gang, Preis'));
     });
   });
 

@@ -52,9 +52,9 @@ Display 16:9 (split field: solid stage left ~40 %, striped board right ~60 %):
 
 ```
 +----------------------------------------------------------------+
-| [Logo]                                  Runde 7 von 24  (ring) |
+| [Logo]                                   Gang 7 von 24  (ring) |
 |                                                                |
-|     .--RUNDE 7 VON 24--.       1  2  3  4  5  6  7  8  9 10    |
+|     .--GANG 7 VON 24---.       1  2  3  4  5  6  7  8  9 10    |
 |    /   .------------.   \     11 12 13 14 15 16 17 18 19 20    |
 |   |   |      42      |   |      ...  (ten columns, Cream bands)|
 |    \   '------------'   /     81 82 83 84 85 86 87 88 89 90    |
@@ -68,7 +68,7 @@ Display 4:3 (split turns horizontal):
 
 ```
 +--------------------------------------------+
-| [Logo]                Runde 7 von 24 (ring)|
+| [Logo]                 Gang 7 von 24 (ring)|
 |   board 1-90, ten columns, Cream bands     |
 |                                            |
 |  ( 42 badge )   o o o o o   23 von 90      |
@@ -97,7 +97,7 @@ Host console (opaque control plate left, banded board right):
 +----------------------------------------------------------------+
 | [Logo]  Start  Spiel  Preise  Auswertung  Einstellungen   (i)  |  <- glass header
 +------------------------+---------------------------------------+
-| Runde 7 von 24  (ring) |                                       |
+| Gang 7 von 24   (ring) |                                       |
 | Preis 2 von 4, 1 Reihe |   board 1-90, column bands,           |
 | Präsentkorb            |   compact, clickable                  |
 |   ( 42 ) result well   |                                       |
@@ -106,7 +106,7 @@ Host console (opaque control plate left, banded board right):
 |   Rückgängig           |                                       |
 |   Gewinn prüfen        |                                       |
 +------------------------+---------------------------------------+
-| Anzeige verbunden       Anzeige öffnen   Pause   Runde starten |
+| Anzeige verbunden       Anzeige öffnen   Pause    Gang starten |
 +----------------------------------------------------------------+
 ```
 

@@ -19,7 +19,7 @@ export interface StageProps {
 
 /**
  * The solid half of the split field: the latest number assembled into a badge, ringed with
- * "RUNDE 7 VON 24" and "ZIEHUNG 37" (SUPERLOTTO in red, ÜBUNG in practice), and the last five.
+ * "GANG 7 VON 24" and "ZIEHUNG 37" (SUPERLOTTO in red, ÜBUNG in practice), and the last five.
  */
 export function Stage({ snapshot, view, stageRef, lastFive }: StageProps) {
   const m = t(displayText);

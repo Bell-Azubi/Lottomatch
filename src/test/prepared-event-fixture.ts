@@ -11,7 +11,7 @@ export const PREPARED_EVENT = JSON.stringify({
       id: `p${round}-${slot}`,
       round,
       slot,
-      title: `Runde ${round}, Preis ${slot}`,
+      title: `Gang ${round}, Preis ${slot}`,
       winCondition: { kind: 'ONE_LINE' },
     })),
   ),

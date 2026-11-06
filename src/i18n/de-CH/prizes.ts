@@ -2,13 +2,13 @@
 export const prizes = {
   title: 'Preise',
   intro: (rounds: number): string =>
-    `${rounds} Runden mit je vier Preisen. Das Superlotto kommt als fünfter Preis dazu, wo es in der Preisliste steht.`,
+    `${rounds} Gänge mit je vier Preisen. Das Superlotto kommt als fünfter Preis dazu, wo es in der Preisliste steht.`,
   readOnly: 'Nur Ansicht: Ein anderes Fenster steuert das Spiel.',
-  liveHint: 'Änderungen an laufenden und kommenden Runden erscheinen sofort auf der Anzeige.',
+  liveHint: 'Änderungen an laufenden und kommenden Gängen erscheinen sofort auf der Anzeige.',
   toolbar: 'Werkzeuge',
   matrix: {
-    caption: 'Preise pro Runde',
-    round: 'Runde',
+    caption: 'Preise pro Gang',
+    round: 'Gang',
     prizes: 'Preise',
     status: 'Stand',
     action: 'Aktion',
@@ -18,12 +18,12 @@ export const prizes = {
     totalGaps: (count: number): string =>
       count === 1 ? 'Insgesamt fehlt 1 Preis.' : `Insgesamt fehlen ${count} Preise.`,
     edit: 'Bearbeiten',
-    editRound: (round: number): string => `Runde ${round} bearbeiten`,
+    editRound: (round: number): string => `Gang ${round} bearbeiten`,
     awarded: 'vergeben',
     missing: 'fehlt',
   },
   editor: {
-    title: (round: number): string => `Runde ${round}`,
+    title: (round: number): string => `Gang ${round}`,
     close: 'Schliessen',
     awarded: 'Vergeben – nicht mehr änderbar.',
     gap: (slot: string): string =>
@@ -77,36 +77,36 @@ export const prizes = {
   },
   bulk: {
     title: 'Sammelbearbeitung',
-    copy: 'Runde kopieren',
+    copy: 'Gang kopieren',
     copyBody:
-      'Die vier Preise einer Runde in andere Runden kopieren. Preise dort werden ersetzt, das Superlotto bleibt unberührt.',
-    copyFrom: 'Von Runde',
-    copyTo: 'In die Runden (zum Beispiel 2-5, 8)',
+      'Die vier Preise eines Gangs in andere Gänge kopieren. Preise dort werden ersetzt, das Superlotto bleibt unberührt.',
+    copyFrom: 'Von Gang',
+    copyTo: 'In die Gänge (zum Beispiel 2-5, 8)',
     copyConfirm: 'Kopieren',
     copied: (count: number): string =>
-      count === 1 ? 'In 1 Runde kopiert' : `In ${count} Runden kopiert`,
+      count === 1 ? 'In 1 Gang kopiert' : `In ${count} Gänge kopiert`,
     template: 'Gewinnregeln überall anwenden',
     templateBody:
-      'Setzt bei den vier Preisen jeder Runde die Gewinnregel der Vorlage aus den Einstellungen. Das Superlotto behält seine Regel.',
+      'Setzt bei den vier Preisen jedes Gangs die Gewinnregel der Vorlage aus den Einstellungen. Das Superlotto behält seine Regel.',
     templateConfirm: 'Anwenden',
     templated: 'Gewinnregeln angewendet',
-    clear: 'Runde leeren',
-    clearRound: 'Runde',
-    clearBody: 'Alle Preise der gewählten Runde werden entfernt, auch das Superlotto.',
+    clear: 'Gang leeren',
+    clearRound: 'Gang',
+    clearBody: 'Alle Preise des gewählten Gangs werden entfernt, auch das Superlotto.',
     clearConfirm: 'Leeren',
-    cleared: (round: number): string => `Runde ${round} geleert`,
+    cleared: (round: number): string => `Gang ${round} geleert`,
     skipped: (count: number): string =>
       count === 1
         ? '1 vergebener Preis blieb unverändert.'
         : `${count} vergebene Preise blieben unverändert.`,
-    roundsInvalid: 'Bitte Runden wie «2-5, 8» angeben.',
+    roundsInvalid: 'Bitte Gänge wie «2-5, 8» angeben.',
   },
   csv: {
     import: 'CSV importieren',
     export: 'CSV exportieren',
     exported: 'CSV exportiert',
     title: 'Preise aus CSV importieren',
-    hint: 'Spalten: Runde; Preis; Titel; Beschreibung; Wert CHF; Sponsor; Gewinnregel. In der Spalte Preis steht 1. Preis bis 4. Preis oder Superlotto. Trennzeichen «;» oder «,», UTF-8.',
+    hint: 'Spalten: Gang; Preis; Titel; Beschreibung; Wert CHF; Sponsor; Gewinnregel. In der Spalte Preis steht 1. Preis bis 4. Preis oder Superlotto. Trennzeichen «;» oder «,», UTF-8.',
     file: 'CSV-Datei',
     reading: 'Datei wird gelesen …',
     unreadable: 'Die Datei kann nicht gelesen werden.',
@@ -121,7 +121,7 @@ export const prizes = {
     imported: (count: number): string =>
       count === 1 ? '1 Preis importiert' : `${count} Preise importiert`,
     columns: {
-      round: 'Runde',
+      round: 'Gang',
       slot: 'Preis',
       title: 'Titel',
       description: 'Beschreibung',
@@ -130,8 +130,8 @@ export const prizes = {
       condition: 'Gewinnregel',
     },
     rowErrors: {
-      ROUND_INVALID: 'Die Runde ist keine ganze Zahl.',
-      ROUND_OUT_OF_RANGE: 'Diese Runde gibt es im Anlass nicht.',
+      ROUND_INVALID: 'Der Gang ist keine ganze Zahl.',
+      ROUND_OUT_OF_RANGE: 'Diesen Gang gibt es im Anlass nicht.',
       SLOT_INVALID: 'Preis muss 1. Preis bis 4. Preis oder Superlotto sein.',
       TITLE_REQUIRED: 'Der Titel fehlt.',
       TITLE_TOO_LONG: 'Der Titel ist länger als 60 Zeichen.',
@@ -141,9 +141,8 @@ export const prizes = {
       CONDITION_INVALID: 'Die Gewinnregel ist länger als 60 Zeichen.',
       CONDITION_REMOVED:
         'Die Gewinnregel «2 Reihen» gibt es nicht mehr. Bitte «1 Reihe», «Volle Karte» oder eine eigene Regel eintragen.',
-      DUPLICATE: 'Diese Runde und dieser Preis kommen mehrfach vor.',
-      AWARDED:
-        'Dieser Preis kann nicht mehr geändert werden: Er ist vergeben oder die Runde läuft.',
+      DUPLICATE: 'Dieser Gang und dieser Preis kommen mehrfach vor.',
+      AWARDED: 'Dieser Preis kann nicht mehr geändert werden: Er ist vergeben oder der Gang läuft.',
     },
   },
   prepared: {
@@ -159,7 +158,7 @@ export const prizes = {
     previewTitle: (name: string): string => `«${name}» laden?`,
     previewBody:
       'Wird als neuer Anlass angelegt und aktiviert. Der bisherige Anlass bleibt unverändert.',
-    facts: (rounds: number, prizes: number): string => `${rounds} Runden, ${prizes} Preise`,
+    facts: (rounds: number, prizes: number): string => `${rounds} Gänge, ${prizes} Preise`,
     confirm: 'Als neuen Anlass laden',
     loaded: (name: string): string => `«${name}» geladen und aktiviert`,
     importErrors: {
@@ -179,7 +178,7 @@ export const prizes = {
   print: {
     button: 'Preisliste drucken',
     heading: (name: string): string => `Preisliste ${name}`,
-    round: (round: number): string => `Runde ${round}`,
+    round: (round: number): string => `Gang ${round}`,
     value: 'Wert',
     condition: 'Gewinnregel',
     sponsor: (name: string): string => `Gestiftet von ${name}`,
@@ -199,7 +198,7 @@ export const prizes = {
     READ_ONLY: 'Dieses Fenster ist schreibgeschützt.',
     NO_EVENT: 'Kein Anlass geöffnet.',
     LOCKED: 'Dieser Preis ist vergeben und kann nicht mehr geändert werden.',
-    OUT_OF_RANGE: 'Diese Runde gibt es im Anlass nicht.',
+    OUT_OF_RANGE: 'Diesen Gang gibt es im Anlass nicht.',
     INVALID: 'Bitte die markierten Felder prüfen.',
   },
 };

@@ -92,7 +92,7 @@ describe('overrides and completion', () => {
     expect(roundOf(state, 1).status).toBe('ABORTED');
     state = run(state, startNextRound(state, CONTEXT));
     expect(state.currentRound).toBe(2);
-    state = run(state, jumpToRound(state, CONTEXT, 1, 'Runde 1 fertig spielen'));
+    state = run(state, jumpToRound(state, CONTEXT, 1, 'Gang 1 fertig spielen'));
     expect(state.currentRound).toBe(1);
     expect(activeSlot(state)).toBe(2);
     expect(roundOf(state, 1).runs).toBe(2);

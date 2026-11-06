@@ -54,6 +54,9 @@ function snapshot(patch: Partial<DisplaySnapshot> = {}): DisplaySnapshot {
   };
 }
 
+const band = () =>
+  document.querySelector('[data-reveal="badge"] [data-layer="band"] circle')?.getAttribute('class');
+
 function push(next: DisplaySnapshot) {
   void act(() => {
     link.accept(next);
@@ -138,7 +141,7 @@ describe('DisplayPage: welcome page', () => {
 describe('DisplayPage', () => {
   it('renders round, prize, board and the latest number without animation on first sight', () => {
     push(snapshot({ drawn: [7, 42], latest: { number: 42, seq: 2, method: 'RANDOM' } }));
-    expect(screen.getByText('Runde 3 von 24')).toBeInTheDocument();
+    expect(screen.getByText('Gang 3 von 24')).toBeInTheDocument();
     expect(screen.getByText('Präsentkorb')).toBeInTheDocument();
     expect(screen.getByText('Preis 2 von 4')).toBeInTheDocument();
     expect(screen.getByText('Zuletzt gezogen: 42, Ziehung 2')).toBeInTheDocument();
@@ -200,6 +203,14 @@ describe('DisplayPage', () => {
     );
     expect(screen.getByText('Superlotto')).toBeInTheDocument();
     expect(screen.getAllByText('SUPERLOTTO').length).toBeGreaterThan(0);
+    expect(screen.getByText('S')).toBeInTheDocument();
+    expect(band()).toMatch(/bandRed/);
+  });
+
+  it('keeps the ring without red and shows no S while no Superlotto is played', () => {
+    push(snapshot({ prize: { slot: 4, condition: { kind: 'ONE_LINE' } } }));
+    expect(band()).not.toMatch(/bandRed/);
+    expect(screen.queryByText('S')).toBeNull();
   });
 
   it.each<[DisplayOverlay, string]>([
@@ -223,9 +234,9 @@ describe('DisplayPage', () => {
         round: 3,
         next: { round: 4, prizes: [{ slot: 1, condition: { kind: 'ONE_LINE' }, title: 'Wein' }] },
       },
-      'Runde 4: diese Preise warten',
+      'Gang 4: diese Preise warten',
     ],
-    [{ kind: 'ROUND_END', id: 'o3', round: 24 }, 'Alle Runden sind gespielt'],
+    [{ kind: 'ROUND_END', id: 'o3', round: 24 }, 'Alle Gänge sind gespielt'],
     [
       { kind: 'PAUSE', id: 'o4', message: 'Kurze Pause', resumeAt: '21:30', sponsors: ['A', 'B'] },
       'Weiter um 21:30 Uhr',

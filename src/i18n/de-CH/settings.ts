@@ -27,9 +27,9 @@ export const settings = {
     duplicateHint: 'Übernimmt Einstellungen und Preise, aber keine Ziehungen und keine Gewinner.',
     copyName: (name: string): string => `${name} (Kopie)`,
     switch: 'Wechseln',
-    switchRunningTitle: 'Eine Runde läuft',
+    switchRunningTitle: 'Ein Gang läuft',
     switchRunningBody:
-      'Die laufende Runde bleibt gespeichert und kann später weitergespielt werden. Die Anzeige wechselt mit.',
+      'Der laufende Gang bleibt gespeichert und kann später weitergespielt werden. Die Anzeige wechselt mit.',
     switchConfirm: 'Trotzdem wechseln',
     archive: 'Archivieren',
     restore: 'Wiederherstellen',
@@ -55,12 +55,12 @@ export const settings = {
     date: 'Datum',
     venue: 'Ort (optional)',
     game: 'Spiel',
-    rounds: 'Anzahl Runden',
+    rounds: 'Anzahl Gänge',
     roundsHint: (min: number): string =>
       min > 1 ? `1 bis 50, mindestens ${min} (bereits gestartet)` : '1 bis 50',
     maxNumber: 'Höchste Zahl (N)',
     maxNumberHint: '30 bis 99; das Brett zeigt die Zahlen 1 bis N',
-    locked: 'Gesperrt, solange eine Runde läuft.',
+    locked: 'Gesperrt, solange ein Gang läuft.',
     template: 'Gewinnregeln (Vorlage)',
     templateHint:
       'Gilt für Preise ohne eigene Regel. Vor dem Anlass mit dem Spielreglement des Clubs abgleichen.',
@@ -93,9 +93,9 @@ export const settings = {
     name: { REQUIRED: 'Bitte einen Namen eingeben.', TOO_LONG: 'Höchstens 80 Zeichen.' },
     venue: { TOO_LONG: 'Höchstens 80 Zeichen.' },
     date: { INVALID_DATE: 'Ungültiges Datum.' },
-    rounds: { OUT_OF_RANGE: '1 bis 50 Runden.' },
+    rounds: { OUT_OF_RANGE: '1 bis 50 Gänge.' },
     belowPlayed: (min: number): string =>
-      `Mindestens ${min}: so viele Runden wurden schon gestartet.`,
+      `Mindestens ${min}: so viele Gänge wurden schon gestartet.`,
     maxNumber: { OUT_OF_RANGE: 'Eine ganze Zahl von 30 bis 99.' },
     perLine: { OUT_OF_RANGE: '3 bis 9 Zahlen pro Reihe.' },
     lines: { OUT_OF_RANGE: '2 bis 6 Reihen.' },
@@ -106,7 +106,7 @@ export const settings = {
       TOO_LONG: 'Je Sponsor höchstens 60 Zeichen.',
     },
     payout: 'Einsätze als CHF-Betrag (z. B. 4’500.–), Mindestquote 1 bis 100 %.',
-    locked: 'Gesperrt, solange eine Runde läuft.',
+    locked: 'Gesperrt, solange ein Gang läuft.',
   },
   presentation: {
     intro: 'Gilt für dieses Gerät, also für Konsole und Anzeige am selben Laptop.',

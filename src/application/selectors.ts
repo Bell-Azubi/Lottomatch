@@ -96,7 +96,7 @@ export interface RoundPreview {
   }[];
 }
 
-/** The round "Runde starten" would begin, with its prizes. */
+/** The round "Gang starten" would begin, with its prizes. */
 export function nextRoundPreview(
   state: GameState,
   catalogue: Catalogue,

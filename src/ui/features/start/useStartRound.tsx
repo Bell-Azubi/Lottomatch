@@ -9,7 +9,7 @@ import { showToast } from '../../design-system/toast-store';
 import { errorMessage } from '../host/error-message';
 
 /**
- * "Runde starten" with the FR-8 gap check: starting the event while prizes are missing lists the
+ * "Gang starten" with the FR-8 gap check: starting the event while prizes are missing lists the
  * gaps and asks for confirmation once.
  */
 export function useStartRound(onStarted?: () => void) {

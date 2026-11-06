@@ -117,12 +117,12 @@ sequenceDiagram
 ```mermaid
 stateDiagram-v2
   [*] --> UPCOMING
-  UPCOMING --> RUNNING: ROUND_STARTED (Runde starten or Zu Runde springen)
+  UPCOMING --> RUNNING: ROUND_STARTED (Gang starten or Zu Gang springen)
   RUNNING --> COMPLETED: last prize awarded or skipped
   COMPLETED --> RUNNING: AWARD_REVOKED (latest award, current round)
   RUNNING --> ABORTED: ROUND_ABORTED after a draw or award
   RUNNING --> UPCOMING: ROUND_ABORTED before any draw or award
-  ABORTED --> RUNNING: ROUND_STARTED with reason (Zu Runde springen)
+  ABORTED --> RUNNING: ROUND_STARTED with reason (Zu Gang springen)
   COMPLETED --> [*]
 ```
 

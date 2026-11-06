@@ -54,7 +54,7 @@ const prize = (round: number, slot: PrizeSlot, extra: Partial<Prize> = {}): Priz
   id: `p${round}-${slot}`,
   round,
   slot,
-  title: `Runde ${round}, Preis ${slot}`,
+  title: `Gang ${round}, Preis ${slot}`,
   winCondition: { kind: 'CUSTOM', label: 'Eigene' },
   ...extra,
 });
@@ -120,7 +120,7 @@ describe('freezing the Superlotto at the round start', () => {
   it('gives only the selected rounds a Superlotto', () => {
     const first = run(initialGameState(), startNextRound(initialGameState(), context));
     expect(roundOf(first, 1).rules).toEqual(RULES);
-    const second = run(first, jumpToRound(first, context, 2, 'Runde vorgezogen'));
+    const second = run(first, jumpToRound(first, context, 2, 'Gang vorgezogen'));
     expect(roundOf(second, 2).rules).toEqual(SUPERLOTTO);
   });
 
@@ -192,7 +192,7 @@ describe('the Superlotto in the catalogue', () => {
   it('stays where it is when a round is copied', () => {
     const source = catalogueOf(prize(1, 1), prize(1, 5), superlotto);
     const { catalogue } = copyRound(source, 1, [2, 4], NOT_LOCKED, newId);
-    expect(prizeAt(catalogue, 2, 1)?.title).toBe('Runde 1, Preis 1');
+    expect(prizeAt(catalogue, 2, 1)?.title).toBe('Gang 1, Preis 1');
     expect(prizeAt(catalogue, 2, 5)).toBeUndefined();
     expect(prizeAt(catalogue, 4, 5)?.title).toBe('Grosser Früchtekorb');
   });

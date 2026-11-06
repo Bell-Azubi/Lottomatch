@@ -41,6 +41,18 @@ describe('header mapping', () => {
   });
 });
 
+describe('the column of the round', () => {
+  it.each(['Gang', 'Runde'])('is read as %s', (name) => {
+    const preview = buildPreview(
+      [{ line: 2, cells: { [name]: '4', Preis: '1. Preis', Titel: 'Vorderschinken' } }],
+      [name, 'Preis', 'Titel'],
+      options,
+    );
+    expect(preview.errors).toEqual([]);
+    expect(preview.rows[0]?.round).toBe(4);
+  });
+});
+
 describe('a list with a Superlotto', () => {
   const entry = (line: number, round: string, slot: string, title: string) => ({
     line,
@@ -251,7 +263,7 @@ describe('export round trip', () => {
     expect(rows[0]?.[1]).toBe('1. Preis');
     expect(rows[1]?.[1]).toBe('4. Preis');
     const text = excelCsv.serialize(exportHeaders, rows);
-    expect(text.startsWith('\uFEFFRunde;Preis;Titel')).toBe(true);
+    expect(text.startsWith('\uFEFFGang;Preis;Titel')).toBe(true);
     expect(text).toContain('\r\n');
     const parsed = await excelCsv.parse(text);
     const preview = buildPreview(parsed.rows, parsed.headers, options);

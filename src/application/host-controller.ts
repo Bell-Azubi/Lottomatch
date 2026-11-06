@@ -122,7 +122,7 @@ export class HostController {
     return ok(undefined);
   }
 
-  /** Runde starten. */
+  /** Gang starten. */
   startRound(): ActionResult {
     const result = this.run((state, session) =>
       commands.startNextRound(state, this.context(session)),

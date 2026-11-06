@@ -5,13 +5,13 @@ export const start = {
   noEvent: 'Noch kein Anlass vorhanden.',
   createEvent: 'Anlass erstellen',
   status: {
-    READY: 'Bereit, noch keine Runde gespielt',
-    ROUND_RUNNING: (round: number): string => `Runde ${round} läuft`,
+    READY: 'Bereit, noch kein Gang gespielt',
+    ROUND_RUNNING: (round: number): string => `Gang ${round} läuft`,
     BETWEEN_ROUNDS: (played: number, total: number): string =>
-      `${played} von ${total} Runden gespielt`,
+      `${played} von ${total} Gängen gespielt`,
     COMPLETED: 'Abgeschlossen',
   },
-  startRound: 'Runde starten',
+  startRound: 'Gang starten',
   resume: 'Weiterspielen',
   toResults: 'Zur Auswertung',
   practiceHint: 'Übung: getrennt vom echten Anlass, ohne Auswirkung auf dessen Daten.',
@@ -39,8 +39,8 @@ export const start = {
   },
   gapsConfirm: {
     title: 'Preise fehlen',
-    body: 'Diese Runden haben Lücken. Die Anzeige zeigt dort «Preis n» und die Gewinnregel.',
-    round: (round: number, slots: string): string => `Runde ${round}: ${slots}`,
+    body: 'Diese Gänge haben Lücken. Die Anzeige zeigt dort «Preis n» und die Gewinnregel.',
+    round: (round: number, slots: string): string => `Gang ${round}: ${slots}`,
     confirm: 'Trotzdem starten',
   },
 };

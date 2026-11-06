@@ -54,7 +54,7 @@ describe('App shell', () => {
     expect(screen.getByText('96 Preise fehlen')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Ton aus' }));
     expect(t.app.prefs.value.muted).toBe(true);
-    fireEvent.click(screen.getByRole('button', { name: 'Runde starten' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Gang starten' }));
     fireEvent.click(await screen.findByRole('button', { name: 'Trotzdem starten' }));
     await waitFor(() => {
       expect(window.location.hash).toBe('#/host');

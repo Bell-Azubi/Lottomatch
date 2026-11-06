@@ -35,7 +35,7 @@ describe('Anlass form', () => {
     type('Name', '  Herbstlotto  ');
     type('Datum', '2026-11-14');
     type('Ort (optional)', 'Mehrzweckhalle Kaisten');
-    type('Anzahl Runden', '20');
+    type('Anzahl Gänge', '20');
     type(/^Höchste Zahl/, '75');
     fireEvent.change(screen.getByLabelText('Mehrere Gewinnkarten'), { target: { value: 'SHARE' } });
     fireEvent.click(screen.getByRole('switch', { name: /Brett nach jedem Preis leeren/ }));
@@ -79,10 +79,10 @@ describe('Anlass form', () => {
     const test = await createTestHost();
     renderWithServices(<EventForm canEdit />, test);
     type('Name', ' ');
-    type('Anzahl Runden', '0');
+    type('Anzahl Gänge', '0');
     save();
     expect(screen.getByText('Bitte einen Namen eingeben.')).toBeInTheDocument();
-    expect(screen.getByText('1 bis 50 Runden.')).toBeInTheDocument();
+    expect(screen.getByText('1 bis 50 Gänge.')).toBeInTheDocument();
     expect(screen.getByLabelText('Name')).toHaveAttribute('aria-invalid', 'true');
     expect(messages()).toContain('Bitte die markierten Felder korrigieren.');
     expect(settingsOf(test).name).toBe('Lottomatch');
@@ -155,7 +155,7 @@ describe('Anlass form', () => {
     renderWithServices(<EventForm canEdit />, test);
     expect(screen.getByLabelText(/^Höchste Zahl/)).toBeDisabled();
     expect(screen.getByRole('switch', { name: /Brett nach jedem Preis leeren/ })).toBeDisabled();
-    expect(screen.getAllByText('Gesperrt, solange eine Runde läuft.').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Gesperrt, solange ein Gang läuft.').length).toBeGreaterThan(0);
     type('Ort (optional)', 'Turnhalle');
     save();
     expect(settingsOf(test).venue).toBe('Turnhalle');
@@ -167,10 +167,10 @@ describe('Anlass form', () => {
     expect(test.host.jumpToRound(7, 'Spätstart').ok).toBe(true);
     renderWithServices(<EventForm canEdit />, test);
     expect(screen.getByText('1 bis 50, mindestens 7 (bereits gestartet)')).toBeInTheDocument();
-    type('Anzahl Runden', '5');
+    type('Anzahl Gänge', '5');
     save();
     expect(
-      screen.getByText('Mindestens 7: so viele Runden wurden schon gestartet.'),
+      screen.getByText('Mindestens 7: so viele Gänge wurden schon gestartet.'),
     ).toBeInTheDocument();
   });
 

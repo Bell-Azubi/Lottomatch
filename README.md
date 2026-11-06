@@ -155,7 +155,7 @@ once the manifest lists a file. The prize list of the event is built in
    to `public/events/index.json`:
 
    ```json
-   { "file": "<name>.json", "name": "Lottomatch 2027", "description": "24 Runden, Stand März" }
+   { "file": "<name>.json", "name": "Lottomatch 2027", "description": "24 Gänge, Stand März" }
    ```
 
 4. Open a pull request. CI checks every file in `public/events/`: it must be listed in the

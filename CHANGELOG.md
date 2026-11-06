@@ -21,6 +21,8 @@ All notable changes to this project are documented in this file. The format foll
 
 ### Changed
 
+- The German texts say Gang instead of Runde, on the display ring too. The CSV export writes Gang,
+  and the import reads both, because the Excel sheet of the event says Runde.
 - The word Hauptpreis is gone: the fourth prize is called Preis 4, and the red highlight and the
   large confetti belong to the Superlotto.
 - New events use 1 Reihe for all four prizes. Stored events keep their template.

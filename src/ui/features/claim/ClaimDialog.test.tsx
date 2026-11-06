@@ -75,7 +75,7 @@ describe('ClaimDialog (FR-6, ADR-0025)', () => {
     expect(t.host.award({ winners: [{ cardNo: '117' }] }).ok).toBe(true);
     typeInto(within(dialog()).getByLabelText('Kartennummer (optional)'), '117');
     expect(
-      within(dialog()).getByText('Karte 117 hat in dieser Runde bereits gewonnen.'),
+      within(dialog()).getByText('Karte 117 hat in diesem Gang bereits gewonnen.'),
     ).toBeInTheDocument();
   });
 

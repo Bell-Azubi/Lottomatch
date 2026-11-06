@@ -26,9 +26,9 @@ test.describe('full event (§11 E2E 1)', () => {
         await typeNumber(page, slot * 10 + (round % 10));
         await confirmWin(page, `${round}-${slot}`);
       }
-      await expect(page.getByRole('heading', { name: `Runde ${round} ist fertig` })).toBeVisible();
+      await expect(page.getByRole('heading', { name: `Gang ${round} ist fertig` })).toBeVisible();
     }
-    await expect(page.getByRole('heading', { name: 'Alle Runden sind gespielt' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Alle Gänge sind gespielt' })).toBeVisible();
     await page.getByRole('button', { name: 'Anlass abschliessen' }).click();
     await page.getByRole('dialog').getByRole('button', { name: 'Bestätigen' }).click();
     await expect(page.getByRole('heading', { name: 'Anlass abgeschlossen' })).toBeVisible();

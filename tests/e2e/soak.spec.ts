@@ -86,7 +86,7 @@ async function playEvent(page: Page): Promise<void> {
       await typeNumber(page, slot * 10 + (round % 10));
       await confirmWin(page, `${round}-${slot}`);
     }
-    await expect(page.getByRole('heading', { name: `Runde ${round} ist fertig` })).toBeVisible();
+    await expect(page.getByRole('heading', { name: `Gang ${round} ist fertig` })).toBeVisible();
   }
   await page.getByRole('button', { name: 'Anlass abschliessen' }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Bestätigen' }).click();

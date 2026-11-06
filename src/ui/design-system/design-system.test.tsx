@@ -22,14 +22,14 @@ afterEach(() => {
 describe('BadgeRing (single ring primitive)', () => {
   it('runs both lettering arcs left to right so they read upright', () => {
     const { container } = render(
-      <BadgeRing topText="RUNDE 7 VON 24" bottomText="ZIEHUNG 37" numeral="42" />,
+      <BadgeRing topText="GANG 7 VON 24" bottomText="ZIEHUNG 37" numeral="42" />,
     );
     const paths = [...container.querySelectorAll('path')].map((path) => path.getAttribute('d'));
     // Top: from the left edge clockwise over 12 o'clock; bottom: from the left counter-clockwise through 6 o'clock.
     expect(paths).toContain('M 23 100 A 77 77 0 0 1 177 100');
     expect(paths).toContain('M 11 100 A 89 89 0 0 0 189 100');
     const textPaths = [...container.querySelectorAll('textPath')];
-    expect(textPaths.map((tp) => tp.textContent)).toEqual(['RUNDE 7 VON 24', 'ZIEHUNG 37']);
+    expect(textPaths.map((tp) => tp.textContent)).toEqual(['GANG 7 VON 24', 'ZIEHUNG 37']);
     expect(
       textPaths.every(
         (tp) =>
@@ -61,9 +61,9 @@ describe('BadgeRing (single ring primitive)', () => {
 
   it('renders rings with real text beside them', () => {
     render(<RoundRing round={7} total={24} segments={[]} size="lg" />);
-    expect(screen.getByText('Runde 7 von 24')).toBeInTheDocument();
+    expect(screen.getByText('Gang 7 von 24')).toBeInTheDocument();
     render(<RoundRing round={undefined} total={24} segments={['DONE', 'UPCOMING']} />);
-    expect(screen.getByText('1 von 24 Runden gespielt')).toBeInTheDocument();
+    expect(screen.getByText('1 von 24 Gängen gespielt')).toBeInTheDocument();
     render(<PrizeProgress states={['AWARDED', 'ACTIVE', 'SKIPPED', 'UPCOMING']} />);
     expect(screen.getByText('Preis 3: übersprungen')).toBeInTheDocument();
     expect(screen.getByText('Preis 4: offen')).toBeInTheDocument();

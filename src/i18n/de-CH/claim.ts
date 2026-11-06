@@ -9,7 +9,7 @@ export const claim = {
   name: 'Name (optional)',
   note: 'Notiz (optional)',
   privacy: 'Namen bleiben auf diesem Gerät und lassen sich jederzeit löschen.',
-  cardWonEarlier: (card: string): string => `Karte ${card} hat in dieser Runde bereits gewonnen.`,
+  cardWonEarlier: (card: string): string => `Karte ${card} hat in diesem Gang bereits gewonnen.`,
   validCount: (count: number): string =>
     count === 1 ? '1 gültige Karte' : `${count} gültige Karten`,
   share: 'Preis teilen',

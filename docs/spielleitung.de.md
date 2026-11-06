@@ -7,23 +7,23 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
 
 1. **Anlass wählen.** Unter Einstellungen → Anlässe den Anlass auswählen, neu erstellen oder einen
    Vorjahresanlass als Vorlage duplizieren (Einstellungen und Preise, ohne Ziehungen und Gewinner).
-2. **Anlass einstellen.** Name, Datum, Ort, Anzahl Runden (Standard 24), höchste Zahl (Standard 90)
+2. **Anlass einstellen.** Name, Datum, Ort, Anzahl Gänge (Standard 24), höchste Zahl (Standard 90)
    und die Gewinnregel-Vorlage:
    Preis 1 bis Preis 4 je «1 Reihe». Das Superlotto gilt für die volle Karte.
    Die Vorlage mit dem Spielreglement des Vereins abgleichen.
 3. **Regeln festlegen.** Mehrere Gewinnkarten (Stechen oder Teilen, beim Stechen gewinnt die höchste oder die tiefste
    Zahl) und ob das Brett nach jedem Preis geleert wird (Standard: nein, die Zahlen gelten für alle
-   Preise der Runde). Das Superlotto läuft immer auf dem Brett von Preis 4 weiter.
+   Preise des Gangs). Das Superlotto läuft immer auf dem Brett von Preis 4 weiter.
 4. **Preise prüfen.** Die Preisliste des Anlasses ist im Programm hinterlegt: Ein Anlass ohne Preise
-   bekommt alle 24 Runden und das Superlotto in den Runden 4, 9, 14, 19 und 24.
-   Unter «Preise» lassen sich pro Runde Titel, Beschreibung, Wert in CHF, Sponsor, Bild und
+   bekommt alle 24 Gänge und das Superlotto in den Gängen 4, 9, 14, 19 und 24.
+   Unter «Preise» lassen sich pro Gang Titel, Beschreibung, Wert in CHF, Sponsor, Bild und
    Gewinnregel ändern. Eine geänderte Excel-Liste bringt der CSV-Import herein. Fehlt ein Preis,
    zeigt die Anzeige «Preis 2» und die Gewinnregel.
-   Steht in der Liste bei einer Runde ein Superlotto, kommt es als fünfter Preis dazu und lässt sich
-   dort bearbeiten, auch wenn der Titel in der Liste noch leer ist. Runden ohne Superlotto in der
+   Steht in der Liste bei einem Gang ein Superlotto, kommt es als fünfter Preis dazu und lässt sich
+   dort bearbeiten, auch wenn der Titel in der Liste noch leer ist. Gänge ohne Superlotto in der
    Liste haben keine Einstellung dafür. Es muss vor
-   dem Start der Runde importiert sein. Gespielt wird es nach Preis 4, ohne das Brett zu leeren, bis
-   jemand die volle Karte hat. In der Spalte «Preis» steht `1. Preis` bis `4. Preis` oder
+   dem Start des Gangs importiert sein. Gespielt wird es nach Preis 4, ohne das Brett zu leeren, bis
+   jemand die volle Karte hat. Die Spalte für den Gang darf «Gang» oder «Runde» heissen. In der Spalte «Preis» steht `1. Preis` bis `4. Preis` oder
    `Superlotto`. In Excel die Liste mit dem Dateityp «CSV UTF-8» speichern.
 5. **Darstellung prüfen.** Anzeige-Thema «Dunkler Saal», Animationsdauer, Ton und Sprachansage
    (auf Wunsch mit Ziffernwiederholung: «zweiundvierzig – vier, zwei»).
@@ -43,12 +43,12 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
 3. Im Anzeigefenster einmal klicken oder F drücken: «Klicken oder F drücken für Vollbild».
 4. Unten in der Konsole muss «Anzeige verbunden» stehen. Die Startseite zeigt zusätzlich die
    Checkliste «Bereit für den Anlass?».
-5. Bis zur ersten Runde zeigt die Anzeige die Begrüssung mit dem Vereinslogo sowie Datum und Ort des
-   Anlasses (Einstellungen → Anlass). Mit «Runde starten» wechselt sie auf das Spielbrett.
+5. Bis zum ersten Gang zeigt die Anzeige die Begrüssung mit dem Vereinslogo sowie Datum und Ort des
+   Anlasses (Einstellungen → Anlass). Mit «Gang starten» wechselt sie auf das Spielbrett.
 
-## Ablauf einer Runde
+## Ablauf eines Gangs
 
-1. **Runde starten.** In der Konsole «Runde starten». Fehlen beim ersten Start Preise, listet die
+1. **Gang starten.** In der Konsole «Gang starten». Fehlen beim ersten Start Preise, listet die
    App die Lücken auf und fragt nach.
 2. **Zahl ziehen.**
    - «Drehen» oder Leertaste: Die Zahl steht im Moment des Drückens fest; die Trommel auf der
@@ -63,7 +63,7 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
    nicht.
 4. **Entscheiden.**
    - Gültig: «Gewinn bestätigen», optional mit Kartennummer, Name und Notiz. Die App weist darauf
-     hin, wenn dieselbe Karte in dieser Runde schon gewonnen hat. Danach ist der nächste Preis aktiv.
+     hin, wenn dieselbe Karte in diesem Gang schon gewonnen hat. Danach ist der nächste Preis aktiv.
    - Ungültig: «Abbrechen». Es wird nichts erfasst, das Spiel geht weiter.
 5. **Mehrere Gewinnkarten.** Mit «Weitere Karte» jede gültige Karte erfassen. Je nach Einstellung
    folgt das Stechen («Stechen ziehen»: eine Zahl pro Karte, die höchste oder tiefste gewinnt; bei
@@ -71,8 +71,8 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
    Preis.
 6. **Gewinnanzeige.** Nach jedem bestätigten Gewinn zeigt die Anzeige den Gewinn 60 Sekunden lang.
    Die nächste gezogene Zahl beendet die Gewinnanzeige sofort.
-7. **Rundenende.** Nach dem letzten Preis zeigt die Konsole eine Zusammenfassung und die nächste
-   Runde, die Anzeige die Preise der nächsten Runde. Weiter mit «Runde starten».
+7. **Ende des Gangs.** Nach dem letzten Preis zeigt die Konsole eine Zusammenfassung und den
+   nächsten Gang, die Anzeige die Preise des nächsten Gangs. Weiter mit «Gang starten».
 
 ## Tastenkürzel
 
@@ -95,9 +95,9 @@ Die Kürzel sind nur in der Konsole aktiv und nicht, solange ein Textfeld den Fo
 - **Rückgängig** (Ctrl/Cmd + Z) nimmt nur die letzte Ziehung zurück und nur, wenn danach kein
   Gewinn bestätigt und kein Preis übersprungen wurde.
 - **Letzten Gewinn widerrufen** (Menü «Spielleitung») geht nur für den letzten Gewinn der
-  laufenden Runde und braucht einen Grund; der Preis ist danach wieder aktiv. Wird das Brett nach
+  laufenden Gangs und braucht einen Grund; der Preis ist danach wieder aktiv. Wird das Brett nach
   jedem Preis geleert, zuerst die seither gezogenen Zahlen rückgängig machen.
-- In früheren Runden lassen sich nur die Angaben zur Gewinnkarte korrigieren (Kartennummer, Name,
+- In früheren Gängen lassen sich nur die Angaben zur Gewinnkarte korrigieren (Kartennummer, Name,
   Notiz), nicht der Gewinn selbst.
 - Jede Rücknahme, jeder Widerruf und jede Korrektur steht im Protokoll; nichts wird gelöscht.
 
@@ -106,10 +106,10 @@ Die Kürzel sind nur in der Konsole aktiv und nicht, solange ein Textfeld den Fo
 Im Menü «Spielleitung», jeweils mit Bestätigung und einem Grund, der protokolliert wird:
 
 - **Preis überspringen:** Der aktive Preis wird nicht vergeben, der nächste ist aktiv.
-- **Runde abbrechen:** Vergebene Preise bleiben vergeben, offene bleiben offen. Eine Runde, die
+- **Gang abbrechen:** Vergebene Preise bleiben vergeben, offene bleiben offen. Ein Gang, der
   vor der ersten Zahl abgebrochen wird, gilt wieder als ausstehend.
-- **Zu Runde springen:** Startet eine andere Runde; eine laufende Runde wird dabei abgebrochen.
-  So lässt sich auch eine abgebrochene Runde später fertig spielen.
+- **Zu Gang springen:** Startet einen anderen Gang; ein laufender Gang wird dabei abgebrochen.
+  So lässt sich auch ein abgebrochener Gang später fertig spielen.
 - **Anlass abschliessen:** Beendet den Anlass; danach sind nur noch Korrekturen möglich.
 
 ## Pause
@@ -119,7 +119,7 @@ Mitteilung und die Zeit für «Weiter um …» eingeben; die Sponsoren des Anlas
 
 ## Ende des Anlasses
 
-1. Nach der letzten Runde «Anlass abschliessen»: Die Anzeige zeigt den Schlussbildschirm.
+1. Nach dem letzten Gang «Anlass abschliessen»: Die Anzeige zeigt den Schlussbildschirm.
 2. Sofort eine Sicherung exportieren (Einstellungen → Daten).
 3. Unter «Auswertung» die Gewinnerliste für den Gabentisch drucken und die Ausgabe als «abgeholt»
    markieren.
@@ -141,5 +141,5 @@ Mitteilung und die Zeit für «Weiter um …» eingeben; die Sponsoren des Anlas
 - **«Daten können nicht geladen werden».** Zuerst «Rohdaten exportieren», dann die letzte Sicherung
   importieren. «Alles zurücksetzen» löscht alle Daten auf diesem Gerät und verlangt eine
   Bestätigung durch Eintippen.
-- **«Update bereit».** Erscheint nur zwischen den Runden. «Jetzt aktualisieren» lädt Konsole und
+- **«Update bereit».** Erscheint nur zwischen den Gängen. «Jetzt aktualisieren» lädt Konsole und
   Anzeige neu; das Spiel bleibt erhalten.

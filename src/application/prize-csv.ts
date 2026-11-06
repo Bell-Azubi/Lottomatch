@@ -13,7 +13,7 @@ export type CsvColumn =
 
 /** German export headers (Excel de-CH); the import also accepts English names. */
 export const CSV_HEADERS: Readonly<Record<CsvColumn, string>> = {
-  round: 'Runde',
+  round: 'Gang',
   slot: 'Preis',
   title: 'Titel',
   description: 'Beschreibung',
@@ -34,7 +34,8 @@ const COLUMN_ORDER: readonly CsvColumn[] = [
 export const REQUIRED_COLUMNS: readonly CsvColumn[] = ['round', 'slot', 'title'];
 
 const ALIASES: Readonly<Record<CsvColumn, readonly string[]>> = {
-  round: ['runde', 'round', 'rd', 'nr', 'runde nr'],
+  // The Excel sheet of the event calls this column Runde.
+  round: ['gang', 'gang nr', 'runde', 'runde nr', 'round', 'rd', 'nr'],
   slot: ['preis', 'prize', 'slot', 'preis nr', 'prize no'],
   title: ['titel', 'title', 'bezeichnung', 'name', 'preisname'],
   description: ['beschreibung', 'description', 'details', 'text'],

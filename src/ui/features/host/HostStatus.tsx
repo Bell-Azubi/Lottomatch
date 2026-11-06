@@ -20,7 +20,7 @@ export interface HostStatusProps {
   readonly images: ImageStore;
 }
 
-/** "Runde 7 von 24", the active prize and the round's prize progress (FR-5, always visible). */
+/** "Gang 7 von 24", the active prize and the round's prize progress (FR-5, always visible). */
 export function HostStatus({
   round,
   totalRounds,

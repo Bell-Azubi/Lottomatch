@@ -33,7 +33,7 @@ describe('winnerTable', () => {
   it('formats every column for Excel de-CH', () => {
     const { headers, cells } = winnerTable(winnerRows(results.rounds), deResults, deCommon);
     expect(headers).toHaveLength(15);
-    expect(headers[0]).toBe('Runde');
+    expect(headers[0]).toBe('Gang');
     expect(cells[0]).toEqual([
       '1',
       'Preis 1',

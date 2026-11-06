@@ -66,7 +66,7 @@ export class OverlayController {
     if (this.current.value?.kind !== 'WIN') this.showRoundEnd();
   }
 
-  /** Rundenende: the next round's prizes. */
+  /** Ende des Gangs: the next round's prizes. */
   showRoundEnd(): void {
     const session = this.app.session.value;
     this.roundEndPending = false;

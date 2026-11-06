@@ -30,7 +30,7 @@ export async function openHost(page: Page): Promise<void> {
 /** Starts the next round from the host console, confirming the gap warning if shown. */
 export async function startRound(page: Page, round: number): Promise<void> {
   await page
-    .getByRole('button', { name: `Runde ${round} starten` })
+    .getByRole('button', { name: `Gang ${round} starten` })
     .first()
     .click();
   const confirm = page.getByRole('button', { name: 'Trotzdem starten' });

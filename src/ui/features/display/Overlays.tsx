@@ -129,7 +129,7 @@ function PauseOverlay({ overlay }: { readonly overlay: Pause }) {
   );
 }
 
-/** Host-triggered overlays on the display (FR-10): Gewinn, Rundenende, Pause, Spielende. */
+/** Host-triggered overlays on the display (FR-10): Gewinn, Ende des Gangs, Pause, Spielende. */
 export function Overlay({
   overlay,
   images,

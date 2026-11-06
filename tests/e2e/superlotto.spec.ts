@@ -28,10 +28,10 @@ test.describe('Superlotto (ADR-0027)', () => {
     await expect(page.getByText('Alle Preise erfasst')).toBeVisible();
     await expect(page.getByText('5 von 5 Preisen erfasst')).toHaveCount(5);
     await expect(page.getByText('4 von 4 Preisen erfasst')).toHaveCount(19);
-    await page.getByRole('button', { name: 'Runde 3 bearbeiten' }).click();
+    await page.getByRole('button', { name: 'Gang 3 bearbeiten' }).click();
     await expect(page.getByRole('heading', { name: 'Preis 4', level: 3 })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Superlotto', level: 3 })).toHaveCount(0);
-    await page.getByRole('button', { name: 'Runde 4 bearbeiten' }).click();
+    await page.getByRole('button', { name: 'Gang 4 bearbeiten' }).click();
     const form = page.getByRole('region', { name: 'Superlotto' });
     await expect(form.getByLabel('Titel')).toHaveValue('Grosser Früchtekorb');
     await expect(form.getByLabel('Gewinnregel')).toHaveValue('FULL_CARD');
@@ -54,10 +54,10 @@ test.describe('Superlotto (ADR-0027)', () => {
     await expect(page.getByText('6 Preise importiert')).toBeVisible();
     await expect(page.getByText('5 von 5 Preisen erfasst')).toHaveCount(6);
 
-    await page.getByRole('button', { name: 'Runde 2 bearbeiten' }).click();
+    await page.getByRole('button', { name: 'Gang 2 bearbeiten' }).click();
     await expect(page.getByRole('heading', { name: 'Preis 4', level: 3 })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Superlotto', level: 3 })).toHaveCount(0);
-    await page.getByRole('button', { name: 'Runde 1 bearbeiten' }).click();
+    await page.getByRole('button', { name: 'Gang 1 bearbeiten' }).click();
     const form = page.getByRole('region', { name: 'Superlotto' });
     await expect(form.getByLabel('Titel')).toHaveValue('Grosser Früchtekorb');
     await expect(form.getByLabel('Gewinnregel')).toHaveValue('FULL_CARD');
@@ -79,7 +79,7 @@ test.describe('Superlotto (ADR-0027)', () => {
     await expect(display.getByText('SUPERLOTTO').first()).toBeAttached();
     await confirmWin(page, '77');
     await expect(display.getByText('Superlotto!')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Runde 1 ist fertig' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Gang 1 ist fertig' })).toBeVisible();
 
     await startRound(page, 2);
     await expect(page.getByText('Preis 1 von 4 · 1 Reihe')).toBeVisible();

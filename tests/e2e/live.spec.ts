@@ -26,7 +26,7 @@ test.describe('draws (FR-2, FR-3)', () => {
     await expect(cell(page, 7)).toHaveAccessibleName('7, zuletzt gezogen');
     await field.fill('7');
     await field.press('Enter');
-    await expect(page.getByText('7 ist in dieser Runde bereits gezogen.')).toBeVisible();
+    await expect(page.getByText('7 ist in diesem Gang bereits gezogen.')).toBeVisible();
     await page.getByRole('button', { name: 'Drehen' }).click();
     await expect(page.getByText('2 von 90 gezogen')).toBeVisible();
     await cell(page, 50).click();
@@ -94,7 +94,7 @@ test.describe('keyboard (FR-12)', () => {
       await dialog.getByRole('button', { name: 'Gewinn bestätigen' }).press('Enter');
       await expect(dialog).toBeHidden();
     }
-    await expect(page.getByRole('heading', { name: 'Runde 1 ist fertig' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Gang 1 ist fertig' })).toBeVisible();
     await page.keyboard.press('?');
     await expect(page.getByRole('dialog', { name: 'Tastenkürzel' })).toBeVisible();
     await page.keyboard.press('Escape');

@@ -19,7 +19,7 @@ async function expectRestored(page: Page): Promise<void> {
   await expect(cell(page, 56)).toHaveAccessibleName('56, zuletzt gezogen');
   await expect(cell(page, 12)).toHaveAccessibleName('12, gezogen');
   await expect(page.getByText('Preis 2 von 4 · 1 Reihe')).toBeVisible();
-  await expect(page.getByText('Runde 1 von 24').first()).toBeVisible();
+  await expect(page.getByText('Gang 1 von 24').first()).toBeVisible();
 }
 
 test.describe('crash safety (§8 reliability)', () => {

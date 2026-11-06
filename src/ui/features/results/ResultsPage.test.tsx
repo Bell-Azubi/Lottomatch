@@ -22,7 +22,7 @@ async function playedHost(overrides: Partial<Platform> = {}): Promise<TestHost> 
 }
 
 function rounds(): HTMLElement {
-  return screen.getByRole('region', { name: 'Runden' });
+  return screen.getByRole('region', { name: 'Gänge' });
 }
 
 function asBlob(content: unknown): Blob {
@@ -43,7 +43,7 @@ describe('ResultsPage', () => {
     expect(within(totals).getByText('Preise vergeben').nextElementSibling).toHaveTextContent('1');
     expect(within(totals).getByText('Gezogene Zahlen').nextElementSibling).toHaveTextContent('5');
     const list = rounds();
-    expect(within(list).getByRole('heading', { name: 'Runde 1' })).toBeInTheDocument();
+    expect(within(list).getByRole('heading', { name: 'Gang 1' })).toBeInTheDocument();
     expect(within(list).getByText('läuft')).toBeInTheDocument();
     expect(within(list).getByText('Karte 17')).toBeInTheDocument();
     expect(within(list).getByText(/Anna Muster/)).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe('ResultsPage', () => {
     renderWithServices(<ResultsPage />, services);
     fireEvent.click(within(rounds()).getByRole('button', { name: 'Preis 1 korrigieren' }));
     const dialog = screen.getByRole('dialog', {
-      name: 'Gewinnkarte korrigieren: Runde 1, Preis 1',
+      name: 'Gewinnkarte korrigieren: Gang 1, Preis 1',
     });
     fireEvent.input(within(dialog).getByLabelText('Kartennummer'), { target: { value: ' 18 ' } });
     fireEvent.input(within(dialog).getByLabelText('Name (optional)'), {
@@ -120,7 +120,7 @@ describe('ResultsPage', () => {
     const bytes = new Uint8Array(await asBlob(csvBlob).arrayBuffer());
     expect([...bytes.slice(0, 3)]).toEqual([0xef, 0xbb, 0xbf]);
     const csv = await blobText(csvBlob);
-    expect(csv.startsWith('Runde;Preis;Titel;Gewinnregel;Wert CHF')).toBe(true);
+    expect(csv.startsWith('Gang;Preis;Titel;Gewinnregel;Wert CHF')).toBe(true);
     expect(csv).toContain('1;Preis 1;;1 Reihe;;;17;Anna Muster;;5;');
     expect(csv.endsWith('\r\n')).toBe(true);
     fireEvent.click(screen.getByRole('button', { name: 'Auswertung als JSON' }));
@@ -140,7 +140,7 @@ describe('ResultsPage', () => {
     renderWithServices(<ResultsPage />, services);
     fireEvent.click(screen.getByRole('button', { name: 'Gewinnerliste drucken' }));
     expect(print).toHaveBeenCalledTimes(1);
-    fireEvent.click(within(rounds()).getByRole('button', { name: 'Runde 1 drucken' }));
+    fireEvent.click(within(rounds()).getByRole('button', { name: 'Gang 1 drucken' }));
     expect(print).toHaveBeenCalledTimes(2);
     fireEvent(window, new Event('beforeprint'));
     fireEvent(window, new Event('afterprint'));
@@ -150,9 +150,9 @@ describe('ResultsPage', () => {
   it('shows every round on request', async () => {
     const services = await playedHost();
     renderWithServices(<ResultsPage />, services);
-    expect(within(rounds()).queryByRole('heading', { name: 'Runde 24' })).not.toBeInTheDocument();
+    expect(within(rounds()).queryByRole('heading', { name: 'Gang 24' })).not.toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('Anzeigen'), { target: { value: 'ALL' } });
-    expect(within(rounds()).getByRole('heading', { name: 'Runde 24' })).toBeInTheDocument();
+    expect(within(rounds()).getByRole('heading', { name: 'Gang 24' })).toBeInTheDocument();
     expect(within(rounds()).getAllByText('ausstehend').length).toBeGreaterThan(20);
   });
 

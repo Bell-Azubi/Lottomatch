@@ -10,7 +10,7 @@ import { cardsText, describeAudit } from './audit-text';
 
 const rules = { maxNumber: 75, perLine: 5, lines: 3, boardReset: 'ROUND' } as const;
 const EXTRA: readonly LogEvent[] = [
-  { type: 'ROUND_STARTED', round: 3, rules, reason: 'Runde 2 später' },
+  { type: 'ROUND_STARTED', round: 3, rules, reason: 'Gang 2 später' },
   { type: 'NUMBER_DRAWN', round: 3, draw: { seq: 1, number: 50, method: 'RANDOM' } },
   { type: 'CLAIM_REJECTED', round: 3, slot: 1, claimed: [50, 1, 2], missing: [], lateSinceSeq: 1 },
   { type: 'WINNER_CORRECTED', round: 3, slot: 1, winners: [{}], reason: '' },
@@ -28,29 +28,29 @@ function sentences(locale: 'de' | 'en'): string[] {
 describe('describeAudit', () => {
   it('renders one de-CH sentence per event type', () => {
     const text = sentences('de');
-    expect(text).toContain('Runde 1 gestartet (Zahlen 1–90)');
+    expect(text).toContain('Gang 1 gestartet (Zahlen 1–90)');
     expect(text).toContain('5 eingetragen (Ziehung 1)');
-    expect(text).toContain('Fehlmeldung, Runde 1, Preis 1: es fehlen 1, 2');
-    expect(text).toContain('Gewinn bestätigt, Runde 1, Preis 1: Karte 17');
-    expect(text).toContain('Preis übersprungen, Runde 1, Preis 2: Kein Preis vorhanden');
+    expect(text).toContain('Fehlmeldung, Gang 1, Preis 1: es fehlen 1, 2');
+    expect(text).toContain('Gewinn bestätigt, Gang 1, Preis 1: Karte 17');
+    expect(text).toContain('Preis übersprungen, Gang 1, Preis 2: Kein Preis vorhanden');
     expect(text).toContain('Ziehung 7 (Zahl 77) rückgängig gemacht');
-    expect(text).toContain('Gewinn nach Stechen bestätigt, Runde 1, Preis 3: Karte 30');
-    expect(text).toContain('Gewinn widerrufen, Runde 1, Preis 3 (Karte 30): Karte falsch gelesen');
-    expect(text).toContain('Gewinn bestätigt, Runde 1, Preis 4: Karte 1, Karte 2');
-    expect(text).toContain('Preis abgeholt, Runde 1, Preis 1');
-    expect(text).toContain('Gewinnkarte korrigiert, Runde 1, Preis 1: Karte 18 (Tippfehler)');
-    expect(text).toContain('Runde 2 abgebrochen: Stromausfall');
+    expect(text).toContain('Gewinn nach Stechen bestätigt, Gang 1, Preis 3: Karte 30');
+    expect(text).toContain('Gewinn widerrufen, Gang 1, Preis 3 (Karte 30): Karte falsch gelesen');
+    expect(text).toContain('Gewinn bestätigt, Gang 1, Preis 4: Karte 1, Karte 2');
+    expect(text).toContain('Preis abgeholt, Gang 1, Preis 1');
+    expect(text).toContain('Gewinnkarte korrigiert, Gang 1, Preis 1: Karte 18 (Tippfehler)');
+    expect(text).toContain('Gang 2 abgebrochen: Stromausfall');
     expect(text).toContain('Einstellungen geändert: venue von «» auf «Turnhalle»');
-    expect(text).toContain('Preise geändert: Runde kopiert (Runden 3, 4)');
+    expect(text).toContain('Preise geändert: Gang kopiert (Gänge 3, 4)');
     expect(text).toContain('PIN zurückgesetzt');
     expect(text).toContain('Namen gelöscht (1 Gewinnkarte)');
     expect(text).toContain('Steuerung von einem anderen Fenster übernommen');
-    expect(text).toContain('Zu Runde 3 gesprungen: Runde 2 später');
+    expect(text).toContain('Zu Gang 3 gesprungen: Gang 2 später');
     expect(text).toContain('50 gezogen (Ziehung 1)');
-    expect(text).toContain('Verspätete Meldung abgelehnt, Runde 3, Preis 1: gültig seit Ziehung 1');
-    expect(text).toContain('Gewinnkarte korrigiert, Runde 3, Preis 1: ohne Kartennummer');
-    expect(text).toContain('Gewinn widerrufen, Runde 3, Preis 2: Fehler');
-    expect(text).toContain('Abholung zurückgesetzt, Runde 3, Preis 1');
+    expect(text).toContain('Verspätete Meldung abgelehnt, Gang 3, Preis 1: gültig seit Ziehung 1');
+    expect(text).toContain('Gewinnkarte korrigiert, Gang 3, Preis 1: ohne Kartennummer');
+    expect(text).toContain('Gewinn widerrufen, Gang 3, Preis 2: Fehler');
+    expect(text).toContain('Abholung zurückgesetzt, Gang 3, Preis 1');
     expect(text).toContain('Preise geändert: Bild ersetzt');
     expect(text).toContain('Anlass abgeschlossen');
   });

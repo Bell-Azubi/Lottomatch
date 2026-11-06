@@ -101,7 +101,7 @@ export const EVENING: readonly LogEvent[] = [
   draw(2, 1, 9),
   { type: 'ROUND_ABORTED', round: 2, reason: 'Stromausfall' },
   { type: 'SETTINGS_CHANGED', changes: [{ field: 'venue', from: '', to: 'Turnhalle' }] },
-  { type: 'PRIZES_CHANGED', action: 'Runde kopiert', rounds: [3, 4] },
+  { type: 'PRIZES_CHANGED', action: 'Gang kopiert', rounds: [3, 4] },
   { type: 'PIN_RESET' },
   { type: 'PERSONAL_DATA_ERASED', winners: 1 },
   { type: 'CONTROL_TAKEN_OVER' },
