@@ -1,6 +1,7 @@
 import type { SettingsField } from '../../../domain/settings';
-import type { PrizeSlot, WinConditionKind } from '../../../domain/types';
+import type { PrizeSlot } from '../../../domain/types';
 import { PRIZE_SLOTS } from '../../../domain/types';
+import { conditionChoices } from '../../../domain/win-condition';
 import { commonText } from '../../../i18n/catalogues';
 import { t } from '../../../i18n';
 import { SelectField, TextField } from '../../design-system/Field';
@@ -17,8 +18,6 @@ export interface DraftFieldsProps {
   readonly locked: boolean;
   readonly minRounds: number;
 }
-
-const KINDS: readonly WinConditionKind[] = ['ONE_LINE', 'TWO_LINES', 'FULL_CARD', 'CUSTOM'];
 
 /** Rounds, highest number and the win-condition template. */
 export function GameFields({
@@ -77,7 +76,10 @@ export function GameFields({
                 <SelectField
                   label={m.form.slotRule(slotName)}
                   value={condition.kind}
-                  options={KINDS.map((kind) => ({ value: kind, label: c.conditions[kind] }))}
+                  options={conditionChoices(condition.kind).map((kind) => ({
+                    value: kind,
+                    label: c.conditions[kind],
+                  }))}
                   onValue={(kind) => {
                     setCondition(slot, { kind });
                   }}

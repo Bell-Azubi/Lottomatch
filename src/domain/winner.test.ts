@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { sameCondition, textLength, validateWinCondition } from './win-condition';
+import { conditionChoices, sameCondition, textLength, validateWinCondition } from './win-condition';
 import { hasPersonalData, normaliseWinner, redactWinner } from './winner';
 
 describe('winners', () => {
@@ -25,6 +25,12 @@ describe('winners', () => {
 });
 
 describe('win conditions', () => {
+  it('offers 2 Reihen only where it is already stored (ADR-0026)', () => {
+    expect(conditionChoices('ONE_LINE')).toEqual(['ONE_LINE', 'FULL_CARD', 'CUSTOM']);
+    expect(conditionChoices('CUSTOM')).toEqual(['ONE_LINE', 'FULL_CARD', 'CUSTOM']);
+    expect(conditionChoices('TWO_LINES')).toEqual(['ONE_LINE', 'FULL_CARD', 'CUSTOM', 'TWO_LINES']);
+  });
+
   it('compares and validates conditions', () => {
     expect(sameCondition({ kind: 'ONE_LINE' }, { kind: 'ONE_LINE' })).toBe(true);
     expect(sameCondition({ kind: 'ONE_LINE' }, { kind: 'FULL_CARD' })).toBe(false);

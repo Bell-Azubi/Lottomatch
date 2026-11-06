@@ -61,10 +61,7 @@ describe('cell parsing', () => {
 
   it('parses known win conditions and keeps other text as a custom rule', () => {
     expect(parseCondition('1 Reihe')).toEqual({ kind: 'ONE_LINE' });
-    expect(parseCondition('2 Reihen')).toEqual({ kind: 'TWO_LINES' });
     expect(parseCondition('1 Linie')).toEqual({ kind: 'ONE_LINE' });
-    expect(parseCondition('2 Linien')).toEqual({ kind: 'TWO_LINES' });
-    expect(parseCondition('Two lines')).toEqual({ kind: 'TWO_LINES' });
     expect(parseCondition('Volle Karte')).toEqual({ kind: 'FULL_CARD' });
     expect(parseCondition('  Vier   Ecken ')).toEqual({ kind: 'CUSTOM', label: 'Vier Ecken' });
     expect(parseCondition('')).toBeUndefined();
@@ -151,6 +148,25 @@ describe('buildPreview', () => {
     const missing = buildPreview([row(2, ['1'])], ['Runde'], options);
     expect(missing.mapping.missing).toEqual(['slot', 'title']);
     expect(missing.rows).toEqual([]);
+  });
+});
+
+describe('the removed win condition 2 Reihen (ADR-0026)', () => {
+  it.each(['2 Reihen', 'zwei Reihen', '2 rows', '2 Linien', 'Two lines'])(
+    'recognises %j',
+    (raw) => {
+      expect(parseCondition(raw)).toBe('REMOVED');
+    },
+  );
+
+  it('reports the row instead of importing another rule', () => {
+    const preview = buildPreview(
+      [{ line: 2, cells: { Runde: '1', Preis: '3', Titel: 'Wein', Gewinnregel: '2 Reihen' } }],
+      ['Runde', 'Preis', 'Titel', 'Gewinnregel'],
+      options,
+    );
+    expect(preview.rows).toEqual([]);
+    expect(preview.errors).toEqual([{ line: 2, code: 'CONDITION_REMOVED' }]);
   });
 });
 

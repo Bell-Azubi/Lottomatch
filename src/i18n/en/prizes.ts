@@ -132,6 +132,8 @@ export const prizes: PrizesMessages = {
       SPONSOR_TOO_LONG: 'The sponsor is longer than 60 characters.',
       VALUE_INVALID: 'The value is not a valid CHF amount.',
       CONDITION_INVALID: 'The win condition is longer than 60 characters.',
+      CONDITION_REMOVED:
+        'The win condition «2 rows» is no longer available. Please enter «1 row», «Full card» or a custom rule.',
       DUPLICATE: 'This round and prize appear more than once.',
       AWARDED: 'This prize has already been awarded.',
     },

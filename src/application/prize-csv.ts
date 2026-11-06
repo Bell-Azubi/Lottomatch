@@ -104,28 +104,27 @@ const CONDITIONS: readonly [WinCondition, readonly string[]][] = [
       'line',
     ],
   ],
-  [
-    { kind: 'TWO_LINES' },
-    [
-      '2 reihen',
-      'zwei reihen',
-      '2 rows',
-      'two rows',
-      // Earlier wording, still in existing Excel files.
-      '2 linien',
-      'zwei linien',
-      '2 lines',
-      'two lines',
-    ],
-  ],
   [{ kind: 'FULL_CARD' }, ['volle karte', 'voll', 'full card', 'full house', 'karte voll']],
 ];
 
+/** Names of the rule that is no longer offered (ADR-0026), also in the earlier wording. */
+const REMOVED_CONDITION: readonly string[] = [
+  '2 reihen',
+  'zwei reihen',
+  '2 rows',
+  'two rows',
+  '2 linien',
+  'zwei linien',
+  '2 lines',
+  'two lines',
+];
+
 /** Known rule names map to their kind; any other text becomes an Eigene Regel label. */
-export function parseCondition(raw: string): WinCondition | 'TOO_LONG' | undefined {
+export function parseCondition(raw: string): WinCondition | 'TOO_LONG' | 'REMOVED' | undefined {
   const label = cleanText(raw);
   if (label === '') return undefined;
   const key = label.toLowerCase();
+  if (REMOVED_CONDITION.includes(key)) return 'REMOVED';
   const known = CONDITIONS.find(([, names]) => names.includes(key));
   if (known !== undefined) return known[0];
   return textLength(label) > LIMITS.customRule ? 'TOO_LONG' : { kind: 'CUSTOM', label };
@@ -141,6 +140,7 @@ export type RowErrorCode =
   | 'SPONSOR_TOO_LONG'
   | 'VALUE_INVALID'
   | 'CONDITION_INVALID'
+  | 'CONDITION_REMOVED'
   | 'DUPLICATE'
   | 'AWARDED';
 
@@ -199,6 +199,7 @@ function parseRow(
   if (!value.ok) return 'VALUE_INVALID';
   const condition = parseCondition(cell(row, mapping, 'condition'));
   if (condition === 'TOO_LONG') return 'CONDITION_INVALID';
+  if (condition === 'REMOVED') return 'CONDITION_REMOVED';
   const draft: PrizeDraft = {
     title: cell(row, mapping, 'title'),
     description: cell(row, mapping, 'description'),

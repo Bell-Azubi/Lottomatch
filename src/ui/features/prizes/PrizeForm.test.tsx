@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/preact';
+import { fireEvent, render, screen, within } from '@testing-library/preact';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { PrizeEditor } from '../../../application/prize-editor';
 import { prizeAt } from '../../../domain/catalogue';
@@ -55,6 +55,20 @@ beforeEach(() => {
 });
 
 describe('PrizeForm', () => {
+  it('offers 2 Reihen only for a prize that already has it (ADR-0026)', async () => {
+    const host = await createTestHost();
+    const choices = () =>
+      within(screen.getByLabelText(m.form.condition))
+        .getAllByRole('option')
+        .map((option) => option.textContent);
+    const current = view(host, { ...PRIZE, winCondition: { kind: 'ONE_LINE' } });
+    expect(choices()).toEqual(['1 Reihe', 'Volle Karte', 'Eigene Regel']);
+    current.unmount();
+    view(host, PRIZE);
+    expect(screen.getByLabelText(m.form.condition)).toHaveValue('TWO_LINES');
+    expect(choices()).toContain('2 Reihen');
+  });
+
   it('edits description and sponsor and saves them', async () => {
     const host = await createTestHost();
     view(host, undefined);

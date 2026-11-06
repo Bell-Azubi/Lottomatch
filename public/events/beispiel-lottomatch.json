@@ -19,7 +19,7 @@
           "kind": "ONE_LINE"
         },
         "3": {
-          "kind": "TWO_LINES"
+          "kind": "ONE_LINE"
         },
         "4": {
           "kind": "FULL_CARD"
@@ -79,7 +79,7 @@
       "valueChf": 100,
       "sponsor": "Gasthaus Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -123,7 +123,7 @@
       "valueChf": 120,
       "sponsor": "Käserei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -167,7 +167,7 @@
       "valueChf": 140,
       "sponsor": "Druckerei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -211,7 +211,7 @@
       "valueChf": 160,
       "sponsor": "Garage Muster AG",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -255,7 +255,7 @@
       "valueChf": 80,
       "sponsor": "Bäckerei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -299,7 +299,7 @@
       "valueChf": 100,
       "sponsor": "Metzgerei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -343,7 +343,7 @@
       "valueChf": 120,
       "sponsor": "Weinbau Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -387,7 +387,7 @@
       "valueChf": 140,
       "sponsor": "Blumen Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -431,7 +431,7 @@
       "valueChf": 160,
       "sponsor": "Sport Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -475,7 +475,7 @@
       "valueChf": 80,
       "sponsor": "Elektro Muster AG",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -519,7 +519,7 @@
       "valueChf": 100,
       "sponsor": "Gasthaus Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -563,7 +563,7 @@
       "valueChf": 120,
       "sponsor": "Käserei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -607,7 +607,7 @@
       "valueChf": 140,
       "sponsor": "Druckerei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -651,7 +651,7 @@
       "valueChf": 160,
       "sponsor": "Garage Muster AG",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -695,7 +695,7 @@
       "valueChf": 80,
       "sponsor": "Bäckerei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -739,7 +739,7 @@
       "valueChf": 100,
       "sponsor": "Metzgerei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -783,7 +783,7 @@
       "valueChf": 120,
       "sponsor": "Weinbau Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -827,7 +827,7 @@
       "valueChf": 140,
       "sponsor": "Blumen Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -871,7 +871,7 @@
       "valueChf": 160,
       "sponsor": "Sport Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -915,7 +915,7 @@
       "valueChf": 80,
       "sponsor": "Elektro Muster AG",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -959,7 +959,7 @@
       "valueChf": 100,
       "sponsor": "Gasthaus Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -1003,7 +1003,7 @@
       "valueChf": 120,
       "sponsor": "Käserei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -1047,7 +1047,7 @@
       "valueChf": 140,
       "sponsor": "Druckerei Muster",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {
@@ -1091,7 +1091,7 @@
       "valueChf": 160,
       "sponsor": "Garage Muster AG",
       "winCondition": {
-        "kind": "TWO_LINES"
+        "kind": "ONE_LINE"
       }
     },
     {

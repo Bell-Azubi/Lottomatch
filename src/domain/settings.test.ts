@@ -25,7 +25,7 @@ describe('defaults', () => {
       boardReset: 'ROUND',
     });
     expect(base.template[1]).toEqual({ kind: 'ONE_LINE' });
-    expect(base.template[3]).toEqual({ kind: 'TWO_LINES' });
+    expect(base.template[3]).toEqual({ kind: 'ONE_LINE' });
     expect(base.template[4]).toEqual({ kind: 'FULL_CARD' });
     expect(base.lateClaimPolicy).toBe('HOST_DECIDES');
     expect(base.tiePolicy).toBe('TIEBREAK');

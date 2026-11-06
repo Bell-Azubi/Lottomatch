@@ -1,5 +1,17 @@
 import { cleanText, LIMITS } from './limits';
-import type { WinCondition } from './types';
+import type { WinCondition, WinConditionKind } from './types';
+
+const CHOOSABLE_CONDITIONS: readonly WinConditionKind[] = ['ONE_LINE', 'FULL_CARD', 'CUSTOM'];
+
+/**
+ * Win conditions a form offers. `TWO_LINES` can no longer be chosen (ADR-0026); a stored prize or
+ * template that still has it keeps showing it until it is changed.
+ */
+export function conditionChoices(current: WinConditionKind): readonly WinConditionKind[] {
+  return CHOOSABLE_CONDITIONS.includes(current)
+    ? CHOOSABLE_CONDITIONS
+    : [...CHOOSABLE_CONDITIONS, current];
+}
 
 /** Length in Unicode code points, so emoji and umlauts count as one character each. */
 export function textLength(value: string): number {

@@ -137,6 +137,8 @@ export const prizes = {
       SPONSOR_TOO_LONG: 'Der Sponsor ist länger als 60 Zeichen.',
       VALUE_INVALID: 'Der Wert ist kein gültiger CHF-Betrag.',
       CONDITION_INVALID: 'Die Gewinnregel ist länger als 60 Zeichen.',
+      CONDITION_REMOVED:
+        'Die Gewinnregel «2 Reihen» gibt es nicht mehr. Bitte «1 Reihe», «Volle Karte» oder eine eigene Regel eintragen.',
       DUPLICATE: 'Diese Runde und dieser Preis kommen mehrfach vor.',
       AWARDED: 'Dieser Preis ist bereits vergeben.',
     },

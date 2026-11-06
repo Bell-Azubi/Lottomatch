@@ -7,7 +7,7 @@ export const PRIZE_SLOTS: readonly PrizeSlot[] = [1, 2, 3, 4];
 /** The Hauptpreis slot. */
 export const MAIN_PRIZE_SLOT: PrizeSlot = 4;
 
-/** What a card must show to win a prize. */
+/** What a card must show to win a prize. `TWO_LINES` stays for stored data only (ADR-0026). */
 export type WinCondition =
   | { readonly kind: 'ONE_LINE' }
   | { readonly kind: 'TWO_LINES' }

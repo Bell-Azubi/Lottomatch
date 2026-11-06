@@ -40,7 +40,7 @@ export interface MatchSettings {
 export const DEFAULT_TEMPLATE: ConditionTemplate = {
   1: { kind: 'ONE_LINE' },
   2: { kind: 'ONE_LINE' },
-  3: { kind: 'TWO_LINES' },
+  3: { kind: 'ONE_LINE' },
   4: { kind: 'FULL_CARD' },
 };
 

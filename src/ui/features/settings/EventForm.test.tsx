@@ -88,6 +88,34 @@ describe('Anlass form', () => {
     expect(settingsOf(test).name).toBe('Lottomatch');
   });
 
+  it('offers 2 Reihen in the template only while the event still holds it (ADR-0026)', async () => {
+    const test = await createTestHost();
+    const choices = () =>
+      within(screen.getByLabelText('Gewinnregel Preis 3'))
+        .getAllByRole('option')
+        .map((option) => option.textContent);
+    const first = renderWithServices(<EventForm canEdit />, test);
+    expect(screen.getByLabelText('Gewinnregel Preis 3')).toHaveValue('ONE_LINE');
+    expect(choices()).toEqual(['1 Reihe', 'Volle Karte', 'Eigene Regel']);
+    first.unmount();
+    const session = test.app.session.value;
+    if (session === undefined) throw new Error('no session');
+    const settings = settingsOf(test);
+    session.updateSettings(
+      { ...settings, template: { ...settings.template, 3: { kind: 'TWO_LINES' } } },
+      [],
+    );
+    renderWithServices(<EventForm canEdit />, test);
+    expect(screen.getByLabelText('Gewinnregel Preis 3')).toHaveValue('TWO_LINES');
+    expect(choices()).toContain('2 Reihen');
+    fireEvent.change(screen.getByLabelText('Gewinnregel Preis 3'), {
+      target: { value: 'ONE_LINE' },
+    });
+    save();
+    expect(settingsOf(test).template[3]).toEqual({ kind: 'ONE_LINE' });
+    expect(choices()).not.toContain('2 Reihen');
+  });
+
   it('edits custom win rules in the template', async () => {
     const test = await createTestHost();
     renderWithServices(<EventForm canEdit />, test);

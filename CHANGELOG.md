@@ -24,6 +24,8 @@ All notable changes to this project are documented in this file. The format foll
 
 ### Removed
 
+- The win condition 2 Reihen can no longer be chosen. New events use 1 Reihe for prize 3, a CSV row
+  with 2 Reihen is reported as an error, and stored events keep it until it is changed (ADR-0026).
 - Number check, Fehlmeldung and late-claim detection in Gewinn prüfen, and the settings that only
   they used (Verspätete Meldungen, card layout). Stored events and backups stay valid and keep their
   recorded false claims and late claims.
