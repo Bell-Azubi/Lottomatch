@@ -5,8 +5,8 @@ import type { AppStore } from './app-store';
 import { nextRoundPreview, type ActivePrizeView } from './selectors';
 import type { DisplayOverlay } from './sync-messages';
 
-/** How long the Gewinn overlay stays before the display returns to the board. */
-export const WIN_OVERLAY_MS = 12_000;
+/** How long the Gewinn overlay stays at most; the next draw ends it earlier. */
+export const WIN_OVERLAY_MS = 60_000;
 
 /** Display overlays triggered from the host console (FR-10). */
 export class OverlayController {

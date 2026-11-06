@@ -113,6 +113,43 @@ describe('HostController prizes and overlays', () => {
     expect(t.host.overlays.state.value).toBeUndefined();
   });
 
+  it('keeps the Gewinn overlay for 60 s unless the next draw ends it', () => {
+    t.host.startRound();
+    t.host.drawManual(1);
+    t.host.award({ winners: [{ cardNo: '1' }] });
+    vi.advanceTimersByTime(59_999);
+    expect(t.host.overlays.state.value?.kind).toBe('WIN');
+    vi.advanceTimersByTime(1);
+    expect(t.host.overlays.state.value).toBeUndefined();
+    t.host.drawManual(2);
+    t.host.award({ winners: [{ cardNo: '2' }] });
+    expect(t.host.overlays.state.value?.kind).toBe('WIN');
+    t.host.drawManual(3);
+    expect(t.host.overlays.state.value).toBeUndefined();
+  });
+
+  it('ends the Gewinn overlay when the host skips the next prize or aborts the round', () => {
+    t.host.startRound();
+    t.host.drawManual(1);
+    t.host.award({ winners: [{ cardNo: '1' }] });
+    expect(t.host.skipPrize('Preis fehlt').ok).toBe(true);
+    expect(t.host.overlays.state.value).toBeUndefined();
+    t.host.drawManual(2);
+    t.host.award({ winners: [{ cardNo: '2' }] });
+    expect(t.host.abortRound('Stromausfall').ok).toBe(true);
+    expect(t.host.overlays.state.value).toBeUndefined();
+  });
+
+  it('shows the round end at once when the last prize is skipped after a win', () => {
+    t.host.startRound();
+    for (let slot = 1; slot <= 3; slot += 1) {
+      t.host.drawManual(slot);
+      t.host.award({ winners: [{ cardNo: String(slot) }] });
+    }
+    expect(t.host.skipPrize('Preis fehlt').ok).toBe(true);
+    expect(t.host.overlays.state.value?.kind).toBe('ROUND_END');
+  });
+
   it('shows names on the display only when the event allows it', () => {
     const session = t.app.session.value;
     if (session === undefined) throw new Error('no session');

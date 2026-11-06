@@ -64,7 +64,9 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
    folgt je nach Einstellung das Stechen («Stechen ziehen»: eine Zahl pro Karte, die höchste oder
    tiefste gewinnt; bei Gleichstand ziehen nur die gleichstehenden Karten nochmals) oder
    «Preis teilen».
-6. **Rundenende.** Nach dem Hauptpreis zeigt die Konsole eine Zusammenfassung und die nächste
+6. **Gewinnanzeige.** Nach jedem bestätigten Gewinn zeigt die Anzeige den Gewinn 60 Sekunden lang.
+   Die nächste gezogene Zahl beendet die Gewinnanzeige sofort.
+7. **Rundenende.** Nach dem Hauptpreis zeigt die Konsole eine Zusammenfassung und die nächste
    Runde, die Anzeige die vier Preise der nächsten Runde. Weiter mit «Runde starten».
 
 ## Verspätete Meldungen

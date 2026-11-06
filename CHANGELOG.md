@@ -13,6 +13,11 @@ All notable changes to this project are documented in this file. The format foll
   FC Laufenburg-Kaisten Senioren, club badge, the event's date and venue. A round start replaces it
   with the board.
 
+### Changed
+
+- The Gewinn overlay on the display stays for 60 seconds instead of 12. The next draw still ends it
+  at once, and so does skipping a prize or aborting the round.
+
 ## [1.0.0] - 2026-11-05
 
 First release of Lottomatch Live for the FC Laufenburg-Kaisten Lottomatch.

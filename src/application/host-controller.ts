@@ -144,14 +144,17 @@ export class HostController {
   /** Host override: abort the running round with a reason. */
   abortRound(reason: string): ActionResult {
     const result = this.run((state) => commands.abortRound(state, reason));
-    if (result.ok) this.reveal.clear();
-    return result.ok ? ok(undefined) : result;
+    if (!result.ok) return result;
+    this.reveal.clear();
+    this.overlays.hideTransient();
+    return ok(undefined);
   }
 
   /** Host override: skip the active prize with a reason. */
   skipPrize(reason: string): ActionResult {
     const result = this.run((state) => commands.skipPrize(state, reason));
     if (!result.ok) return result;
+    this.overlays.hideTransient();
     this.afterResolution();
     return ok(undefined);
   }
