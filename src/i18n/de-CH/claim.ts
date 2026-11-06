@@ -1,35 +1,9 @@
-/** de-CH copy for Gewinn prüfen, Fehlmeldung, Stechen and Gewinn bestätigen (FR-6, FR-7). */
+/** de-CH copy for Gewinn bestätigen and Stechen (FR-6, FR-7). */
 export const claim = {
-  title: 'Gewinn prüfen',
   drawLocked: 'Ziehen ist gesperrt, solange dieser Dialog offen ist.',
-  expected: (count: number): string => `${count} Zahlen erwartet`,
-  free: 'Eigene Regel: beliebig viele Zahlen',
-  numberLabel: 'Zahl auf der Karte',
-  add: 'Hinzufügen',
-  chipsLabel: 'Gemeldete Zahlen',
-  chipDrawn: (n: number): string => `${n}, gezogen`,
-  chipMissing: (n: number): string => `${n}, fehlt`,
-  removeChip: (n: number): string => `${n} entfernen`,
-  duplicate: (n: number): string => `${n} ist schon erfasst.`,
-  outOfRange: (max: number): string => `Nur Zahlen von 1 bis ${max}.`,
-  notANumber: 'Nur Ziffern 0–9 erlaubt.',
-  count: (have: number, expected: number | undefined): string =>
-    expected === undefined ? `${have} Zahlen erfasst` : `${have} von ${expected} Zahlen erfasst`,
-  valid: 'Gültig',
-  validSince: (seq: number, n: number, current: number): string =>
-    `gültig seit Ziehung ${seq} (Zahl ${n}), aktuell Ziehung ${current}`,
-  late: 'Verspätete Meldung',
-  lateAllow: 'Zulassen',
-  lateReject: 'Ablehnen',
-  latePolicyRejects: 'Verspätete Meldungen werden abgelehnt (Einstellung).',
-  invalid: 'Fehlmeldung',
-  missingList: (list: string): string => `Fehlende Zahlen: ${list}`,
-  wrongCount: (have: number, expected: number): string =>
-    `Erst ${have} von ${expected} Zahlen erfasst.`,
-  recordFalse: 'Fehlmeldung erfassen',
   claimants: 'Karten',
   claimant: (index: number): string => `Karte ${index}`,
-  addClaimant: 'Weitere Karte prüfen',
+  addClaimant: 'Weitere Karte',
   removeClaimant: 'Karte entfernen',
   cardNo: 'Kartennummer (optional)',
   name: 'Name (optional)',
@@ -51,8 +25,6 @@ export const claim = {
   },
   confirm: 'Gewinn bestätigen',
   confirmed: 'Gewinn bestätigt',
-  confirmWithoutCheck: 'Ohne Prüfung bestätigen',
-  backToCheck: 'Zurück zur Prüfung',
   detailsTitle: 'Gewinnkarte',
 };
 

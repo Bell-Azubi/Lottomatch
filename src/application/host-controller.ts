@@ -177,16 +177,6 @@ export class HostController {
     return ok(undefined);
   }
 
-  /** Fehlmeldung or rejected late claim; play continues. */
-  rejectClaim(
-    claimed: readonly number[],
-    missing: readonly number[],
-    lateSinceSeq?: number,
-  ): ActionResult {
-    const result = this.run((state) => commands.rejectClaim(state, claimed, missing, lateSinceSeq));
-    return result.ok ? ok(undefined) : result;
-  }
-
   /** Revokes the latest award of the current round (FR-4). */
   revokeAward(reason: string): ActionResult {
     const result = this.run((state) => commands.revokeLatestAward(state, reason));

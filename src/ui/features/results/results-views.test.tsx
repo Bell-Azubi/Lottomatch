@@ -103,6 +103,16 @@ describe('round notes and anonymous Stechen', () => {
   });
 });
 
+describe('TotalsPanel', () => {
+  it('lists false claims only for events from before ADR-0025 that hold them', () => {
+    const { unmount } = render(<TotalsPanel totals={results.totals} />);
+    expect(screen.getByText('Fehlmeldungen')).toBeInTheDocument();
+    unmount();
+    render(<TotalsPanel totals={{ ...results.totals, falseClaims: 0 }} />);
+    expect(screen.queryByText('Fehlmeldungen')).not.toBeInTheDocument();
+  });
+});
+
 describe('English', () => {
   it('renders totals, rounds, the print list and the audit log in English', () => {
     locale.value = 'en';

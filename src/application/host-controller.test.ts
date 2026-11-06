@@ -160,10 +160,9 @@ describe('HostController prizes and overlays', () => {
     expect(overlay?.kind === 'WIN' && overlay.winners).toEqual([{ cardNo: '7', name: 'Anna' }]);
   });
 
-  it('records false claims, skips, revokes and completes', () => {
+  it('skips, revokes and completes', () => {
     t.host.startRound();
     t.host.drawManual(5);
-    expect(t.host.rejectClaim([5, 6], [6]).ok).toBe(true);
     expect(t.host.award({ winners: [{}] }).ok).toBe(true);
     expect(t.host.revokeAward('Karte falsch').ok).toBe(true);
     expect(t.host.skipPrize('').ok).toBe(false);

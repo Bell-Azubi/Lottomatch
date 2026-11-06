@@ -111,7 +111,7 @@ describe('HostPage', () => {
     fireEvent.click(within(pause).getByRole('button', { name: 'Pause anzeigen' }));
     expect(t.host.overlays.state.value).toMatchObject({ kind: 'PAUSE', resumeAt: '21:45' });
     key('g');
-    expect(await screen.findByRole('dialog', { name: /Gewinn prüfen/ })).toBeInTheDocument();
+    expect(await screen.findByRole('dialog', { name: /Gewinn bestätigen/ })).toBeInTheDocument();
     key(' ');
     expect(drawnCount()).toBe(0);
   });

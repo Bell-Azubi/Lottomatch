@@ -60,10 +60,6 @@ export const settings: SettingsMessages = {
     roundsHint: (min) => (min > 1 ? `1 to 50, at least ${min} (already started)` : '1 to 50'),
     maxNumber: 'Highest number (N)',
     maxNumberHint: '30 to 99; the board shows the numbers 1 to N',
-    card: 'Cards',
-    perLine: 'Numbers per line',
-    lines: 'Lines per card',
-    cardHint: (count) => `A full card has ${count} numbers.`,
     locked: 'Locked while a round is running.',
     template: 'Win rules (template)',
     templateHint:
@@ -71,12 +67,6 @@ export const settings: SettingsMessages = {
     slotRule: (slot) => `Win rule ${slot}`,
     customLabel: (slot) => `Custom rule for ${slot}`,
     rules: 'Rules',
-    lateClaim: 'Late claims',
-    lateClaimOptions: {
-      ALLOW: 'Admit',
-      REJECT: 'Reject',
-      HOST_DECIDES: 'Caller decides',
-    },
     tiePolicy: 'Several winning cards',
     tiePolicyOptions: { TIEBREAK: 'Tie-break', SHARE: 'Share' },
     tiebreakOrder: 'Tie-break',

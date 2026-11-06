@@ -26,3 +26,4 @@
 | [0022](0022-numeral-fonts-without-link-preload.md)             | Numeral fonts without a link preload                          |
 | [0023](0023-engine-limits-of-the-e2e-suite.md)                 | Engine limits of the E2E suite                                |
 | [0024](0024-firefox-and-webkit-e2e-in-the-playwright-image.md) | Firefox and WebKit E2E in the official Playwright image       |
+| [0025](0025-no-number-check-in-the-claim-dialog.md)            | No number check in the claim dialog                           |

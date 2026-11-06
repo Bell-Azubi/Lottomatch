@@ -91,7 +91,6 @@ test.describe('keyboard (FR-12)', () => {
       await expect(dialog).toBeVisible();
       await page.keyboard.press(' ');
       await expect(page.getByText(`${slot} von 90 gezogen`)).toBeVisible();
-      await dialog.getByRole('button', { name: 'Ohne Prüfung bestätigen' }).press('Enter');
       await dialog.getByRole('button', { name: 'Gewinn bestätigen' }).press('Enter');
       await expect(dialog).toBeHidden();
     }

@@ -1,10 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  expectedClaimSize,
-  sameCondition,
-  textLength,
-  validateWinCondition,
-} from './win-condition';
+import { sameCondition, textLength, validateWinCondition } from './win-condition';
 import { hasPersonalData, normaliseWinner, redactWinner } from './winner';
 
 describe('winners', () => {
@@ -30,16 +25,6 @@ describe('winners', () => {
 });
 
 describe('win conditions', () => {
-  const layout = { perLine: 5, lines: 3 };
-
-  it('derives the expected claim size from the card layout', () => {
-    expect(expectedClaimSize({ kind: 'ONE_LINE' }, layout)).toBe(5);
-    expect(expectedClaimSize({ kind: 'TWO_LINES' }, layout)).toBe(10);
-    expect(expectedClaimSize({ kind: 'FULL_CARD' }, layout)).toBe(15);
-    expect(expectedClaimSize({ kind: 'CUSTOM', label: 'Ecken' }, layout)).toBeUndefined();
-    expect(expectedClaimSize({ kind: 'FULL_CARD' }, { perLine: 9, lines: 2 })).toBe(18);
-  });
-
   it('compares and validates conditions', () => {
     expect(sameCondition({ kind: 'ONE_LINE' }, { kind: 'ONE_LINE' })).toBe(true);
     expect(sameCondition({ kind: 'ONE_LINE' }, { kind: 'FULL_CARD' })).toBe(false);

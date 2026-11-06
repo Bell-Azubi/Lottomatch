@@ -4,7 +4,6 @@ import { activePool, firstOpenSlot, roundOf, runningRound, type GameState } from
 import type { DrawEntry } from '../domain/state';
 import type { Prize, PrizeSlot, WinCondition } from '../domain/types';
 import { MAIN_PRIZE_SLOT, PRIZE_SLOTS } from '../domain/types';
-import { expectedClaimSize } from '../domain/win-condition';
 import { nextRound } from '../domain/rounds';
 import type { PrizeProgress } from './sync-messages';
 
@@ -15,8 +14,6 @@ export interface ActivePrizeView {
   readonly prize: Prize | undefined;
   readonly condition: WinCondition;
   readonly main: boolean;
-  /** Claimed numbers the check expects, `undefined` for custom rules. */
-  readonly expectedCount: number | undefined;
 }
 
 export function activePrizeView(
@@ -33,7 +30,6 @@ export function activePrizeView(
     prize: prizeAt(catalogue, pool.round.round, pool.slot),
     condition,
     main: pool.slot === MAIN_PRIZE_SLOT,
-    expectedCount: expectedClaimSize(condition, pool.rules),
   };
 }
 

@@ -4,7 +4,7 @@
 
 - [ ] Preise vollständig erfasst; die Startseite meldet keine fehlenden Preise.
 - [ ] Gewinnregeln und Einstellungen mit dem Spielreglement abgeglichen.
-- [ ] Übung durchgespielt: eine Runde mit Drehen, Zahl eintragen, Gewinn prüfen, Fehlmeldung und
+- [ ] Übung durchgespielt: eine Runde mit Drehen, Zahl eintragen, Gewinn bestätigen und
       Stechen.
 - [ ] Sicherung exportiert und auf einem USB-Stick abgelegt.
 - [ ] Ersatzlaptop mit aktuellem Browser vorbereitet; die App einmal geöffnet (offline bereit) und

@@ -60,10 +60,6 @@ export const settings = {
       min > 1 ? `1 bis 50, mindestens ${min} (bereits gestartet)` : '1 bis 50',
     maxNumber: 'Höchste Zahl (N)',
     maxNumberHint: '30 bis 99; das Brett zeigt die Zahlen 1 bis N',
-    card: 'Karten',
-    perLine: 'Zahlen pro Linie',
-    lines: 'Linien pro Karte',
-    cardHint: (count: number): string => `Eine volle Karte hat ${count} Zahlen.`,
     locked: 'Gesperrt, solange eine Runde läuft.',
     template: 'Gewinnregeln (Vorlage)',
     templateHint:
@@ -71,12 +67,6 @@ export const settings = {
     slotRule: (slot: string): string => `Gewinnregel ${slot}`,
     customLabel: (slot: string): string => `Eigene Regel für ${slot}`,
     rules: 'Regeln',
-    lateClaim: 'Verspätete Meldungen',
-    lateClaimOptions: {
-      ALLOW: 'Zulassen',
-      REJECT: 'Ablehnen',
-      HOST_DECIDES: 'Spielleitung entscheidet',
-    },
     tiePolicy: 'Mehrere Gewinnkarten',
     tiePolicyOptions: { TIEBREAK: 'Stechen', SHARE: 'Teilen' },
     tiebreakOrder: 'Stechen',

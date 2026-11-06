@@ -45,6 +45,24 @@ describe('MatchSession', () => {
 });
 
 describe('loader', () => {
+  it('still loads logs with checked claims from before ADR-0025', () => {
+    const log = logOf([
+      { type: 'ROUND_STARTED', round: 1, rules: RULES },
+      { type: 'NUMBER_DRAWN', round: 1, draw: { seq: 1, number: 5, method: 'MANUAL' } },
+      { type: 'CLAIM_REJECTED', round: 1, slot: 1, claimed: [5, 6], missing: [6] },
+      { type: 'CLAIM_REJECTED', round: 1, slot: 1, claimed: [5], missing: [], lateSinceSeq: 1 },
+      {
+        type: 'PRIZE_AWARDED',
+        round: 1,
+        slot: 1,
+        winners: [{ cardNo: '17', validSinceSeq: 1 }],
+        prize: { winCondition: { kind: 'ONE_LINE' } },
+      },
+    ]);
+    const loaded = validateLog(log);
+    expect(loaded.ok && loaded.value.state.rounds.get(1)?.rejectedClaims).toBe(2);
+  });
+
   it('reports corrupt logs with the first bad position', () => {
     const log = logOf([{ type: 'ROUND_STARTED', round: 1, rules: RULES }]);
     expect(validateLog([...log, { nonsense: true }])).toEqual({

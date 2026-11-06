@@ -1,7 +1,7 @@
 # Lottomatch Live — FC Laufenburg-Kaisten
 
 The caller's console and the audience's big screen for the FC Laufenburg-Kaisten Lottomatch: draw
-numbers by spin or from a physical drum, check claims, award 24 rounds × 4 prizes and show
+numbers by spin or from a physical drum, confirm wins, award 24 rounds × 4 prizes and show
 everything legibly on a projector, from one laptop and without a network once loaded.
 
 Lottomatch Live is a static progressive web app on GitHub Pages. Every browser keeps its own data

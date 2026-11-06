@@ -17,6 +17,14 @@ All notable changes to this project are documented in this file. The format foll
 
 - The Gewinn overlay on the display stays for 60 seconds instead of 12. The next draw still ends it
   at once, and so does skipping a prize or aborting the round.
+- Gewinn prüfen opens Gewinn bestätigen directly: the numbers of a card are no longer typed in and
+  checked. Several cards can still be entered for Stechen or Teilen (ADR-0025).
+
+### Removed
+
+- Number check, Fehlmeldung and late-claim detection in Gewinn prüfen, and the settings that only
+  they used (Verspätete Meldungen, card layout). Stored events and backups stay valid and keep their
+  recorded false claims and late claims.
 
 ## [1.0.0] - 2026-11-05
 

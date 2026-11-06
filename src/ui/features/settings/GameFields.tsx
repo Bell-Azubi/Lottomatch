@@ -4,7 +4,7 @@ import { PRIZE_SLOTS } from '../../../domain/types';
 import { commonText } from '../../../i18n/catalogues';
 import { t } from '../../../i18n';
 import { SelectField, TextField } from '../../design-system/Field';
-import { parseWholeNumber, type ConditionDraft, type EventDraft } from './event-draft';
+import type { ConditionDraft, EventDraft } from './event-draft';
 import { settingsText } from './messages';
 import styles from './Settings.module.css';
 
@@ -13,14 +13,14 @@ export interface DraftFieldsProps {
   readonly update: (patch: Partial<EventDraft>) => void;
   readonly errors: Partial<Record<SettingsField, string>>;
   readonly disabled: boolean;
-  /** True while a round runs: N, card layout and board reset are frozen (I6). */
+  /** True while a round runs: N and board reset are frozen (I6). */
   readonly locked: boolean;
   readonly minRounds: number;
 }
 
 const KINDS: readonly WinConditionKind[] = ['ONE_LINE', 'TWO_LINES', 'FULL_CARD', 'CUSTOM'];
 
-/** Rounds, highest number, card layout and the win-condition template. */
+/** Rounds, highest number and the win-condition template. */
 export function GameFields({
   draft,
   update,
@@ -32,7 +32,6 @@ export function GameFields({
   const m = t(settingsText);
   const c = t(commonText);
   const lockedHint = locked ? m.form.locked : undefined;
-  const fullCard = parseWholeNumber(draft.perLine) * parseWholeNumber(draft.lines);
   const setCondition = (slot: PrizeSlot, patch: Partial<ConditionDraft>) => {
     update({ template: { ...draft.template, [slot]: { ...draft.template[slot], ...patch } } });
   };
@@ -64,34 +63,6 @@ export function GameFields({
             error={errors.maxNumber}
           />
         </div>
-      </fieldset>
-      <fieldset class={styles.group}>
-        <legend class={styles.legend}>{m.form.card}</legend>
-        <div class={styles.grid}>
-          <TextField
-            label={m.form.perLine}
-            value={draft.perLine}
-            onValue={(perLine) => {
-              update({ perLine });
-            }}
-            inputMode="numeric"
-            disabled={disabled || locked}
-            hint={lockedHint}
-            error={errors.perLine}
-          />
-          <TextField
-            label={m.form.lines}
-            value={draft.lines}
-            onValue={(lines) => {
-              update({ lines });
-            }}
-            inputMode="numeric"
-            disabled={disabled || locked}
-            hint={lockedHint}
-            error={errors.lines}
-          />
-        </div>
-        {Number.isFinite(fullCard) && <p class={styles.hint}>{m.form.cardHint(fullCard)}</p>}
         {errors.cardSize !== undefined && <p class={styles.errorText}>{errors.cardSize}</p>}
       </fieldset>
       <fieldset class={styles.group}>

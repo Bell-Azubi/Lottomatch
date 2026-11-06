@@ -7,12 +7,11 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
 
 1. **Anlass wählen.** Unter Einstellungen → Anlässe den Anlass auswählen, neu erstellen oder einen
    Vorjahresanlass als Vorlage duplizieren (Einstellungen und Preise, ohne Ziehungen und Gewinner).
-2. **Anlass einstellen.** Name, Datum, Ort, Anzahl Runden (Standard 24), höchste Zahl (Standard 90),
-   Kartenformat (Standard 5 Zahlen pro Linie, 3 Linien) und die Gewinnregel-Vorlage:
+2. **Anlass einstellen.** Name, Datum, Ort, Anzahl Runden (Standard 24), höchste Zahl (Standard 90)
+   und die Gewinnregel-Vorlage:
    Preis 1 «1 Linie», Preis 2 «1 Linie», Preis 3 «2 Linien», Hauptpreis «Volle Karte».
    Die Vorlage mit dem Spielreglement des Vereins abgleichen.
-3. **Regeln festlegen.** Verspätete Meldungen (Zulassen, Ablehnen oder Spielleitung entscheidet),
-   mehrere Gewinnkarten (Stechen oder Teilen, beim Stechen gewinnt die höchste oder die tiefste
+3. **Regeln festlegen.** Mehrere Gewinnkarten (Stechen oder Teilen, beim Stechen gewinnt die höchste oder die tiefste
    Zahl) und ob das Brett nach jedem Preis geleert wird (Standard: nein, die Zahlen gelten für alle
    vier Preise der Runde).
 4. **Preise erfassen.** Unter «Preise» pro Runde vier Preise eintragen: Titel, Beschreibung, Wert in
@@ -52,28 +51,20 @@ Spiel, das zweite Fenster («Anzeige») läuft auf Projektor oder TV für das Pu
      einzelnen Ziffer, weil aus «1» noch «12» werden kann.
    - Ein Klick auf ein Feld im Raster fragt «42 als gezogen markieren?».
 3. **«Lotto!» – Gewinn prüfen.** «Gewinn prüfen» wählen oder G drücken. Solange der Dialog offen
-   ist, kann nicht gezogen werden. Die Zahlen der Karte eintippen; jede erscheint als gezogen oder
-   fehlend. Die erwartete Anzahl folgt der Gewinnregel (5, 10 oder 15 Zahlen; bei einer eigenen
-   Regel beliebig viele).
+   ist, kann nicht gezogen werden. Die Kontrolle prüft die Karte am Tisch; die App prüft die Zahlen
+   nicht.
 4. **Entscheiden.**
    - Gültig: «Gewinn bestätigen», optional mit Kartennummer, Name und Notiz. Die App weist darauf
      hin, wenn dieselbe Karte in dieser Runde schon gewonnen hat. Danach ist der nächste Preis aktiv.
-   - Ungültig: «Fehlmeldung erfassen» – die fehlenden Zahlen werden angezeigt, das Spiel geht weiter.
-   - Prüfung durch die Kontrolle am Tisch: «Ohne Prüfung bestätigen».
-5. **Mehrere Gewinnkarten.** Mit «Weitere Karte prüfen» jede Karte prüfen. Sind mehrere gültig,
-   folgt je nach Einstellung das Stechen («Stechen ziehen»: eine Zahl pro Karte, die höchste oder
-   tiefste gewinnt; bei Gleichstand ziehen nur die gleichstehenden Karten nochmals) oder
-   «Preis teilen».
+   - Ungültig: «Abbrechen». Es wird nichts erfasst, das Spiel geht weiter.
+5. **Mehrere Gewinnkarten.** Mit «Weitere Karte» jede gültige Karte erfassen. Je nach Einstellung
+   folgt das Stechen («Stechen ziehen»: eine Zahl pro Karte, die höchste oder tiefste gewinnt; bei
+   Gleichstand ziehen nur die gleichstehenden Karten nochmals), oder alle Karten teilen sich den
+   Preis.
 6. **Gewinnanzeige.** Nach jedem bestätigten Gewinn zeigt die Anzeige den Gewinn 60 Sekunden lang.
    Die nächste gezogene Zahl beendet die Gewinnanzeige sofort.
 7. **Rundenende.** Nach dem Hauptpreis zeigt die Konsole eine Zusammenfassung und die nächste
    Runde, die Anzeige die vier Preise der nächsten Runde. Weiter mit «Runde starten».
-
-## Verspätete Meldungen
-
-Die App erkennt, mit welcher Ziehung eine Karte vollständig war, zum Beispiel «gültig seit
-Ziehung 37 (Zahl 42), aktuell Ziehung 39». Je nach Einstellung wird die Meldung zugelassen,
-abgelehnt oder die Spielleitung entscheidet mit «Zulassen» oder «Ablehnen».
 
 ## Tastenkürzel
 

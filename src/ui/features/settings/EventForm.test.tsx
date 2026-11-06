@@ -37,11 +37,6 @@ describe('Anlass form', () => {
     type('Ort (optional)', 'Mehrzweckhalle Kaisten');
     type('Anzahl Runden', '20');
     type(/^Höchste Zahl/, '75');
-    type('Zahlen pro Linie', '4');
-    type('Linien pro Karte', '2');
-    fireEvent.change(screen.getByLabelText('Verspätete Meldungen'), {
-      target: { value: 'REJECT' },
-    });
     fireEvent.change(screen.getByLabelText('Mehrere Gewinnkarten'), { target: { value: 'SHARE' } });
     fireEvent.click(screen.getByRole('switch', { name: /Brett nach jedem Preis leeren/ }));
     fireEvent.click(screen.getByRole('switch', { name: /Namen auf der Anzeige zeigen/ }));
@@ -55,9 +50,6 @@ describe('Anlass form', () => {
       venue: 'Mehrzweckhalle Kaisten',
       rounds: 20,
       maxNumber: 75,
-      perLine: 4,
-      lines: 2,
-      lateClaimPolicy: 'REJECT',
       tiePolicy: 'SHARE',
       boardReset: 'PRIZE',
       showNamesOnDisplay: true,
@@ -65,7 +57,22 @@ describe('Anlass form', () => {
     });
     expect(messages()).toContain('Einstellungen gespeichert');
     expect(screen.getByLabelText('Name')).toHaveValue('Herbstlotto');
-    expect(screen.getByText('Eine volle Karte hat 8 Zahlen.')).toBeInTheDocument();
+  });
+
+  it('keeps the card layout and late-claim policy of an event without offering them', async () => {
+    const test = await createTestHost();
+    renderWithServices(<EventForm canEdit />, test);
+    expect(screen.queryByLabelText('Zahlen pro Linie')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Linien pro Karte')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Verspätete Meldungen')).not.toBeInTheDocument();
+    type('Ort (optional)', 'Turnhalle');
+    save();
+    expect(settingsOf(test)).toMatchObject({
+      venue: 'Turnhalle',
+      perLine: 5,
+      lines: 3,
+      lateClaimPolicy: 'HOST_DECIDES',
+    });
   });
 
   it('shows field errors and keeps the stored settings', async () => {
@@ -73,13 +80,9 @@ describe('Anlass form', () => {
     renderWithServices(<EventForm canEdit />, test);
     type('Name', ' ');
     type('Anzahl Runden', '0');
-    type('Zahlen pro Linie', '9');
-    type('Linien pro Karte', '6');
-    type(/^Höchste Zahl/, '30');
     save();
     expect(screen.getByText('Bitte einen Namen eingeben.')).toBeInTheDocument();
     expect(screen.getByText('1 bis 50 Runden.')).toBeInTheDocument();
-    expect(screen.getByText('Eine Karte hat mehr Zahlen, als das Brett hat.')).toBeInTheDocument();
     expect(screen.getByLabelText('Name')).toHaveAttribute('aria-invalid', 'true');
     expect(messages()).toContain('Bitte die markierten Felder korrigieren.');
     expect(settingsOf(test).name).toBe('Lottomatch');
@@ -118,13 +121,11 @@ describe('Anlass form', () => {
     });
   });
 
-  it('locks N, card layout and board reset while a round runs (I6)', async () => {
+  it('locks N and board reset while a round runs (I6)', async () => {
     const test = await createTestHost();
     expect(test.host.startRound().ok).toBe(true);
     renderWithServices(<EventForm canEdit />, test);
-    for (const label of [/^Höchste Zahl/, 'Zahlen pro Linie', 'Linien pro Karte']) {
-      expect(screen.getByLabelText(label)).toBeDisabled();
-    }
+    expect(screen.getByLabelText(/^Höchste Zahl/)).toBeDisabled();
     expect(screen.getByRole('switch', { name: /Brett nach jedem Preis leeren/ })).toBeDisabled();
     expect(screen.getAllByText('Gesperrt, solange eine Runde läuft.').length).toBeGreaterThan(0);
     type('Ort (optional)', 'Turnhalle');

@@ -47,11 +47,10 @@ export function cell(page: Page, number: number) {
   return page.locator(`[data-number="${number}"]`).first();
 }
 
-/** Confirms the active prize without a number check, with a card number. */
+/** Confirms the active prize with a card number. */
 export async function confirmWin(page: Page, cardNo: string): Promise<void> {
   await page.keyboard.press('g');
   const dialog = page.getByRole('dialog');
-  await dialog.getByRole('button', { name: 'Ohne Prüfung bestätigen' }).click();
   await dialog.getByLabel('Kartennummer (optional)').fill(cardNo);
   await dialog.getByRole('button', { name: 'Gewinn bestätigen' }).click();
   await expect(dialog).toBeHidden();

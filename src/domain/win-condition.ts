@@ -1,5 +1,5 @@
 import { cleanText, LIMITS } from './limits';
-import type { RoundRules, WinCondition } from './types';
+import type { WinCondition } from './types';
 
 /** Length in Unicode code points, so emoji and umlauts count as one character each. */
 export function textLength(value: string): number {
@@ -17,24 +17,4 @@ export function validateWinCondition(condition: WinCondition): boolean {
 export function sameCondition(a: WinCondition, b: WinCondition): boolean {
   if (a.kind !== b.kind) return false;
   return a.kind !== 'CUSTOM' || (b.kind === 'CUSTOM' && a.label === b.label);
-}
-
-/**
- * Number of claimed numbers a check expects for a condition and card layout.
- * Returns `undefined` for custom rules, whose size is free.
- */
-export function expectedClaimSize(
-  condition: WinCondition,
-  rules: Pick<RoundRules, 'perLine' | 'lines'>,
-): number | undefined {
-  switch (condition.kind) {
-    case 'ONE_LINE':
-      return rules.perLine;
-    case 'TWO_LINES':
-      return rules.perLine * Math.min(2, rules.lines);
-    case 'FULL_CARD':
-      return rules.perLine * rules.lines;
-    case 'CUSTOM':
-      return undefined;
-  }
 }
